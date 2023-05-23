@@ -81,8 +81,19 @@ namespace LMM00200Front
             if (eventArgs.ConductorMode == R_eConductorMode.Normal)
             {
                 var loParam = (LMM00200DTO)eventArgs.Data;
-                _viewModel.ActiveDept = loParam.LACTIVE;
-                _labelActiveInactive = _viewModel.ActiveDept ? "Inactive" : "Activate";
+                _viewModel.liUserParamCode=loParam.CCODE;
+                if (loParam.LACTIVE)
+                {
+                    _labelActiveInactive = "Inactive";
+                    _viewModel.ActiveDept = false;
+                    _viewModel._action = "INACTIVE";
+                }
+                else
+                {
+                    _labelActiveInactive = "Active";
+                    _viewModel.ActiveDept = true;
+                    _viewModel._action = "ACTIVE";
+                }
                 _viewModel.CUSER_LEVEL_OPERATOR_SIGN=loParam.CUSER_LEVEL_OPERATOR_SIGN;
             }
         }
@@ -142,29 +153,11 @@ namespace LMM00200Front
 
 
         #region Active/Inactive
-        private void R_Before_Open_Popup_ActivateInactive(R_BeforeOpenPopupEventArgs eventArgs)
+        private async Task R_Before_Open_Popup_ActivateInactive(R_BeforeOpenPopupEventArgs eventArgs)
         {
-            eventArgs.Parameter = "LMM00200";
-            eventArgs.TargetPageType = typeof(GFF00900FRONT.GFF00900);
-        }
-
-        private async Task R_After_Open_Popup_ActivateInactive(R_AfterOpenPopupEventArgs eventArgs)
-        {
-            R_Exception loException = new R_Exception();
-            try
-            {
-                bool result = (bool)eventArgs.Result;
-                if (result == true)
-                {
-                    await _viewModel.ActiveInactiveProcessAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-                loException.Add(ex);
-            }
-            loException.ThrowExceptionIfErrors();
-            //await _gridDeptRef.R_RefreshGrid(null);
+            await _viewModel.ActiveInactiveProcessAsync();
+            await _gridRef.R_RefreshGrid(null);
+            await _viewModel.GetUserParamRecord(new LMM00200DTO());
         }
         #endregion
     }

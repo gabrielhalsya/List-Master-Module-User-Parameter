@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\COMMON\LM\LMM00200Common\LMM00200Common.csproj" />
+    <ProjectReference Include="..\LM_SPR\RSP_LM_MAINTAIN_USER_PARAMResources\RSP_LM_MAINTAIN_USER_PARAMResources.csproj" />
   </ItemGroup>
 
   <ItemGroup>

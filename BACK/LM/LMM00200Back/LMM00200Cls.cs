@@ -57,18 +57,21 @@ namespace LMM00200Back
         protected override void R_Saving(LMM00200DTO poNewEntity, eCRUDMode poCRUDMode)
         {
             R_Exception loEx = new R_Exception();
-            LMM00200DTO loTmpEntity;
-            string lcQuery;
+            string lcQuery = null;
             R_Db loDb;
             DbCommand loCmd;
-            DbConnection loConn;
+            DbConnection loConn = null;
             string lcAction = "";
+
             try
             {
                 loDb = new R_Db();
-                loConn = loDb.GetConnection("R_DefaultConnectionString");
+                // loConn = loDb.GetConnection("BimasaktiConnectionString");
+                loConn = loDb.GetConnection();
                 loCmd = loDb.GetCommand();
-                lcQuery = "RSP_LM_MAINTAIN_USER_PARAM";
+
+                R_ExternalException.R_SP_Init_Exception(loConn);
+
                 switch (poCRUDMode)
                 {
                     //case eCRUDMode.AddMode:
@@ -79,6 +82,11 @@ namespace LMM00200Back
                         lcAction = "EDIT";
                         break;
                 }
+            
+                lcQuery = "RSP_LM_MAINTAIN_USER_PARAM";
+                loCmd.CommandType = CommandType.StoredProcedure;
+                loCmd.CommandText = lcQuery;
+
                 loCmd.CommandType = CommandType.StoredProcedure;
                 loCmd.CommandText = lcQuery;
                 loDb.R_AddCommandParameter(loCmd, "@CCOMPANY_ID", DbType.String, 8, poNewEntity.CCOMPANY_ID);
@@ -90,16 +98,40 @@ namespace LMM00200Back
                 loDb.R_AddCommandParameter(loCmd, "@LACTIVE", DbType.Boolean, 2, poNewEntity.LACTIVE);
                 loDb.R_AddCommandParameter(loCmd, "@CACTION", DbType.String, 10, lcAction);
                 loDb.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 8, poNewEntity.CUSER_ID);
-                loDb.SqlExecNonQuery(loConn, loCmd, true);
 
+                try
+                {
+                    loDb.SqlExecNonQuery(loConn, loCmd, false);
+                }
+                catch (Exception ex)
+                {
+                    loEx.Add(ex);
+                }
+
+                loEx.Add(R_ExternalException.R_SP_Get_Exception(loConn));
             }
             catch (Exception ex)
             {
                 loEx.Add(ex);
             }
+
+            finally
+            {
+                if (loConn != null)
+                {
+                    if (loConn.State != ConnectionState.Closed)
+                    {
+                        loConn.Close();
+                    }
+
+                    loConn.Dispose();
+                }
+            }
+
         EndBlock:
             loEx.ThrowExceptionIfErrors();
         }
+
 
         public List<LMM00200StreamDTO> GetUserParamList(LMM00200DBListParam poEntity)
         {
@@ -133,7 +165,7 @@ namespace LMM00200Back
             return loRtn;
         }
 
-        public void ActiveInactiveUserParam(LMM00200ActiveInactiveParam poEntity)
+        public void ActiveInactiveUserParam(LMM00200DTO poEntity)
         {
             R_Exception loex = new R_Exception();
             string lcQuery = "";
@@ -149,8 +181,13 @@ namespace LMM00200Back
                 loCmd.CommandType = CommandType.StoredProcedure;
                 loCmd.CommandText = lcQuery;
                 loDb.R_AddCommandParameter(loCmd, "@CCOMPANY_ID", DbType.String, 8, poEntity.CCOMPANY_ID);
-                loDb.R_AddCommandParameter(loCmd, "@CCODE", DbType.String, 20, poEntity.CCODE);
+                loDb.R_AddCommandParameter(loCmd, "@CCODE", DbType.String, 8, poEntity.CCODE);
+                loDb.R_AddCommandParameter(loCmd, "@CDESCRIPTION", DbType.String, 255, poEntity.CDESCRIPTION);
+                loDb.R_AddCommandParameter(loCmd, "@CUSER_LEVEL_OPERATOR_SIGN", DbType.String, 2, poEntity.CUSER_LEVEL_OPERATOR_SIGN);
+                loDb.R_AddCommandParameter(loCmd, "@IUSER_LEVEL", DbType.Int32, 8, poEntity.IUSER_LEVEL);
+                loDb.R_AddCommandParameter(loCmd, "@CVALUE", DbType.String, 100, poEntity.CVALUE);
                 loDb.R_AddCommandParameter(loCmd, "@LACTIVE", DbType.Boolean, 2, poEntity.LACTIVE);
+                loDb.R_AddCommandParameter(loCmd, "@CACTION", DbType.String, 10, poEntity.CACTION);
                 loDb.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 8, poEntity.CUSER_ID);
                 loDb.SqlExecNonQuery(loConn, loCmd, true);
             }
@@ -161,7 +198,6 @@ namespace LMM00200Back
         EndBlock:
             loex.ThrowExceptionIfErrors();
         }
-
 
     }
 }

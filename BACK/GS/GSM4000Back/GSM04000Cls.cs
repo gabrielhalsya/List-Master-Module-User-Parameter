@@ -89,14 +89,17 @@ namespace GSM04000Back
             string lcQuery;
             R_Db loDb;
             DbCommand loCmd;
-            DbConnection loConn;
+            DbConnection loConn=null;
             string lcAction = "";
             try
             {
                 loDb = new R_Db();
                 loConn=loDb.GetConnection();
                 loCmd = loDb.GetCommand();
+                R_ExternalException.R_SP_Init_Exception(loConn);
+
                 lcQuery = "RSP_GS_MAINTAIN_DEPARTMENT";
+
                 switch (poCRUDMode)
                 {
                     case eCRUDMode.AddMode:
@@ -107,6 +110,7 @@ namespace GSM04000Back
                         lcAction = "EDIT";
                         break;
                 }
+
                 loCmd.CommandType = CommandType.StoredProcedure;
                 loCmd.CommandText = lcQuery;
                 loDb.R_AddCommandParameter(loCmd, "@CCOMPANY_ID", DbType.String, 8, poNewEntity.CCOMPANY_ID);
@@ -118,13 +122,35 @@ namespace GSM04000Back
                 loDb.R_AddCommandParameter(loCmd, "@LACTIVE", DbType.Boolean, 2, poNewEntity.LACTIVE);
                 loDb.R_AddCommandParameter(loCmd, "@CACTION", DbType.String, 10, lcAction);
                 loDb.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 8, poNewEntity.CUSER_ID);
-                loDb.SqlExecNonQuery(loConn, loCmd, true);
+                try
+                {
+                    loDb.SqlExecNonQuery(loConn, loCmd, false);
 
+                }
+                catch (Exception ex)
+                {
+                    loEx.Add(ex);
+                }
+                loEx.Add(R_ExternalException.R_SP_Get_Exception(loConn));
             }
             catch (Exception ex)
             {
                 loEx.Add(ex);
             }
+
+            finally
+            {
+                if (loConn != null)
+                {
+                    if (loConn.State != ConnectionState.Closed)
+                    {
+                        loConn.Close();
+                    }
+
+                    loConn.Dispose();
+                }
+            }
+
         EndBlock:
             loEx.ThrowExceptionIfErrors();
         }

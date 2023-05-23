@@ -29,7 +29,12 @@ namespace LMM00200Model
         {
         }
 
-        public async Task GetActiveParam()
+        public LMM00200ActiveInactiveParamDTO GetActiveParam()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task GetActiveParamAsync()
         {
             R_Exception loEx = new R_Exception();
             LMM00200ActiveInactiveParamDTO loRtn = new LMM00200ActiveInactiveParamDTO();
@@ -83,7 +88,6 @@ namespace LMM00200Model
             return loResult;
 
         }
-
 
     }
 }

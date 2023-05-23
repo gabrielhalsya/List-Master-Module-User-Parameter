@@ -65,10 +65,9 @@ namespace LMM00200Service
                 {
                     loCls = new LMM00200Cls(); //create cls class instance
                     loRtn = new R_ServiceGetRecordResultDTO<LMM00200DTO>();
-                    //poParameter.Entity.CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID;
-                    //poParameter.Entity.CUSER_ID = R_BackGlobalVar.USER_ID;
-                    poParameter.Entity.CCOMPANY_ID = "RCD";
-                    poParameter.Entity.CUSER_ID = "GHC";
+                    poParameter.Entity.CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID;
+                    poParameter.Entity.CUSER_ID = R_BackGlobalVar.USER_ID;
+                    poParameter.Entity.CCODE =R_Utility.R_GetStreamingContext<string>(ContextConstant.CCODE);
                     loRtn.data = loCls.R_GetRecord(poParameter.Entity);
                 }
                 catch (Exception ex)
@@ -91,11 +90,44 @@ namespace LMM00200Service
             {
                 loCls = new LMM00200Cls();
                 loRtn = new R_ServiceSaveResultDTO<LMM00200DTO>();
-                //poParameter.Entity.CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID;
-                //poParameter.Entity.CUSER_ID = R_BackGlobalVar.USER_ID;
-                poParameter.Entity.CCOMPANY_ID ="RCD";
-                poParameter.Entity.CUSER_ID = "GHC";
+                poParameter.Entity.CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID;
+                poParameter.Entity.CUSER_ID = R_BackGlobalVar.USER_ID;
                 loRtn.data = loCls.R_Save(poParameter.Entity, poParameter.CRUDMode);//call clsMethod to save
+            }
+            catch (Exception ex)
+            {
+                loException.Add(ex);
+            }
+        EndBlock:
+            loException.ThrowExceptionIfErrors();
+            return loRtn;
+        }
+
+        [HttpPost]
+        public LMM00200ActiveInactiveParamDTO GetActiveParam()
+        {
+            LMM00200ActiveInactiveParamDTO loRtn = null;
+            R_Exception loException = new R_Exception();
+            LMM00200Cls loCls;
+            try
+            {
+                loCls = new LMM00200Cls();
+                loRtn = new LMM00200ActiveInactiveParamDTO();
+                var loParam = new LMM00200DTO()
+                {
+                    CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID,
+                    //CUSER_ID = R_BackGlobalVar.USER_ID,
+                    CUSER_ID = "ADMIN",
+                    CCODE = R_Utility.R_GetContext<string>(ContextConstant.CCODE),
+                    LACTIVE = R_Utility.R_GetContext<bool>(ContextConstant.LACTIVE),
+                    CACTION = R_Utility.R_GetContext<string>(ContextConstant.CACTION),
+                    CDESCRIPTION= "",
+                    CUSER_LEVEL_OPERATOR_SIGN = "",
+                    CVALUE = "",
+                    IUSER_LEVEL = 0
+                };
+                    //call clsMethod to save
+                    loCls.ActiveInactiveUserParam(loParam);
             }
             catch (Exception ex)
             {

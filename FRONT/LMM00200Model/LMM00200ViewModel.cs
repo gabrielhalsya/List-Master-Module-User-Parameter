@@ -27,6 +27,8 @@ namespace LMM00200Model
         public string liUserParamCode{ get; set; }
         public bool ActiveDept { get; set; }
 
+        public string _action { get; set; }
+
 
         public async Task GetUserParamList()
         {
@@ -86,7 +88,8 @@ namespace LMM00200Model
             {
                 R_FrontContext.R_SetContext(ContextConstant.CCODE, liUserParamCode);
                 R_FrontContext.R_SetContext(ContextConstant.LACTIVE, ActiveDept);
-                await _model.GetActiveParam();
+                R_FrontContext.R_SetContext(ContextConstant.CACTION, _action);
+                await _model.GetActiveParamAsync();
 
             }
             catch (Exception ex)
@@ -95,8 +98,6 @@ namespace LMM00200Model
             }
             loEx.ThrowExceptionIfErrors();
         }
-
-
     }
 
     public class RadioModel
