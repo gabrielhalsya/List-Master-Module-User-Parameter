@@ -16,6 +16,8 @@ namespace LMM00200Model
     {
         private const string DEFAULT_HTTP_NAME = "R_DefaultServiceUrlLM";
         private const string DEFAULT_CHECKPOINT_NAME = "api/LMM00200";
+        private const string DEFAULT_MODULE = "LM";
+
         public LMM00200Model(
             string pcHttpClientName = DEFAULT_HTTP_NAME,
             string pcRequestServiceEndPoint = DEFAULT_CHECKPOINT_NAME,
@@ -24,6 +26,7 @@ namespace LMM00200Model
             ) : base(
                 pcHttpClientName,
                 pcRequestServiceEndPoint,
+                DEFAULT_MODULE,
                 plSendWithContext,
                 plSendWithToken)
         {
@@ -45,7 +48,7 @@ namespace LMM00200Model
                 loRtn = await R_HTTPClientWrapper.R_APIRequestObject<LMM00200ActiveInactiveParamDTO>(
                     _RequestServiceEndPoint,
                     nameof(ILMM00200.GetActiveParam),
-                    _SendWithContext,
+                    DEFAULT_MODULE, _SendWithContext,
                     _SendWithToken);
             }
             catch (Exception ex)
@@ -75,7 +78,7 @@ namespace LMM00200Model
                 loResult = await R_HTTPClientWrapper.R_APIRequestStreamingObject<LMM00200StreamDTO>(
                     _RequestServiceEndPoint,
                     nameof(ILMM00200.GetUserParamList),
-                    _SendWithContext,
+                    DEFAULT_MODULE, _SendWithContext,
                     _SendWithToken);
             }
             catch (Exception ex)

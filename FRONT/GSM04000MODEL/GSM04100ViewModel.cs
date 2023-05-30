@@ -25,7 +25,7 @@ namespace GSM04000Model
             try
             {
                 R_FrontContext.R_SetStreamingContext(ContextConstant.CDEPT_CODE, DepartmentCode);
-                var loResult =await _model.GetGSM04100ListByDeptCodeAsync();
+                var loResult = await _model.GetGSM04100ListByDeptCodeAsync();
                 DepartmentUserList = new ObservableCollection<GSM04100StreamDTO>(loResult.Data);
             }
             catch (Exception ex)
@@ -75,7 +75,7 @@ namespace GSM04000Model
 
             try
             {
-                var loParam =R_FrontUtility.ConvertObjectToObject<GSM04100DTO>(poDept);
+                var loParam = R_FrontUtility.ConvertObjectToObject<GSM04100DTO>(poDept);
                 await _model.R_ServiceDeleteAsync(loParam);
             }
             catch (Exception ex)
@@ -101,7 +101,7 @@ namespace GSM04000Model
             loEx.ThrowExceptionIfErrors();
         }
 
-        
+
 
     }
 }

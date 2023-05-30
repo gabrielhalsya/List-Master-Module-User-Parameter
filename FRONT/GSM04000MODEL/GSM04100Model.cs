@@ -12,6 +12,8 @@ namespace GSM04000Model
     {
         private const string DEFAULT_HTTP_NAME = "R_DefaultServiceUrl";
         private const string DEFAULT_CHECKPOINT_NAME = "api/GSM04100";
+        private const string DEFAULT_MODULE = "GS";
+
 
         public GSM04100Model(
             string pcHttpClientName = DEFAULT_HTTP_NAME,
@@ -21,6 +23,7 @@ namespace GSM04000Model
             ) : base(
                 pcHttpClientName,
                 pcRequestServiceEndPoint,
+                DEFAULT_MODULE,
                 plSendWithContext,
                 plSendWithToken)
         {
@@ -44,7 +47,7 @@ namespace GSM04000Model
                     loResult = await R_HTTPClientWrapper.R_APIRequestObject<GSM04100ListDTO>(
                         _RequestServiceEndPoint,
                         nameof(IGSM04100.GetGSM04100ListByDeptCode),
-                        _SendWithContext,
+                        DEFAULT_MODULE, _SendWithContext,
                         _SendWithToken);
                 }
                 catch (Exception ex)
@@ -74,7 +77,7 @@ namespace GSM04000Model
                 loResult = await R_HTTPClientWrapper.R_APIRequestStreamingObject<GSM04100DTO>(
                     _RequestServiceEndPoint,
                     nameof(IGSM04100.GetUserToAssignList),
-                    _SendWithContext,
+                    DEFAULT_MODULE, _SendWithContext,
                     _SendWithToken);
             }
             catch (Exception ex)

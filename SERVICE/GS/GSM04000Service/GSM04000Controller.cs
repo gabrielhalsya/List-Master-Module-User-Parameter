@@ -5,6 +5,7 @@ using R_Common;
 using R_CommonFrontBackAPI;
 using GSM04000Back;
 using System.Drawing.Text;
+using System.Xml.Linq;
 
 namespace GSM04000Service
 {
@@ -138,6 +139,32 @@ namespace GSM04000Service
                 loEx.Add(ex);
             }
             loEx.ThrowExceptionIfErrors();
+            return loRtn;
+        }
+
+        [HttpPost]
+        public GSM04000CheckUserExistResultDTO CheckIsUserDeptExist()
+        {
+
+            R_Exception loException = new R_Exception();
+            GSM04000CheckUserExistResultDTO loRtn=null;
+            GSM04000Cls loCls;
+            GSM04000DTO loParameter = null;
+            try
+            {
+                loCls = new GSM04000Cls(); //create cls class instance
+                loRtn=new GSM04000CheckUserExistResultDTO();            
+                loParameter = new GSM04000DTO();
+                loParameter.CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID;
+                loParameter.CDEPT_CODE = R_Utility.R_GetStreamingContext<string>(ContextConstant.CDEPT_CODE);
+                loRtn.UserDeptExist = loCls.CheckIsUserDeptExist(loParameter);
+            }
+            catch (Exception ex)
+            {
+                loException.Add(ex);
+            }
+        EndBlock:
+            loException.ThrowExceptionIfErrors();
             return loRtn;
         }
     }

@@ -132,7 +132,6 @@ namespace LMM00200Back
             loEx.ThrowExceptionIfErrors();
         }
 
-
         public List<LMM00200StreamDTO> GetUserParamList(LMM00200DBListParam poEntity)
         {
             R_Exception loEx = new R_Exception();

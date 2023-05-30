@@ -14,7 +14,7 @@ namespace LMM00200Service
     {
         [HttpPost]
         public IAsyncEnumerable<LMM00200StreamDTO> GetUserParamList()
-        {
+            {
             R_Exception loException = new R_Exception();
             List<LMM00200StreamDTO> loRtnTemp = null;
             LMM00200DBListParam loDbParam;
@@ -24,10 +24,8 @@ namespace LMM00200Service
                 loCls = new LMM00200Cls();
                 loRtnTemp = loCls.GetUserParamList(new LMM00200DBListParam()
                 {
-                    //CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID,
-                    //CUSER_ID = R_BackGlobalVar.USER_ID
-                    CCOMPANY_ID = "RCD",
-                    CUSER_ID = "GHC"
+                    CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID,
+                    CUSER_ID = R_BackGlobalVar.USER_ID
                 });
             }
             catch (Exception ex)
@@ -116,8 +114,7 @@ namespace LMM00200Service
                 var loParam = new LMM00200DTO()
                 {
                     CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID,
-                    //CUSER_ID = R_BackGlobalVar.USER_ID,
-                    CUSER_ID = "ADMIN",
+                    CUSER_ID = R_BackGlobalVar.USER_ID,
                     CCODE = R_Utility.R_GetContext<string>(ContextConstant.CCODE),
                     LACTIVE = R_Utility.R_GetContext<bool>(ContextConstant.LACTIVE),
                     CACTION = R_Utility.R_GetContext<string>(ContextConstant.CACTION),

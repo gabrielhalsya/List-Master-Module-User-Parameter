@@ -15,10 +15,14 @@ namespace GSM04000Model
     {
         private GSM04000Model _model = new GSM04000Model();
         public ObservableCollection<GSM04000DTO> DepartmentList { get; set; } = new ObservableCollection<GSM04000DTO>();
+        public ObservableCollection<GSM04000DTO> DepartmentExcelList { get; set; } = new ObservableCollection<GSM04000DTO>();
+
         public GSM04000DTO Department { get; set; } = new GSM04000DTO();
         public R_ContextHeader _ContextHeader { get; set; }
         public string DepartmentCode { get; set; } = "";
         public bool ActiveDept { get; set; }
+        public bool IsUserDeptExist { get; set; }=false;
+
 
         public async Task GetDepartmentList()
         {
@@ -106,5 +110,22 @@ namespace GSM04000Model
             }
             loEx.ThrowExceptionIfErrors();
         }
+
+        public async Task CheckIsUserDeptExist()
+        {
+            R_Exception loEx = new R_Exception();
+            try
+            {
+                R_FrontContext.R_SetContext(ContextConstant.CDEPT_CODE, DepartmentCode);
+                var loResult = await _model.CheckIsUserDeptExistAsync();
+                IsUserDeptExist = loResult.UserDeptExist;
+            }
+            catch (Exception ex)
+            {
+                loEx.Add(ex);
+            }
+            loEx.ThrowExceptionIfErrors();
+        }
+
     }
 }

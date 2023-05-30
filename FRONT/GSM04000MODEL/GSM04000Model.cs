@@ -12,21 +12,24 @@ namespace GSM04000Model
     {
         private const string DEFAULT_HTTP_NAME = "R_DefaultServiceUrl";
         private const string DEFAULT_CHECKPOINT_NAME = "api/GSM04000";
+        private const string DEFAULT_MODULE = "GS";
+
 
         public GSM04000Model(
-            string pcHttpClientName =DEFAULT_HTTP_NAME, 
-            string pcRequestServiceEndPoint=DEFAULT_CHECKPOINT_NAME, 
+            string pcHttpClientName = DEFAULT_HTTP_NAME,
+            string pcRequestServiceEndPoint = DEFAULT_CHECKPOINT_NAME,
             bool plSendWithContext = true,
             bool plSendWithToken = true
             ) : base(
-                pcHttpClientName, 
-                pcRequestServiceEndPoint, 
-                plSendWithContext, 
+                pcHttpClientName,
+                pcRequestServiceEndPoint,
+                DEFAULT_MODULE,
+                plSendWithContext,
                 plSendWithToken)
         {
         }
 
-        #region GetDepartmentList
+
         public IAsyncEnumerable<GSM04000DTO> GetGSM04000List()
         {
             throw new NotImplementedException();
@@ -37,13 +40,14 @@ namespace GSM04000Model
         {
             var loEx = new R_Exception();
             List<GSM04000DTO> loResult = null;
-            
+
             try
             {
                 R_HTTPClientWrapper.httpClientName = DEFAULT_HTTP_NAME;
                 loResult = await R_HTTPClientWrapper.R_APIRequestStreamingObject<GSM04000DTO>(
                     _RequestServiceEndPoint,
                     nameof(IGSM04000.GetGSM04000List),
+                    DEFAULT_MODULE,
                     _SendWithContext,
                     _SendWithToken);
             }
@@ -74,7 +78,7 @@ namespace GSM04000Model
                 loRtn = await R_HTTPClientWrapper.R_APIRequestObject<GSM04000ActiveInactiveDTO>(
                     _RequestServiceEndPoint,
                     nameof(IGSM04000.RSP_GS_ACTIVE_INACTIVE_DEPTMethod),
-                    _SendWithContext,
+                    DEFAULT_MODULE, _SendWithContext,
                     _SendWithToken);
             }
             catch (Exception ex)
@@ -87,6 +91,30 @@ namespace GSM04000Model
 
         }
 
-        #endregion
+        public async Task<GSM04000CheckUserExistResultDTO> CheckIsUserDeptExistAsync()
+        {
+            R_Exception loEx = new R_Exception();
+            GSM04000CheckUserExistResultDTO loRtn = new GSM04000CheckUserExistResultDTO();
+            try
+            {
+                R_HTTPClientWrapper.httpClientName = _HttpClientName;
+
+                loRtn = await R_HTTPClientWrapper.R_APIRequestObject<GSM04000CheckUserExistResultDTO>(
+                    _RequestServiceEndPoint,
+                    nameof(IGSM04000.CheckIsUserDeptExistAsync),
+                    DEFAULT_MODULE, _SendWithContext,
+                    _SendWithToken);
+            }
+            catch (Exception ex)
+            {
+                loEx.Add(ex);
+            }
+            return loRtn;
+        }
+
+        public GSM04000CheckUserExistResultDTO CheckIsUserDeptExist()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

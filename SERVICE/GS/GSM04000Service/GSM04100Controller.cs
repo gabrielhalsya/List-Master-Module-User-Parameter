@@ -35,7 +35,7 @@ namespace GSM04000Service
             loException.ThrowExceptionIfErrors();
             return loRtn;
         }
-        
+
         [HttpPost]
         public IAsyncEnumerable<GSM04100DTO> GetUserToAssignList()
         {

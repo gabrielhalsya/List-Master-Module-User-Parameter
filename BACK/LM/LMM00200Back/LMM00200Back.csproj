@@ -6,11 +6,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Realta.BackCollectionNuGet" Version="1.0.0" />
-    <PackageReference Include="Realta.CommonCollectionNuGet" Version="1.0.0" />
-  </ItemGroup>
-
+ 
   <ItemGroup>
     <ProjectReference Include="..\..\..\COMMON\LM\LMM00200Common\LMM00200Common.csproj" />
     <ProjectReference Include="..\LM_SPR\RSP_LM_MAINTAIN_USER_PARAMResources\RSP_LM_MAINTAIN_USER_PARAMResources.csproj" />

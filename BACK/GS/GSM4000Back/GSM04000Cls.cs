@@ -1,4 +1,5 @@
-﻿using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
+﻿using Castle.Core.Internal;
+using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using GSM04000Common;
 using R_BackEnd;
 using R_Common;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 
 namespace GSM04000Back
@@ -16,16 +18,18 @@ namespace GSM04000Back
     {
         protected override void R_Deleting(GSM04000DTO poEntity)
         {
-            R_Exception loex = new R_Exception();
+            R_Exception loEx = new R_Exception();
             string lcQuery = "";
             R_Db loDb;
             DbCommand loCmd;
-            DbConnection loConn;
+            DbConnection loConn = null;
             try
             {
                 loDb = new R_Db();
-                loConn=loDb.GetConnection();
+                loConn = loDb.GetConnection();
                 loCmd = loDb.GetCommand();
+                R_ExternalException.R_SP_Init_Exception(loConn);
+
                 lcQuery = "RSP_GS_MAINTAIN_DEPARTMENT";
                 loCmd.CommandType = CommandType.StoredProcedure;
                 loCmd.CommandText = lcQuery;
@@ -38,14 +42,38 @@ namespace GSM04000Back
                 loDb.R_AddCommandParameter(loCmd, "@LACTIVE", DbType.Boolean, 2, poEntity.LACTIVE);
                 loDb.R_AddCommandParameter(loCmd, "@CACTION", DbType.String, 10, "DELETE");
                 loDb.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 8, poEntity.CUSER_ID);
-                loDb.SqlExecNonQuery(loConn, loCmd, true);
+
+                try
+                {
+                    loDb.SqlExecNonQuery(loConn, loCmd, false);
+                }
+                catch (Exception ex)
+                {
+                    loEx.Add(ex);
+                }
+
+                loEx.Add(R_ExternalException.R_SP_Get_Exception(loConn));
             }
             catch (Exception ex)
             {
-                loex.Add(ex);
+                loEx.Add(ex);
             }
-            EndBlock:
-            loex.ThrowExceptionIfErrors();
+
+            finally
+            {
+                if (loConn != null)
+                {
+                    if (loConn.State != ConnectionState.Closed)
+                    {
+                        loConn.Close();
+                    }
+
+                    loConn.Dispose();
+                }
+            }
+
+        EndBlock:
+            loEx.ThrowExceptionIfErrors();
         }
 
         protected override GSM04000DTO R_Display(GSM04000DTO poEntity)
@@ -89,12 +117,12 @@ namespace GSM04000Back
             string lcQuery;
             R_Db loDb;
             DbCommand loCmd;
-            DbConnection loConn=null;
+            DbConnection loConn = null;
             string lcAction = "";
             try
             {
                 loDb = new R_Db();
-                loConn=loDb.GetConnection();
+                loConn = loDb.GetConnection();
                 loCmd = loDb.GetCommand();
                 R_ExternalException.R_SP_Init_Exception(loConn);
 
@@ -105,7 +133,7 @@ namespace GSM04000Back
                     case eCRUDMode.AddMode:
                         lcAction = "ADD";
                         break;
-                        
+
                     case eCRUDMode.EditMode:
                         lcAction = "EDIT";
                         break;
@@ -159,7 +187,7 @@ namespace GSM04000Back
         {
             R_Exception loEx = new R_Exception();
             List<GSM04000DTO> loRtn = null;
-            R_Db loDB;  
+            R_Db loDB;
             DbConnection loConn;
             DbCommand loCmd;
             string lcQuery;
@@ -168,15 +196,15 @@ namespace GSM04000Back
                 loDB = new R_Db();
                 loConn = loDB.GetConnection();
                 loCmd = loDB.GetCommand();
-                
+
                 lcQuery = "RSP_GS_GET_DEPT_LIST";
-                loCmd.CommandType= CommandType.StoredProcedure;
-                loCmd.CommandText= lcQuery;
+                loCmd.CommandType = CommandType.StoredProcedure;
+                loCmd.CommandText = lcQuery;
 
                 loDB.R_AddCommandParameter(loCmd, "@CCOMPANY_ID", DbType.String, 50, poEntity.CCOMPANY_ID);
                 loDB.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 50, poEntity.CUSER_LOGIN_ID);
 
-                var loRtnTemp = loDB.SqlExecQuery(loConn,loCmd,true);
+                var loRtnTemp = loDB.SqlExecQuery(loConn, loCmd, true);
                 loRtn = R_Utility.R_ConvertTo<GSM04000DTO>(loRtnTemp).ToList();
             }
             catch (Exception ex)
@@ -214,6 +242,61 @@ namespace GSM04000Back
             }
         EndBlock:
             loex.ThrowExceptionIfErrors();
+        }
+
+        public bool CheckIsUserDeptExist(GSM04000DTO poEntity)
+        {
+            R_Exception loException = new R_Exception();
+            bool loRtn = true;
+            R_Db loDb;
+            String lcCmd;
+            try
+            {
+
+                lcCmd = "SELECT TOP 1 1 FROM GSM_DEPT_USER (NOLOCK) WHERE CCOMPANY_ID = '{0}' AND CDEPT_CODE = '{1}'";
+                loDb = new R_Db();
+                var loRtnTemp = loDb.SqlExecObjectQuery<GSM04000DTO>(
+                    lcCmd,
+                    poEntity.CCOMPANY_ID,
+                    poEntity.CDEPT_CODE
+                    ).FirstOrDefault();
+                loRtn = loRtnTemp != null ? true : false;
+            }
+            catch (Exception ex)
+            {
+                loException.Add(ex);
+            }
+        EndBlock:
+            loException.ThrowExceptionIfErrors();
+            return loRtn;
+        }
+
+        public void DeleteAssignedUserDept(GSM04000DTO poEntity)
+        {
+
+            R_Exception loEx = new R_Exception();
+            string lcCmd = "";
+            R_Db loDb;
+            DbCommand loCmd;
+            DbConnection loConn = null;
+            try
+            {
+                loDb = new R_Db();
+                loConn = loDb.GetConnection();
+                loCmd = loDb.GetCommand();
+                lcCmd = "DELETE GSM_DEPT_USER WHERE CCOMPANY_ID = '{0}' AND CDEPT_CODE = '{1}'";
+                loCmd.CommandType = CommandType.StoredProcedure;
+                loCmd.CommandText = lcCmd;
+                loDb = new R_Db();
+                loDb.SqlExecNonQuery(loConn, lcCmd, false);
+            }
+            catch (Exception ex)
+            {
+                loEx.Add(ex);
+            }
+        EndBlock:
+            loEx.ThrowExceptionIfErrors();
+
         }
     }
 }

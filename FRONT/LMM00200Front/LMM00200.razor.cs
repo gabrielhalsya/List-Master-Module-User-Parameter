@@ -24,7 +24,6 @@ namespace LMM00200Front
         private R_Grid<LMM00200StreamDTO> _gridRef;
         private string _labelActiveInactive = "";
 
-
         protected override async Task R_Init_From_Master(object poParameter)
         {
             var loEx = new R_Exception();
@@ -48,6 +47,7 @@ namespace LMM00200Front
             try
             {
                 await _viewModel.GetUserParamList();
+                eventArgs.ListEntityResult = _viewModel.UserParamList;
             }
             catch (Exception ex)
             {
@@ -150,7 +150,6 @@ namespace LMM00200Front
         {
             eventArgs.GridData = R_FrontUtility.ConvertObjectToObject<LMM00200StreamDTO>(eventArgs.Data);
         }
-
 
         #region Active/Inactive
         private async Task R_Before_Open_Popup_ActivateInactive(R_BeforeOpenPopupEventArgs eventArgs)
