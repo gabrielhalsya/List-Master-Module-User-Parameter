@@ -18,6 +18,7 @@ using Lookup_GSFRONT;
 using Lookup_GSCOMMON.DTOs;
 using R_BlazorFrontEnd.Controls.Grid.Columns;
 using R_BlazorFrontEnd.Controls.MessageBox;
+using System.Diagnostics.Tracing;
 
 namespace GSM04000Front
 {
@@ -105,6 +106,15 @@ namespace GSM04000Front
 
                 await _gridDeptUserRef.R_RefreshGrid(loParam);
             }
+
+            if (eventArgs.ConductorMode == R_eConductorMode.Edit)
+            {
+                var loParam = (GSM04000DTO)eventArgs.Data;
+                if (loParam.LEVERYONE!=true)
+                {
+                    await R_MessageBox.Show("Confirmation", "changing this will delete all assinged user on this dept", R_eMessageBoxButtonType.OKCancel);
+                }
+            }
         }
         private async Task DeptGrid_ServiceGetRecord(R_ServiceGetRecordEventArgs eventArgs)
         {
@@ -149,6 +159,8 @@ namespace GSM04000Front
             var loEx = new R_Exception();
             try
             {
+                
+                R_MessageBox.Show("Confirm", "Change this will delete assigned user on this department", R_eMessageBoxButtonType.OKCancel);
                 await _deptViewModel.SaveDepartment((GSM04000DTO)eventArgs.Data, (eCRUDMode)eventArgs.ConductorMode);
                 eventArgs.Result = _deptViewModel.Department;
             }
@@ -174,6 +186,15 @@ namespace GSM04000Front
             }
             loEx.ThrowExceptionIfErrors();
         }
+
+        //private async Task DeptGrid_OnChecked(R_SetEventArgs eventArgs)
+        //{
+        //    //var loParam = (GSM04000DTO)eventArgs.
+        //    if (eventArgs.Enable)
+        //    {
+        //        R_MessageBox.Show("Confirm","Change this will delete assigned user on this department",R_eMessageBoxButtonType.OKCancel);
+        //    }
+        //}
 
 
         #endregion

@@ -17,11 +17,8 @@
             <R_GridColumns>
                 <R_GridTextColumn FieldName="CDEPT_CODE" HeaderText="Department Code" R_EnableAdd></R_GridTextColumn>
                 <R_GridTextColumn FieldName="CDEPT_NAME" HeaderText="Department Name" R_EnableAdd R_EnableEdit></R_GridTextColumn>
-
                 <R_GridLookupColumn FieldName="CCENTER_NAME" Name="CCENTER" HeaderText="Center Name" R_EnableAdd R_EnableEdit></R_GridLookupColumn>
-
                 <R_GridLookupColumn FieldName="CMANAGER_NAME" Name="CMANAGER" HeaderText="Manager" R_EnableAdd R_EnableEdit></R_GridLookupColumn>
-
                 <R_GridCheckBoxColumn FieldName="LEVERYONE" HeaderText="Everyone" R_EnableAdd R_EnableEdit></R_GridCheckBoxColumn>
                 <R_GridCheckBoxColumn FieldName="LACTIVE" HeaderText="Active" R_EnableAdd R_EnableEdit></R_GridCheckBoxColumn>
                 <R_GridTextColumn FieldName="CUPDATE_BY" HeaderText="Last Update By"></R_GridTextColumn>
@@ -107,7 +104,8 @@
                  R_ServiceDelete="@DeptGrid_ServiceDelete"
                  R_ServiceSave="@DeptGrid_ServiceSave"
                  R_DisableDeleteConfirmation=false
-                 R_Validation="@DeptGrid_Validation">
+                 R_Validation="@DeptGrid_Validation"
+                 >
 </R_ConductorGrid>
 
 <R_ConductorGrid @ref="@_conGridDeptUserRef"
