@@ -10,7 +10,6 @@ namespace GSM04000Common
     {
         IAsyncEnumerable<GSM04000DTO> GetGSM04000List();
         GSM04000ActiveInactiveDTO RSP_GS_ACTIVE_INACTIVE_DEPTMethod();
-        GSM04000CheckUserExistResultDTO CheckIsUserDeptExistAsync();
         GSM04000CheckUserExistResultDTO CheckIsUserDeptExist();
     }
 }

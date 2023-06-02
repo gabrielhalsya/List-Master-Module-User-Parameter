@@ -271,32 +271,32 @@ namespace GSM04000Back
             return loRtn;
         }
 
-        public void DeleteAssignedUserDept(GSM04000DTO poEntity)
-        {
+        //public void DeleteAssignedUserDept(GSM04000DTO poEntity)
+        //{
 
-            R_Exception loEx = new R_Exception();
-            string lcCmd = "";
-            R_Db loDb;
-            DbCommand loCmd;
-            DbConnection loConn = null;
-            try
-            {
-                loDb = new R_Db();
-                loConn = loDb.GetConnection();
-                loCmd = loDb.GetCommand();
-                lcCmd = "DELETE GSM_DEPT_USER WHERE CCOMPANY_ID = '{0}' AND CDEPT_CODE = '{1}'";
-                loCmd.CommandType = CommandType.StoredProcedure;
-                loCmd.CommandText = lcCmd;
-                loDb = new R_Db();
-                loDb.SqlExecNonQuery(loConn, lcCmd, false);
-            }
-            catch (Exception ex)
-            {
-                loEx.Add(ex);
-            }
-        EndBlock:
-            loEx.ThrowExceptionIfErrors();
+        //    R_Exception loEx = new R_Exception();
+        //    string lcCmd = "";
+        //    R_Db loDb;
+        //    DbCommand loCmd;
+        //    DbConnection loConn = null;
+        //    try
+        //    {
+        //        loDb = new R_Db();
+        //        loConn = loDb.GetConnection();
+        //        loCmd = loDb.GetCommand();
+        //        lcCmd = "DELETE GSM_DEPT_USER WHERE CCOMPANY_ID = '{0}' AND CDEPT_CODE = '{1}'";
+        //        loCmd.CommandType = CommandType.StoredProcedure;
+        //        loCmd.CommandText = lcCmd;
+        //        loDb = new R_Db();
+        //        loDb.SqlExecNonQuery(loConn, lcCmd, false);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        loEx.Add(ex);
+        //    }
+        //EndBlock:
+        //    loEx.ThrowExceptionIfErrors();
 
-        }
+        //}
     }
 }

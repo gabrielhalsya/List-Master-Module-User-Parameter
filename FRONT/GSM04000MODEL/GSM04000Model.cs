@@ -101,7 +101,7 @@ namespace GSM04000Model
 
                 loRtn = await R_HTTPClientWrapper.R_APIRequestObject<GSM04000CheckUserExistResultDTO>(
                     _RequestServiceEndPoint,
-                    nameof(IGSM04000.CheckIsUserDeptExistAsync),
+                    nameof(IGSM04000.CheckIsUserDeptExist),
                     DEFAULT_MODULE, _SendWithContext,
                     _SendWithToken);
             }
@@ -116,5 +116,6 @@ namespace GSM04000Model
         {
             throw new NotImplementedException();
         }
+
     }
 }

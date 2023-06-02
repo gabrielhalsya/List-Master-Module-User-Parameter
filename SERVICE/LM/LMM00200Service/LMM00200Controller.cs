@@ -14,7 +14,7 @@ namespace LMM00200Service
     {
         [HttpPost]
         public IAsyncEnumerable<LMM00200StreamDTO> GetUserParamList()
-            {
+        {
             R_Exception loException = new R_Exception();
             List<LMM00200StreamDTO> loRtnTemp = null;
             LMM00200DBListParam loDbParam;
@@ -54,28 +54,25 @@ namespace LMM00200Service
         [HttpPost]
         public R_ServiceGetRecordResultDTO<LMM00200DTO> R_ServiceGetRecord(R_ServiceGetRecordParameterDTO<LMM00200DTO> poParameter)
         {
+            R_ServiceGetRecordResultDTO<LMM00200DTO> loRtn = null;
+            R_Exception loException = new R_Exception();
+            LMM00200Cls loCls;
+            try
             {
-
-                R_ServiceGetRecordResultDTO<LMM00200DTO> loRtn = null;
-                R_Exception loException = new R_Exception();
-                LMM00200Cls loCls;
-                try
-                {
-                    loCls = new LMM00200Cls(); //create cls class instance
-                    loRtn = new R_ServiceGetRecordResultDTO<LMM00200DTO>();
-                    poParameter.Entity.CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID;
-                    poParameter.Entity.CUSER_ID = R_BackGlobalVar.USER_ID;
-                    poParameter.Entity.CCODE =R_Utility.R_GetStreamingContext<string>(ContextConstant.CCODE);
-                    loRtn.data = loCls.R_GetRecord(poParameter.Entity);
-                }
-                catch (Exception ex)
-                {
-                    loException.Add(ex);
-                }
-            EndBlock:
-                loException.ThrowExceptionIfErrors();
-                return loRtn;
+                loCls = new LMM00200Cls(); //create cls class instance
+                loRtn = new R_ServiceGetRecordResultDTO<LMM00200DTO>();
+                poParameter.Entity.CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID;
+                poParameter.Entity.CUSER_ID = R_BackGlobalVar.USER_ID;
+                poParameter.Entity.CCODE = R_Utility.R_GetStreamingContext<string>(ContextConstant.CCODE);
+                loRtn.data = loCls.R_GetRecord(poParameter.Entity);
             }
+            catch (Exception ex)
+            {
+                loException.Add(ex);
+            }
+        EndBlock:
+            loException.ThrowExceptionIfErrors();
+            return loRtn;
         }
 
         [HttpPost]
@@ -118,13 +115,13 @@ namespace LMM00200Service
                     CCODE = R_Utility.R_GetContext<string>(ContextConstant.CCODE),
                     LACTIVE = R_Utility.R_GetContext<bool>(ContextConstant.LACTIVE),
                     CACTION = R_Utility.R_GetContext<string>(ContextConstant.CACTION),
-                    CDESCRIPTION= "",
+                    CDESCRIPTION = "",
                     CUSER_LEVEL_OPERATOR_SIGN = "",
                     CVALUE = "",
                     IUSER_LEVEL = 0
                 };
-                    //call clsMethod to save
-                    loCls.ActiveInactiveUserParam(loParam);
+                //call clsMethod to save
+                loCls.ActiveInactiveUserParam(loParam);
             }
             catch (Exception ex)
             {
