@@ -83,6 +83,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\FRONT\LMM00200Front\LMM00200Front.csproj" />
+    <ProjectReference Include="..\..\..\FRONT\LMM03700Front\LMM03700Front.csproj" />
   </ItemGroup>
 
   <ItemGroup>

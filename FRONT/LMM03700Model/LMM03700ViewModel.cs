@@ -84,7 +84,7 @@ namespace LMM03700Model
             try
             {
                 var loResult = await _model.GetPropertyListAsync();
-                PropertyList = new ObservableCollection<PropertyDTO>(loResult);
+                PropertyList = new List<PropertyDTO>(loResult);
             }
             catch (Exception ex)
             {

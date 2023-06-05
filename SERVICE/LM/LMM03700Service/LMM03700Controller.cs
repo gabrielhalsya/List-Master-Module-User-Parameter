@@ -76,6 +76,7 @@ namespace LMM03700Service
             try
             {
                 loCls = new LMM03700Cls(); //create cls class instance
+                poParameter.Entity.CCREATE_BY = R_BackGlobalVar.COMPANY_ID;
                 poParameter.Entity.CPROPERTY_ID= R_Utility.R_GetStreamingContext<string>(LMM03700ContextConstant.CPROPERTY_ID);
                 loRtn = new R_ServiceGetRecordResultDTO<TenantClassificationGroupDTO>();
                 loRtn.data = loCls.R_GetRecord(poParameter.Entity);
@@ -100,6 +101,8 @@ namespace LMM03700Service
             {
                 loCls = new LMM03700Cls();
                 loRtn = new R_ServiceSaveResultDTO<TenantClassificationGroupDTO>();
+                poParameter.Entity.CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID;
+                poParameter.Entity.CCREATE_BY = R_BackGlobalVar.USER_ID;
                 poParameter.Entity.CPROPERTY_ID = R_Utility.R_GetStreamingContext<string>(LMM03700ContextConstant.CPROPERTY_ID);
                 loRtn.data = loCls.R_Save(poParameter.Entity, poParameter.CRUDMode);
             }

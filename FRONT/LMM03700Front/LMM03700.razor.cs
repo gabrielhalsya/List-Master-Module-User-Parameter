@@ -97,6 +97,31 @@ namespace LMM03700Front
             loEx.ThrowExceptionIfErrors();
 
         }
+
+        private void TGC_Validation(R_ValidationEventArgs eventArgs)
+        {
+            R_Exception loEx = new R_Exception();
+
+            try
+            {
+                var loData = (TenantClassificationGroupDTO)eventArgs.Data;
+
+                if (string.IsNullOrWhiteSpace(loData.CTENANT_CLASSIFICATION_GROUP_ID))
+                    loEx.Add("", "Please fill Tenant Classification Group Id ");
+
+                if (string.IsNullOrWhiteSpace(loData.CTENANT_CLASSIFICATION_GROUP_NAME))
+                    loEx.Add("", "Please fill Tenant Classification Group Name ");
+            }
+            catch (Exception ex)
+            {
+                loEx.Add(ex);
+            }
+
+            if (loEx.HasError)
+                eventArgs.Cancel = true;
+
+            loEx.ThrowExceptionIfErrors();
+        }
         #endregion
 
         #region PropertyDropdown
