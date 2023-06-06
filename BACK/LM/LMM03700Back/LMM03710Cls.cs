@@ -1,20 +1,19 @@
-﻿using LMM03700Common;
+﻿using LMM03700Common.DTO_s;
 using R_BackEnd;
 using R_Common;
 using R_CommonFrontBackAPI;
 using System.Data.Common;
 using System.Data;
-using LMM03700Common.DTO_s;
-using System.Windows.Input;
+using R_APICommonDTO;
 
 namespace LMM03700Back
 {
-    public class LMM03700Cls : R_BusinessObject<TenantClassificationGroupDTO>
+    public class LMM03710Cls : R_BusinessObject<TenantClassificationDTO>
     {
-        protected override void R_Deleting(TenantClassificationGroupDTO poEntity)
+        protected override void R_Deleting(TenantClassificationDTO poEntity)
         {
             R_Exception loEx = new R_Exception();
-            TenantClassificationGroupDTO loRtn = null;
+            TenantClassificationDTO loRtn = null;
             R_Db loDB;
             DbConnection loConn;
             DbCommand loCmd;
@@ -25,15 +24,15 @@ namespace LMM03700Back
                 loConn = loDB.GetConnection("R_DefaultConnectionString");
                 loCmd = loDB.GetCommand();
 
-                lcQuery = "RSP_LM_MAINTAIN_TENANT_CLASS_GRP";
+                lcQuery = "RSP_LM_MAINTAIN_TENANT_CLASS";
                 loCmd.CommandType = CommandType.StoredProcedure;
                 loCmd.CommandText = lcQuery;
 
                 loDB.R_AddCommandParameter(loCmd, "@CCOMPANY_ID", DbType.String, 50, poEntity.CCOMPANY_ID);
                 loDB.R_AddCommandParameter(loCmd, "@CPROPERTY_ID", DbType.String, 50, poEntity.CPROPERTY_ID);
                 loDB.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_GROUP_ID", DbType.String, 50, poEntity.CTENANT_CLASSIFICATION_GROUP_ID);
-                loDB.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_GROUP_NAME", DbType.String, 50, poEntity.CTENANT_CLASSIFICATION_GROUP_NAME);
-                loDB.R_AddCommandParameter(loCmd, "@CACTION", DbType.String, 50,"DELETE");
+                loDB.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_ID", DbType.String, 50, poEntity.CTENANT_CLASSIFICATION_ID);
+                loDB.R_AddCommandParameter(loCmd, "@CACTION", DbType.String, 50, "DELETE");
                 loDB.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 50, poEntity.CCREATE_BY);
                 loDB.SqlExecNonQuery(loConn, loCmd, true);
             }
@@ -45,10 +44,10 @@ namespace LMM03700Back
             loEx.ThrowExceptionIfErrors();
         }
 
-        protected override TenantClassificationGroupDTO R_Display(TenantClassificationGroupDTO poEntity)
+        protected override TenantClassificationDTO R_Display(TenantClassificationDTO poEntity)
         {
             R_Exception loEx = new R_Exception();
-            TenantClassificationGroupDTO loRtn = null;
+            TenantClassificationDTO loRtn = null;
             R_Db loDB;
             DbConnection loConn;
             DbCommand loCmd;
@@ -63,12 +62,13 @@ namespace LMM03700Back
                 loCmd.CommandType = CommandType.StoredProcedure;
                 loCmd.CommandText = lcQuery;
 
-                loDB.R_AddCommandParameter(loCmd, "@CCOMPANY_ID", DbType.String, 50, poEntity.CCOMPANY_ID);
-                loDB.R_AddCommandParameter(loCmd, "@CPROPERTY_ID", DbType.String, 50, poEntity.CPROPERTY_ID);
-                loDB.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_GROUP_ID", DbType.String, 50, poEntity.CTENANT_CLASSIFICATION_GROUP_ID);
-                loDB.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 50, poEntity.CUSER_ID);
+                loDB.R_AddCommandParameter(loCmd, "@CCOMPANY_ID", DbType.String, 20, poEntity.CCOMPANY_ID);
+                loDB.R_AddCommandParameter(loCmd, "@CPROPERTY_ID", DbType.String, 20, poEntity.CPROPERTY_ID);
+                loDB.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_GROUP_ID", DbType.String, 20, poEntity.CTENANT_CLASSIFICATION_GROUP_ID);
+                loDB.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_ID", DbType.String, 20, poEntity.CTENANT_CLASSIFICATION_ID);
+                loDB.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 80, poEntity.CUPDATE_BY);
                 var loRtnTemp = loDB.SqlExecQuery(loConn, loCmd, true);
-                loRtn = R_Utility.R_ConvertTo<TenantClassificationGroupDTO>(loRtnTemp).FirstOrDefault();
+                loRtn = R_Utility.R_ConvertTo<TenantClassificationDTO>(loRtnTemp).FirstOrDefault();
             }
             catch (Exception ex)
             {
@@ -79,7 +79,7 @@ namespace LMM03700Back
             return loRtn;
         }
 
-        protected override void R_Saving(TenantClassificationGroupDTO poNewEntity, eCRUDMode poCRUDMode)
+        protected override void R_Saving(TenantClassificationDTO poNewEntity, eCRUDMode poCRUDMode)
         {
             R_Exception loEx = new R_Exception();
             string lcQuery = null;
@@ -108,7 +108,7 @@ namespace LMM03700Back
                         break;
                 }
 
-                lcQuery = "RSP_LM_MAINTAIN_TENANT_CLASS_GRP";
+                lcQuery = "RSP_LM_MAINTAIN_TENANT_CLASS";
                 loCmd.CommandType = CommandType.StoredProcedure;
                 loCmd.CommandText = lcQuery;
 
@@ -117,9 +117,10 @@ namespace LMM03700Back
                 loDb.R_AddCommandParameter(loCmd, "@CCOMPANY_ID", DbType.String, 8, poNewEntity.CCOMPANY_ID);
                 loDb.R_AddCommandParameter(loCmd, "@CPROPERTY_ID", DbType.String, 20, poNewEntity.CPROPERTY_ID);
                 loDb.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_GROUP_ID", DbType.String, 20, poNewEntity.CTENANT_CLASSIFICATION_GROUP_ID);
-                loDb.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_GROUP_NAME", DbType.String, 100, poNewEntity.CTENANT_CLASSIFICATION_GROUP_NAME);
+                loDb.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_ID", DbType.String, 20, poNewEntity.CTENANT_CLASSIFICATION_ID);
+                loDb.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_NAME", DbType.String, 100, poNewEntity.CTENANT_CLASSIFICATION_NAME);
                 loDb.R_AddCommandParameter(loCmd, "@CACTION", DbType.String, 10, lcAction);
-                loDb.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 8, poNewEntity.CUSER_ID);
+                loDb.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 8, poNewEntity.CCREATE_BY);
 
                 try
                 {
@@ -154,10 +155,10 @@ namespace LMM03700Back
             loEx.ThrowExceptionIfErrors();
         }
 
-        public List<TenantClassificationGroupDTO> GetTCGList(TenantClassificationGroupDTO poEntity)
+        public List<TenantClassificationDTO> GetTCList(TenantClassificationDBListMaintainParamDTO loParam)
         {
+            List<TenantClassificationDTO> loRtn = new List<TenantClassificationDTO>();
             R_Exception loEx = new R_Exception();
-            List<TenantClassificationGroupDTO> loRtn = null;
             R_Db loDB;
             DbConnection loConn;
             DbCommand loCmd;
@@ -168,16 +169,17 @@ namespace LMM03700Back
                 loConn = loDB.GetConnection("R_DefaultConnectionString");
                 loCmd = loDB.GetCommand();
 
-                lcQuery = "RSP_LM_GET_TENANT_CLASS_GRP_LIST";
+                lcQuery = "RSP_LM_GET_TENANT_CLASS_LIST";
                 loCmd.CommandType = CommandType.StoredProcedure;
                 loCmd.CommandText = lcQuery;
 
-                loDB.R_AddCommandParameter(loCmd, "@CCOMPANY_ID", DbType.String, 50, poEntity.CCOMPANY_ID);
-                loDB.R_AddCommandParameter(loCmd, "@CPROPERTY_ID", DbType.String, 50, poEntity.CPROPERTY_ID);
-                loDB.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 50, poEntity.CUSER_ID);
+                loDB.R_AddCommandParameter(loCmd, "@CCOMPANY_ID", DbType.String, 20, loParam.CCOMPANY_ID);
+                loDB.R_AddCommandParameter(loCmd, "@CPROPERTY_ID", DbType.String, 20, loParam.CPROPERTY_ID);
+                loDB.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_GROUP_ID", DbType.String, 20, loParam.CTENANT_CLASSIFICATION_GROUP_ID);
+                loDB.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 8, loParam.CUSER_ID);
 
                 var loRtnTemp = loDB.SqlExecQuery(loConn, loCmd, true);
-                loRtn = R_Utility.R_ConvertTo<TenantClassificationGroupDTO>(loRtnTemp).ToList();
+                loRtn = R_Utility.R_ConvertTo<TenantClassificationDTO>(loRtnTemp).ToList();
             }
             catch (Exception ex)
             {
@@ -186,10 +188,11 @@ namespace LMM03700Back
             loEx.ThrowExceptionIfErrors();
             return loRtn;
         }
-        public List<PropertyDTO> GetPropertyList(PropertyDTO poEntity)
+
+        public List<TenantDTO> GetAssignedTenantList(TenantClassificationDBListMaintainParamDTO loParam)
         {
+            List<TenantDTO> loRtn = new List<TenantDTO>();
             R_Exception loEx = new R_Exception();
-            List<PropertyDTO> loRtn = null;
             R_Db loDB;
             DbConnection loConn;
             DbCommand loCmd;
@@ -200,15 +203,17 @@ namespace LMM03700Back
                 loConn = loDB.GetConnection("R_DefaultConnectionString");
                 loCmd = loDB.GetCommand();
 
-                lcQuery = "RSP_GS_GET_PROPERTY_LIST";
+                lcQuery = "RSP_LM_GET_TENANT_CLASS_TENANT_LIST";
                 loCmd.CommandType = CommandType.StoredProcedure;
                 loCmd.CommandText = lcQuery;
 
-                loDB.R_AddCommandParameter(loCmd, "@CCOMPANY_ID", DbType.String, 20, poEntity.CCOMPANY_ID);
-                loDB.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 20, poEntity.CUSER_ID);
+                loDB.R_AddCommandParameter(loCmd, "@CCOMPANY_ID", DbType.String, 20, loParam.CCOMPANY_ID);
+                loDB.R_AddCommandParameter(loCmd, "@CPROPERTY_ID", DbType.String, 20, loParam.CPROPERTY_ID);
+                loDB.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_ID", DbType.String, 20, loParam.CTENANT_CLASSIFICATION_ID);
+                loDB.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 8, loParam.CUSER_ID);
 
                 var loRtnTemp = loDB.SqlExecQuery(loConn, loCmd, true);
-                loRtn = R_Utility.R_ConvertTo<PropertyDTO>(loRtnTemp).ToList();
+                loRtn = R_Utility.R_ConvertTo<TenantDTO>(loRtnTemp).ToList();
             }
             catch (Exception ex)
             {
@@ -217,5 +222,6 @@ namespace LMM03700Back
             loEx.ThrowExceptionIfErrors();
             return loRtn;
         }
+
     }
 }

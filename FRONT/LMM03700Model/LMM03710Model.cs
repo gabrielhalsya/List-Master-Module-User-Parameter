@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace LMM03700Model
 {
-    public class LMM03700Model : R_BusinessObjectServiceClientBase<TenantClassificationGroupDTO>, ILMM03700
+    public class LMM03710Model : R_BusinessObjectServiceClientBase<TenantClassificationDTO>, ILMM03710
     {
         private const string DEFAULT_HTTP_NAME = "R_DefaultServiceUrlLM";
         private const string DEFAULT_CHECKPOINT_NAME = "api/LMM03700";
         private const string DEFAULT_MODULE = "LM";
-        public LMM03700Model(string pcHttpClientName = DEFAULT_HTTP_NAME,
+        public LMM03710Model(string pcHttpClientName = DEFAULT_HTTP_NAME,
             string pcRequestServiceEndPoint = DEFAULT_CHECKPOINT_NAME,
             bool plSendWithContext = true,
             bool plSendWithToken = true
@@ -28,30 +28,22 @@ namespace LMM03700Model
         {
         }
 
-        public IAsyncEnumerable<TenantClassificationGroupDTO> GetTenantClassGroupList()
+        public IAsyncEnumerable<TenantDTO> GetAssignedTenantList()
         {
-            //this is dump implement method 
             throw new NotImplementedException();
         }
 
-        public IAsyncEnumerable<PropertyDTO> LMM03700GetPropertyData()
-        {
-            //this is dump implement method 
-            throw new NotImplementedException();
-        }
-
-
-        public async Task<List<TenantClassificationGroupDTO>> GetUserParamListAsync()
+        public async Task<List<TenantDTO>> GetAssignedTenantListAsync()
         {
             var loEx = new R_Exception();
-            List<TenantClassificationGroupDTO> loResult = null;
+            List<TenantDTO> loResult = null;
 
             try
             {
                 R_HTTPClientWrapper.httpClientName = DEFAULT_HTTP_NAME;
-                loResult = await R_HTTPClientWrapper.R_APIRequestStreamingObject<TenantClassificationGroupDTO>(
+                loResult = await R_HTTPClientWrapper.R_APIRequestStreamingObject<TenantDTO>(
                     _RequestServiceEndPoint,
-                    nameof(ILMM03700.GetTenantClassGroupList),
+                    nameof(ILMM03710.GetAssignedTenantList),
                     DEFAULT_MODULE, _SendWithContext,
                     _SendWithToken);
             }
@@ -66,17 +58,22 @@ namespace LMM03700Model
 
         }
 
-        public async Task<List<PropertyDTO>> GetPropertyListAsync()
+        public IAsyncEnumerable<TenantClassificationDTO> GetTenantClassificationList()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<List<TenantClassificationDTO>> GetTenantClassificationListAsync()
         {
             var loEx = new R_Exception();
-            List<PropertyDTO> loResult = null;
+            List<TenantClassificationDTO> loResult = null;
 
             try
             {
                 R_HTTPClientWrapper.httpClientName = DEFAULT_HTTP_NAME;
-                loResult = await R_HTTPClientWrapper.R_APIRequestStreamingObject<PropertyDTO>(
+                loResult = await R_HTTPClientWrapper.R_APIRequestStreamingObject<TenantClassificationDTO>(
                     _RequestServiceEndPoint,
-                    nameof(ILMM03700.LMM03700GetPropertyData),
+                    nameof(ILMM03710.GetTenantClassificationList),
                     DEFAULT_MODULE, _SendWithContext,
                     _SendWithToken);
             }

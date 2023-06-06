@@ -7,8 +7,6 @@ namespace LMM03700Common
     public interface ILMM03700 : R_IServiceCRUDBase<TenantClassificationGroupDTO>
     {
         IAsyncEnumerable<TenantClassificationGroupDTO> GetTenantClassGroupList();
-        IAsyncEnumerable<PropertyDTO> GetPropertyList();
-
-
+        IAsyncEnumerable<PropertyDTO> LMM03700GetPropertyData();
     }
 }
