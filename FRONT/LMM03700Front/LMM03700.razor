@@ -4,35 +4,75 @@
 @using LMM03700Common;
 @inherits R_Page
 
-<R_StackLayout>
-    <R_ItemLayout Class="my-4">
-        <R_DropDownList Data="@_viewTCGModel.PropertyList"
-        @bind-Value="_viewTCGModel._propertyId"
-                        ValueField="@nameof(PropertyDTO.CPROPERTY_ID)"
-                        TextField="@nameof(PropertyDTO.CPROPERTY_NAME)"
-                        R_ConductorGridSource="@_conTCGRef" OnChanged="@DpOnchanged"></R_DropDownList>
-    </R_ItemLayout>
-    <R_ItemLayout>
-        <R_Grid @ref="_gridTCGRef"
-                DataSource="@_viewTCGModel.TenantClassificationGroupList"
-                R_ConductorGridSource="_conTCGRef"
-                Pageable="true"
-                R_GridType="R_eGridType.Original"
-                AllowAddNewRow="true"
-                AllowDeleteRow="true"
-                AllowEditRow="true"
-                R_ServiceGetListRecord="TCG_ServiceGetListRecord">
-            <R_GridColumns>
-                <R_GridTextColumn FieldName="@nameof(TenantClassificationGroupDTO.CTENANT_CLASSIFICATION_GROUP_ID)" HeaderText="Tenant Classification Group Id" R_EnableAdd></R_GridTextColumn>
-                <R_GridTextColumn FieldName="@nameof(TenantClassificationGroupDTO.CTENANT_CLASSIFICATION_GROUP_NAME)" HeaderText="Tenant Classification Group Name" R_EnableAdd R_EnableEdit></R_GridTextColumn>
-                <R_GridTextColumn FieldName="@nameof(TenantClassificationGroupDTO.CUPDATE_BY)" HeaderText="Updated By" ></R_GridTextColumn>
-                <R_GridTextColumn FieldName="@nameof(TenantClassificationGroupDTO.DUPDATE_DATE)" HeaderText="Updated Date" ></R_GridTextColumn>
-                <R_GridTextColumn FieldName="@nameof(TenantClassificationGroupDTO.CCREATE_BY)" HeaderText="Created By"></R_GridTextColumn>
+<R_ItemLayout Class="my-4">
+    <R_DropDownList Data="@_viewTCGModel.PropertyList"
+    @bind-Value="_viewTCGModel._propertyId"
+                    ValueField="@nameof(PropertyDTO.CPROPERTY_ID)"
+                    TextField="@nameof(PropertyDTO.CPROPERTY_NAME)"
+                    R_ConductorGridSource="@_conTCGRef" OnChanged="@DpOnchanged"></R_DropDownList>
+</R_ItemLayout>
+<R_TabStrip>
+    <R_TabStripTab Title="Tenant Classificaiton Group">
+        <R_StackLayout>
+            <R_ItemLayout>
+                <R_Grid @ref="_gridTCGRef"
+                        DataSource="@_viewTCGModel.TenantClassificationGroupList"
+                        R_ConductorGridSource="_conTCGRef"
+                        Pageable="true"
+                        R_GridType="R_eGridType.Original"
+                        AllowAddNewRow="true"
+                        AllowDeleteRow="true"
+                        AllowEditRow="true"
+                        R_ServiceGetListRecord="TCG_ServiceGetListRecord">
+                    <R_GridColumns>
+                        <R_GridTextColumn FieldName="@nameof(TenantClassificationGroupDTO.CTENANT_CLASSIFICATION_GROUP_ID)" HeaderText="Tenant Classification Group Id" R_EnableAdd></R_GridTextColumn>
+                        <R_GridTextColumn FieldName="@nameof(TenantClassificationGroupDTO.CTENANT_CLASSIFICATION_GROUP_NAME)" HeaderText="Tenant Classification Group Name" R_EnableAdd R_EnableEdit></R_GridTextColumn>
+                        <R_GridTextColumn FieldName="@nameof(TenantClassificationGroupDTO.CUPDATE_BY)" HeaderText="Updated By"></R_GridTextColumn>
+                        <R_GridTextColumn FieldName="@nameof(TenantClassificationGroupDTO.DUPDATE_DATE)" HeaderText="Updated Date"></R_GridTextColumn>
+                        <R_GridTextColumn FieldName="@nameof(TenantClassificationGroupDTO.CCREATE_BY)" HeaderText="Created By"></R_GridTextColumn>
+                    </R_GridColumns>
+                </R_Grid>
+            </R_ItemLayout>
+        </R_StackLayout>
+    </R_TabStripTab>
 
-            </R_GridColumns>
-        </R_Grid>
-    </R_ItemLayout>
-</R_StackLayout>
+    <R_TabStripTab Title="Tenant Classificaiton">
+        <R_StackLayout Row>
+            <R_ItemLayout xs="4">
+                <R_Grid @ref="@_gridTCGRef"
+                        DataSource="@_viewTCGModel.TenantClassificationGroupList"
+                        Pageable="true"
+                        R_ConductorSource="@_conTCGViewOnlyRef"
+                        R_GridType="@R_eGridType.Navigator"
+                        R_ServiceGetListRecord="@TCG_ServiceGetListRecord">
+                    <R_GridColumns>
+                        <R_GridTextColumn FieldName="@nameof(TenantClassificationGroupDTO.CTENANT_CLASSIFICATION_GROUP_NAME)" HeaderText="Tenant Classification Group"></R_GridTextColumn>
+                    </R_GridColumns>
+                </R_Grid>
+            </R_ItemLayout>
+            <R_ItemLayout xs="8">
+                <R_Grid @ref="_gridTCRef"
+                        DataSource="@_viewTCModel.TenantClassificationList"
+                        R_ConductorGridSource="_conTCRef"
+                        Pageable="true"
+                        R_GridType="R_eGridType.Original"
+                        AllowAddNewRow="true"
+                        AllowDeleteRow="true"
+                        AllowEditRow="true"
+                        R_ServiceGetListRecord="TC_ServiceGetListRecord">
+                    <R_GridColumns>
+                        <R_GridTextColumn FieldName="@nameof(TenantClassificationDTO.CTENANT_CLASSIFICATION_ID)" HeaderText="Tenant Classification Id" R_EnableAdd></R_GridTextColumn>
+                        <R_GridTextColumn FieldName="@nameof(TenantClassificationDTO.CTENANT_CLASSIFICATION_NAME)" HeaderText="Tenant Classification Name" R_EnableAdd R_EnableEdit></R_GridTextColumn>
+                        <R_GridTextColumn FieldName="@nameof(TenantClassificationDTO.CUPDATE_BY)" HeaderText="Updated By"></R_GridTextColumn>
+                        <R_GridTextColumn FieldName="@nameof(TenantClassificationDTO.DUPDATE_DATE)" HeaderText="Updated Date"></R_GridTextColumn>
+                        <R_GridTextColumn FieldName="@nameof(TenantClassificationDTO.CCREATE_BY)" HeaderText="Created By"></R_GridTextColumn>
+                    </R_GridColumns>
+                </R_Grid>
+            </R_ItemLayout>
+        </R_StackLayout>
+    </R_TabStripTab>
+</R_TabStrip>
+
 
 <R_ConductorGrid @ref="@_conTCGRef"
                  R_ViewModel="@_viewTCGModel"
@@ -41,3 +81,17 @@
                  R_Validation="TGC_Validation"
                  R_ServiceSave="@TCG_ServiceSave">
 </R_ConductorGrid>
+
+<R_Conductor @ref="@_conTCGViewOnlyRef"
+             R_ViewModel="@_viewTCGModel"
+             R_ServiceGetRecord="@T2_TC_ServiceGetRecord"
+             R_Display="@T2_TCG_Display">
+</R_Conductor>
+
+<R_ConductorGrid @ref="@_conTCRef"
+                 R_ViewModel="@_viewTCModel"
+                 R_ServiceGetRecord="@TC_ServiceGetRecord"
+                 R_ServiceDelete="@TC_ServiceDelete"
+                 R_ServiceSave="@TC_ServiceSave">
+</R_ConductorGrid>
+

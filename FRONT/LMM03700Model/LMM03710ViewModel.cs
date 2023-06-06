@@ -43,14 +43,14 @@ namespace LMM03700Model
             }
             loEx.ThrowExceptionIfErrors();
         }
-        public async Task GetTenantClassGroupRecord(TenantClassificationDTO loParam)
+        public async Task GetTenantClassRecord(TenantClassificationDTO loParam)
         {
             loParam.CPROPERTY_ID= _propertyId;
             loParam.CTENANT_CLASSIFICATION_GROUP_ID = _tenantClassificationGroupId;
             var loResult = await _model.R_ServiceGetRecordAsync(loParam);
             TenantClassification= R_FrontUtility.ConvertObjectToObject<TenantClassificationDTO>(loResult);
         }
-        public async Task SaveTenantClassGroup(TenantClassificationDTO poNewEntity, eCRUDMode peCRUDMode)
+        public async Task SaveTenantClass(TenantClassificationDTO poNewEntity, eCRUDMode peCRUDMode)
         {
             var loEx = new R_Exception();
             try
@@ -67,7 +67,7 @@ namespace LMM03700Model
 
             loEx.ThrowExceptionIfErrors();
         }
-        public async Task DeleteTenantClassGroup(TenantClassificationDTO loParam)
+        public async Task DeleteTenantClass(TenantClassificationDTO loParam)
         {
             var loEx = new R_Exception();
 

@@ -13,7 +13,7 @@ namespace LMM03700Model
     public class LMM03710Model : R_BusinessObjectServiceClientBase<TenantClassificationDTO>, ILMM03710
     {
         private const string DEFAULT_HTTP_NAME = "R_DefaultServiceUrlLM";
-        private const string DEFAULT_CHECKPOINT_NAME = "api/LMM03700";
+        private const string DEFAULT_CHECKPOINT_NAME = "api/LMM03710";
         private const string DEFAULT_MODULE = "LM";
         public LMM03710Model(string pcHttpClientName = DEFAULT_HTTP_NAME,
             string pcRequestServiceEndPoint = DEFAULT_CHECKPOINT_NAME,
