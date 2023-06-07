@@ -19,6 +19,12 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\BS Shared Form\SOURCE\SERVICES\GFF00900SERVICES\GFF00900SERVICES.csproj" />
     <ProjectReference Include="..\..\..\..\..\BS Shared Form\SOURCE\SERVICES\Lookup_GSSERVICES\Lookup_GSSERVICES.csproj" />
+    <ProjectReference Include="..\..\..\BACK\GS\BlazorMenuBack\BlazorMenuBack.vbproj" />
+    <ProjectReference Include="..\..\..\BACK\GS\R_SecurityPolicyBack\R_SecurityPolicyBack.vbproj" />
+    <ProjectReference Include="..\..\..\BACK\GS\R_SecurityTokenBack\R_SecurityTokenBack.vbproj" />
+    <ProjectReference Include="..\..\..\COMMON\GS\BlazorMenuCommon\BlazorMenuCommon.vbproj" />
+    <ProjectReference Include="..\..\..\COMMON\GS\R_SecurityPolicyCommon\R_SecurityPolicyCommon.vbproj" />
+    <ProjectReference Include="..\..\..\COMMON\GS\R_SecurityTokenCommon\R_SecurityTokenCommon.vbproj" />
     <ProjectReference Include="..\..\..\SERVICE\GS\BlazorMenuService\BlazorMenuService.csproj" />
     <ProjectReference Include="..\..\..\SERVICE\GS\GSM04000Service\GSM04000Service.csproj" />
     <ProjectReference Include="..\..\..\SERVICE\GS\R_SecurityPolicyService\R_SecurityPolicyService.csproj" />

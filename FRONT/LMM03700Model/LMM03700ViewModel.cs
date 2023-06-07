@@ -77,7 +77,6 @@ namespace LMM03700Model
 
             loEx.ThrowExceptionIfErrors();
         }
-
         public async Task GetPropertyList()
         {
             R_Exception loEx = new R_Exception();

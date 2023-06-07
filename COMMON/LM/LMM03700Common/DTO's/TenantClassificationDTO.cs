@@ -15,5 +15,7 @@ namespace LMM03700Common.DTO_s
         public DateTime DUPDATE_DATE { get; set; }
         public string CCREATE_BY { get; set; }
         public DateTime DCREATE_DATE { get; set; }
+        public string CUSER_ID { get; set; } = "";
+
     }
 }

@@ -18,7 +18,6 @@ namespace LMM03700Model
         public ObservableCollection<TenantClassificationDTO> TenantClassificationList { get; set; } = new ObservableCollection<TenantClassificationDTO>();
         public TenantClassificationDTO TenantClassification { get; set; } = new TenantClassificationDTO();
 
-        public List<PropertyDTO> PropertyList { get; set; } = new List<PropertyDTO>();
         public List<TenantDTO> TenantList{ get; set; } = new List<TenantDTO>();
 
         public PropertyDTO Propertiy { get; set; } = new PropertyDTO();

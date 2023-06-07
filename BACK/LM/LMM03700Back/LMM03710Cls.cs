@@ -33,7 +33,7 @@ namespace LMM03700Back
                 loDB.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_GROUP_ID", DbType.String, 50, poEntity.CTENANT_CLASSIFICATION_GROUP_ID);
                 loDB.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_ID", DbType.String, 50, poEntity.CTENANT_CLASSIFICATION_ID);
                 loDB.R_AddCommandParameter(loCmd, "@CACTION", DbType.String, 50, "DELETE");
-                loDB.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 50, poEntity.CCREATE_BY);
+                loDB.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 50, poEntity.CUSER_ID);
                 loDB.SqlExecNonQuery(loConn, loCmd, true);
             }
             catch (Exception ex)
@@ -58,7 +58,7 @@ namespace LMM03700Back
                 loConn = loDB.GetConnection("R_DefaultConnectionString");
                 loCmd = loDB.GetCommand();
 
-                lcQuery = "RSP_LM_GET_TENANT_CLASS_GRP_DETAIL";
+                lcQuery = "RSP_LM_GET_TENANT_CLASS_DETAIL";
                 loCmd.CommandType = CommandType.StoredProcedure;
                 loCmd.CommandText = lcQuery;
 
@@ -66,7 +66,7 @@ namespace LMM03700Back
                 loDB.R_AddCommandParameter(loCmd, "@CPROPERTY_ID", DbType.String, 20, poEntity.CPROPERTY_ID);
                 loDB.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_GROUP_ID", DbType.String, 20, poEntity.CTENANT_CLASSIFICATION_GROUP_ID);
                 loDB.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_ID", DbType.String, 20, poEntity.CTENANT_CLASSIFICATION_ID);
-                loDB.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 80, poEntity.CUPDATE_BY);
+                loDB.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 80, poEntity.CUSER_ID);
                 var loRtnTemp = loDB.SqlExecQuery(loConn, loCmd, true);
                 loRtn = R_Utility.R_ConvertTo<TenantClassificationDTO>(loRtnTemp).FirstOrDefault();
             }
@@ -120,7 +120,7 @@ namespace LMM03700Back
                 loDb.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_ID", DbType.String, 20, poNewEntity.CTENANT_CLASSIFICATION_ID);
                 loDb.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_NAME", DbType.String, 100, poNewEntity.CTENANT_CLASSIFICATION_NAME);
                 loDb.R_AddCommandParameter(loCmd, "@CACTION", DbType.String, 10, lcAction);
-                loDb.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 8, poNewEntity.CCREATE_BY);
+                loDb.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 8, poNewEntity.CUSER_ID);
 
                 try
                 {

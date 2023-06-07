@@ -8,11 +8,10 @@
     <R_DropDownList Data="@_viewTCGModel.PropertyList"
     @bind-Value="_viewTCGModel._propertyId"
                     ValueField="@nameof(PropertyDTO.CPROPERTY_ID)"
-                    TextField="@nameof(PropertyDTO.CPROPERTY_NAME)"
-                    R_ConductorGridSource="@_conTCGRef" OnChanged="@DpOnchanged"></R_DropDownList>
+                    TextField="@nameof(PropertyDTO.CPROPERTY_NAME)" OnChanged="@DpOnchanged"></R_DropDownList>
 </R_ItemLayout>
 <R_TabStrip>
-    <R_TabStripTab Title="Tenant Classificaiton Group">
+    <R_TabStripTab Title="Tenant Classificaiton Group" id="">
         <R_StackLayout>
             <R_ItemLayout>
                 <R_Grid @ref="_gridTCGRef"
@@ -73,7 +72,6 @@
     </R_TabStripTab>
 </R_TabStrip>
 
-
 <R_ConductorGrid @ref="@_conTCGRef"
                  R_ViewModel="@_viewTCGModel"
                  R_ServiceGetRecord="@TCG_ServiceGetRecord"
@@ -84,7 +82,7 @@
 
 <R_Conductor @ref="@_conTCGViewOnlyRef"
              R_ViewModel="@_viewTCGModel"
-             R_ServiceGetRecord="@T2_TC_ServiceGetRecord"
+             R_ServiceGetRecord="@T2_TGC_ServiceGetRecord"
              R_Display="@T2_TCG_Display">
 </R_Conductor>
 
@@ -94,4 +92,3 @@
                  R_ServiceDelete="@TC_ServiceDelete"
                  R_ServiceSave="@TC_ServiceSave">
 </R_ConductorGrid>
-

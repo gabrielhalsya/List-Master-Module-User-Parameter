@@ -90,6 +90,7 @@ namespace LMM03700Service
                 loCls = new LMM03710Cls(); //create cls class instance
                 poParameter.Entity.CPROPERTY_ID = R_Utility.R_GetStreamingContext<string>(LMM03700ContextConstant.CPROPERTY_ID);
                 poParameter.Entity.CTENANT_CLASSIFICATION_ID = R_Utility.R_GetStreamingContext<string>(LMM03700ContextConstant.CTENANT_CLASSIFICATION_ID);
+                poParameter.Entity.CUSER_ID = R_BackGlobalVar.USER_ID;
                 loCls.R_Delete(poParameter.Entity);
             }
             catch (Exception ex)
@@ -110,7 +111,7 @@ namespace LMM03700Service
             try
             {
                 loCls = new LMM03710Cls(); //create cls class instance
-                poParameter.Entity.CCREATE_BY = R_BackGlobalVar.USER_ID;
+                poParameter.Entity.CUSER_ID = R_BackGlobalVar.USER_ID;
                 poParameter.Entity.CPROPERTY_ID = R_Utility.R_GetStreamingContext<string>(LMM03700ContextConstant.CPROPERTY_ID);
                 poParameter.Entity.CTENANT_CLASSIFICATION_ID = R_Utility.R_GetStreamingContext<string>(LMM03700ContextConstant.CTENANT_CLASSIFICATION_ID);
                 loRtn = new R_ServiceGetRecordResultDTO<TenantClassificationDTO>();
@@ -137,7 +138,7 @@ namespace LMM03700Service
                 loCls = new LMM03710Cls();
                 loRtn = new R_ServiceSaveResultDTO<TenantClassificationDTO>();
                 poParameter.Entity.CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID;
-                poParameter.Entity.CCREATE_BY = R_BackGlobalVar.USER_ID;
+                poParameter.Entity.CUSER_ID = R_BackGlobalVar.USER_ID;
                 poParameter.Entity.CPROPERTY_ID = R_Utility.R_GetStreamingContext<string>(LMM03700ContextConstant.CPROPERTY_ID);
                 poParameter.Entity.CTENANT_CLASSIFICATION_GROUP_ID = R_Utility.R_GetStreamingContext<string>(LMM03700ContextConstant.CTENANT_CLASSIFICATION_GROUP_ID);
                 loRtn.data = loCls.R_Save(poParameter.Entity, poParameter.CRUDMode);
