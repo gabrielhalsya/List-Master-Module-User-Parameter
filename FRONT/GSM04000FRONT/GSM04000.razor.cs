@@ -339,7 +339,7 @@ namespace GSM04000Front
                 var loByteFile = _excelProvider.R_WriteToExcel(loDataTable);
                 var saveFileName = $"{_clientHelper.CompanyId}.xlsx";
 
-                await _jsClass.downloadFileFromStreamHandler(saveFileName, loByteFile);
+                //await _jsClass.downloadFileFromStreamHandler(saveFileName, loByteFile);
             }
             catch (Exception ex)
             {
