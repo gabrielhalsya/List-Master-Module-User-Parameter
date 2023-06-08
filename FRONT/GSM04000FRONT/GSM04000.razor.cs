@@ -313,16 +313,26 @@ namespace GSM04000Front
         private R_GridLookupColumn LookupColumn;
         private void Dept_Before_Open_Lookup(R_BeforeOpenGridLookupColumnEventArgs eventArgs)
         {
-            //eventArgs.ColumnName = "Name";
             var loParam = new GSL00900ParameterDTO();
-            eventArgs.Parameter = loParam;
-            eventArgs.TargetPageType = typeof(GSL00900);
+            eventArgs.Parameter = loParam;//jika butuh param
+            //membedakan columname dan mengarahkan tampil lookup
+            switch (eventArgs.ColumnName)
+            {
+                case "CCENTER":
+                    eventArgs.TargetPageType = typeof(GSL00900);
+                    break;
+
+                case "CMANAGER":
+                    eventArgs.TargetPageType=typeof(GSL00900);
+                    break;
+            }
+            
         }
         private void Dept_After_Open_Lookup(R_AfterOpenGridLookupColumnEventArgs eventArgs)
         {
+            //mengambil result dari popup dan set ke data row
             var loTempResult = R_FrontUtility.ConvertObjectToObject<GSM04000DTO>(eventArgs.Result);
             ((GSM04000DTO)eventArgs.ColumnData).CCENTER_CODE = loTempResult.CCENTER_CODE;
-            ((GSM04000DTO)eventArgs.ColumnData).CCENTER_NAME = loTempResult.CCENTER_NAME;
         }
         #endregion
 
