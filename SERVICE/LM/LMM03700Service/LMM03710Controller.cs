@@ -23,10 +23,11 @@ namespace LMM03700Service
                 loCls = new LMM03710Cls();
                 loRtnTemp = loCls.GetAssignedTenantList(new TenantClassificationDBListMaintainParamDTO()
                 {
+
                     CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID,
-                    CTENANT_CLASSIFICATION_GROUP_ID = R_Utility.R_GetStreamingContext<string>(LMM03700ContextConstant.CTENANT_CLASSIFICATION_GROUP_ID),
                     CPROPERTY_ID = R_Utility.R_GetStreamingContext<string>(LMM03700ContextConstant.CPROPERTY_ID),
-                    CUSER_ID = R_BackGlobalVar.USER_ID
+                    CTENANT_CLASSIFICATION_ID = R_Utility.R_GetStreamingContext<string>(LMM03700ContextConstant.CTENANT_CLASSIFICATION_ID),
+                    CUSER_ID = R_BackGlobalVar.USER_ID,
                 });
             }
             catch (Exception ex)
@@ -35,9 +36,9 @@ namespace LMM03700Service
             }
         EndBlock:
             loException.ThrowExceptionIfErrors();
-            return TtreamListHelper(loRtnTemp);
+            return TenantAssignedStreamHelper(loRtnTemp);
         }
-        private async IAsyncEnumerable<TenantDTO> TtreamListHelper(List<TenantDTO> poList)
+        private async IAsyncEnumerable<TenantDTO> TenantAssignedStreamHelper(List<TenantDTO> poList)
         {
             foreach (TenantDTO loEntity in poList)
             {
@@ -152,5 +153,41 @@ namespace LMM03700Service
             loException.ThrowExceptionIfErrors();
             return loRtn;
         }
+
+        [HttpPost]
+        public IAsyncEnumerable<TenantToAssignDTO> GetTenantList()
+        {
+            R_Exception loException = new R_Exception();
+            List<TenantToAssignDTO> loRtnTemp = null;
+            LMM03710Cls loCls;
+            try
+            {
+                loCls = new LMM03710Cls();
+                loRtnTemp = loCls.GetTenantList(new TenantClassificationDBListMaintainParamDTO()
+                {
+                    CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID,
+                    CTENANT_CLASSIFICATION_GROUP_ID = R_Utility.R_GetStreamingContext<string>(LMM03700ContextConstant.CTENANT_CLASSIFICATION_GROUP_ID),
+                    CTENANT_CLASSIFICATION_ID = R_Utility.R_GetStreamingContext<string>(LMM03700ContextConstant.CTENANT_CLASSIFICATION_ID),
+                    CPROPERTY_ID = R_Utility.R_GetStreamingContext<string>(LMM03700ContextConstant.CPROPERTY_ID),
+                    CUSER_ID = R_BackGlobalVar.USER_ID
+                });
+            }
+            catch (Exception ex)
+            {
+                loException.Add(ex);
+            }
+        EndBlock:
+            loException.ThrowExceptionIfErrors();
+            return TenantStreamHelper(loRtnTemp);
+        }
+
+        private async IAsyncEnumerable<TenantToAssignDTO> TenantStreamHelper(List<TenantToAssignDTO> poList)
+        {
+            foreach (TenantToAssignDTO loEntity in poList)
+            {
+                yield return loEntity;
+            }
+        }
+
     }
 }

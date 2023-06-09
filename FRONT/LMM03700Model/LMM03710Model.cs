@@ -87,5 +87,38 @@ namespace LMM03700Model
             return loResult;
 
         }
+
+        public IAsyncEnumerable<TenantToAssignDTO> GetTenantList()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<List<TenantToAssignDTO>> GetTenantListAsync()
+        {
+            var loEx = new R_Exception();
+            List<TenantToAssignDTO> loResult = null;
+
+            try
+            {
+                R_HTTPClientWrapper.httpClientName = DEFAULT_HTTP_NAME;
+                loResult = await R_HTTPClientWrapper.R_APIRequestStreamingObject<TenantToAssignDTO>(
+                    _RequestServiceEndPoint,
+                    nameof(ILMM03710.GetTenantList),
+                    DEFAULT_MODULE, _SendWithContext,
+                    _SendWithToken);
+            }
+            catch (Exception ex)
+            {
+                loEx.Add(ex);
+            }
+
+            loEx.ThrowExceptionIfErrors();
+
+            return loResult;
+
+        }
+
+
+
     }
 }

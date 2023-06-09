@@ -115,6 +115,7 @@ namespace LMM03700Service
             return loRtn;
         }
 
+        [HttpPost]
         public IAsyncEnumerable<PropertyDTO> LMM03700GetPropertyData()
         {
             R_Exception loException = new R_Exception();

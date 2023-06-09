@@ -17,16 +17,17 @@ namespace LMM03700Front
         private LMM03700ViewModel _viewTCGModel = new();
         private LMM03710ViewModel _viewTCModel = new();
 
-        private R_ConductorGrid _conT1_TCGRef;
-        private R_Conductor _conT2_TCGRef;
-        private R_ConductorGrid _conTCRef;
-        private R_ConductorGrid _conTRef;
+        private R_ConductorGrid _conT1_TCGRef; //conductor grid tenantclassgrp tab 1
+        private R_Conductor _conT2_TCGRef; //conductor grid tenantclassgrp tab 2
+        private R_ConductorGrid _conTCRef; //conductor grid tenantclass tab 2
+        private R_Conductor _conTRef; //conductor grid tenant tab 2
 
-        private R_Grid<TenantClassificationGroupDTO> _gridT1_TCGRef;
-        private R_Grid<TenantClassificationGroupDTO> _gridT2_TCGRef;
-        private R_Grid<TenantClassificationDTO> _gridTCRef;
-        private R_Grid<TenantDTO> _gridTRef;
+        private R_Grid<TenantClassificationGroupDTO> _gridT1_TCGRef; //gridref  tenantclassgrp tab 1 
+        private R_Grid<TenantClassificationGroupDTO> _gridT2_TCGRef; //gridref tenantclassgrp tab 2
+        private R_Grid<TenantClassificationDTO> _gridTCRef; //gridref tenantclassgrp tab 2
+        private R_Grid<TenantDTO> _gridTRef; //gridref tenantclassgrp tab 2
 
+        private R_Popup R_PopupCheck;
         protected override async Task R_Init_From_Master(object poParameter)
         {
             var loEx = new R_Exception();
@@ -65,9 +66,12 @@ namespace LMM03700Front
             var loEx = new R_Exception();
             try
             {
-                _viewTCModel._propertyId = _viewTCGModel._propertyId;
-                await _gridT1_TCGRef.R_RefreshGrid(null);
-                await _gridT2_TCGRef.R_RefreshGrid(null);
+                _viewTCModel._propertyId = _viewTCGModel._propertyId; //assign property_id as param grid
+                await _gridT1_TCGRef.R_RefreshGrid(null); //refresh grid tab 1
+                if (_viewTCModel._Tab2IsActive) //the status tab Tab2IsActive will true on changed tab
+                {
+                    await _gridT2_TCGRef.R_RefreshGrid(null);
+                }
             }
             catch (Exception ex)
             {
@@ -81,23 +85,25 @@ namespace LMM03700Front
         private async Task ChangeTab(R_TabStripTab eventArgs)
         {
             var loEx = new R_Exception();
-
             try
             {
-                if (eventArgs.Id == "TC")
+                switch (eventArgs.Id)
                 {
-                    await _gridT2_TCGRef.R_RefreshGrid(null);
+                    case "TC":
+                        _viewTCModel._Tab2IsActive = true;
+                        break;
+                    //case "TGC":
+                    //    await _gridT1_TCGRef.R_RefreshGrid(null);
+                    //    break;
                 }
             }
             catch (Exception ex)
             {
                 loEx.Add(ex);
             }
-
-            loEx.ThrowExceptionIfErrors();
+            R_DisplayException(loEx);
         }
         #endregion
-
 
         #region Tab1-TenantClassificationGroup
         private async Task TCG_ServiceGetListRecord(R_ServiceGetListRecordEventArgs eventArgs)
@@ -155,6 +161,7 @@ namespace LMM03700Front
                 var loParam = R_FrontUtility.ConvertObjectToObject<TenantClassificationGroupDTO>(eventArgs.Data);
                 await _viewTCGModel.SaveTenantClassGroup(loParam, (eCRUDMode)eventArgs.ConductorMode);
                 eventArgs.Result = _viewTCGModel.TenantClassificationGroup;
+                await _gridT2_TCGRef.R_RefreshGrid(_viewTCModel._propertyId);
             }
             catch (Exception ex)
             {
@@ -196,7 +203,7 @@ namespace LMM03700Front
             try
             {
                 await _viewTCModel.GetTenantClassGroupList();
-                eventArgs.ListEntityResult = _viewTCModel.TenantClassificationGroupList;
+                eventArgs.ListEntityResult = _viewTCModel.TenantClassGrpList;
             }
             catch (Exception ex)
             {
@@ -213,7 +220,7 @@ namespace LMM03700Front
             {
                 var loParam = R_FrontUtility.ConvertObjectToObject<TenantClassificationGroupDTO>(eventArgs.Data);
                 await _viewTCModel.GetTenantClassGroupRecord(loParam);
-                eventArgs.Result = _viewTCModel.TenantClassificationGroup;
+                eventArgs.Result = _viewTCModel.TenantClassiGrp;
             }
             catch (Exception ex)
             {
@@ -221,7 +228,7 @@ namespace LMM03700Front
             }
             loEx.ThrowExceptionIfErrors();
         }
-        private async Task T2_TGC_Display(R_DisplayEventArgs eventArgs)
+        private async Task T2_TCG_ServiceDisplay(R_DisplayEventArgs eventArgs)
         {
             var loEx = new R_Exception();
             try
@@ -239,13 +246,13 @@ namespace LMM03700Front
         #endregion
 
         #region Tab2-TenantClassification
-        private async Task TC_ServiceGetListRecord(R_ServiceGetListRecordEventArgs eventArgs)
+        private async Task T2_TC_ServiceGetListRecord(R_ServiceGetListRecordEventArgs eventArgs)
         {
             var loEx = new R_Exception();
             try
             {
                 await _viewTCModel.GetTenantClassList();
-                eventArgs.ListEntityResult = _viewTCModel.TenantClassificationList;
+                eventArgs.ListEntityResult = _viewTCModel.TenantClassList;
             }
             catch (Exception ex)
             {
@@ -255,14 +262,14 @@ namespace LMM03700Front
             R_DisplayException(loEx);
 
         }
-        private async Task TC_ServiceGetRecord(R_ServiceGetRecordEventArgs eventArgs)
+        private async Task T2_TC_ServiceGetRecord(R_ServiceGetRecordEventArgs eventArgs)
         {
             var loEx = new R_Exception();
             try
             {
                 var loParam = R_FrontUtility.ConvertObjectToObject<TenantClassificationDTO>(eventArgs.Data);
                 await _viewTCModel.GetTenantClassRecord(loParam);
-                eventArgs.Result = _viewTCModel.TenantClassification;
+                eventArgs.Result = _viewTCModel.TenantClass;
             }
             catch (Exception ex)
             {
@@ -270,7 +277,7 @@ namespace LMM03700Front
             }
             loEx.ThrowExceptionIfErrors();
         }
-        private async Task TC_ServiceDelete(R_ServiceDeleteEventArgs eventArgs)
+        private async Task T2_TC_ServiceDelete(R_ServiceDeleteEventArgs eventArgs)
         {
             var loEx = new R_Exception();
             try
@@ -285,14 +292,14 @@ namespace LMM03700Front
             loEx.ThrowExceptionIfErrors();
 
         }
-        private async Task TC_ServiceSave(R_ServiceSaveEventArgs eventArgs)
+        private async Task T2_TC_ServiceSave(R_ServiceSaveEventArgs eventArgs)
         {
             var loEx = new R_Exception();
             try
             {
                 var loParam = R_FrontUtility.ConvertObjectToObject<TenantClassificationDTO>(eventArgs.Data);
                 await _viewTCModel.SaveTenantClass(loParam, (eCRUDMode)eventArgs.ConductorMode);
-                eventArgs.Result = _viewTCGModel.TenantClassificationGroup;
+                eventArgs.Result = _viewTCModel.TenantClass;
             }
             catch (Exception ex)
             {
@@ -301,17 +308,32 @@ namespace LMM03700Front
             loEx.ThrowExceptionIfErrors();
 
         }
+        private async Task T2_TC_ServiceDisplay(R_DisplayEventArgs eventArgs)
+        {
+            var loEx = new R_Exception();
+            try
+            {
+                var loEntity = R_FrontUtility.ConvertObjectToObject<TenantClassificationDTO> (eventArgs.Data);
+                _viewTCModel._tenantClassificationId = loEntity.CTENANT_CLASSIFICATION_ID;
+                await _gridTRef.R_RefreshGrid(null);
+            }
+            catch (Exception ex)
+            {
+                loEx.Add(ex);
+            }
+            loEx.ThrowExceptionIfErrors();
+        }
         #endregion
 
         #region Tab2-TenantList
-        private async Task T_ServiceGetListRecord(R_ServiceGetListRecordEventArgs eventArgs)
+        private async Task T2_T_ServiceGetListRecord(R_ServiceGetListRecordEventArgs eventArgs)
         {
             var loEx = new R_Exception();
 
             try
             {
-                await _viewTCGModel.GetTenantClassGroupList();
-                eventArgs.ListEntityResult = _viewTCGModel.TenantClassificationGroupList;
+                await _viewTCModel.GetAssignedTenantList();
+                eventArgs.ListEntityResult = _viewTCModel.AssignedTenantList;
             }
             catch (Exception ex)
             {
@@ -320,6 +342,35 @@ namespace LMM03700Front
 
             R_DisplayException(loEx);
 
+        }
+        #endregion
+
+        #region Tab2-Assign Tenant
+        private void R_Before_Open_PopupAssignTenant(R_BeforeOpenPopupEventArgs eventArgs)
+        {
+            var loParam = new TenantToAssignDTO()
+            {
+                CPROPERTY_ID = _viewTCModel._propertyId,
+                CTENANT_CLASSIFICATION_GROUP_ID = _viewTCModel._tenantClassificationGroupId,
+                CTENANT_CLASSIFICATION_ID = _viewTCModel._tenantClassificationId
+            };
+            eventArgs.Parameter = loParam;
+            eventArgs.TargetPageType = typeof(PopupAssignTenant);
+        }
+        private async Task R_After_Open_PopupAssignTenant(R_AfterOpenPopupEventArgs eventArgs)
+        {
+            await _gridTRef.R_RefreshGrid(null);
+        }
+        #endregion
+
+        #region Tab2-Move Tenant
+        private void R_Before_Open_Popup_MoveTenant(R_BeforeOpenPopupEventArgs eventArgs)
+        {
+            eventArgs.TargetPageType = typeof(PopupAssignTenant);
+        }
+        private async Task R_After_Open_Popup_MoveTenant(R_AfterOpenPopupEventArgs eventArgs)
+        {
+            await _gridTRef.R_RefreshGrid(null);
         }
         #endregion
     }

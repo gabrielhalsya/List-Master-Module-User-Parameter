@@ -313,8 +313,10 @@ namespace GSM04000Front
         private R_GridLookupColumn LookupColumn;
         private void Dept_Before_Open_Lookup(R_BeforeOpenGridLookupColumnEventArgs eventArgs)
         {
-            var loParam = new GSL00900ParameterDTO();
-            eventArgs.Parameter = loParam;//jika butuh param
+            //jika butuh param
+            //var loParam = new GSL00900ParameterDTO();
+            //eventArgs.Parameter = loParam;
+
             //membedakan columname dan mengarahkan tampil lookup
             switch (eventArgs.ColumnName)
             {
@@ -322,9 +324,9 @@ namespace GSM04000Front
                     eventArgs.TargetPageType = typeof(GSL00900);
                     break;
 
-                case "CMANAGER":
-                    eventArgs.TargetPageType=typeof(GSL00900);
-                    break;
+                //case "CMANAGER":
+                //    eventArgs.TargetPageType=typeof(GSL00900);
+                //    break;
             }
             
         }

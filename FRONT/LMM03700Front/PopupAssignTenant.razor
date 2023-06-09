@@ -1,0 +1,26 @@
+﻿@using LMM03700Common.DTO_s;
+@inherits R_Page
+
+<R_Grid @ref="@_gridTenantRef"
+        DataSource="_viewTCModel.TenantList"
+        R_ServiceGetListRecord="GetListRecord"
+        Pageable
+        PageSize="10">
+    <R_GridColumns>
+        <R_GridTextColumn FieldName="@nameof(TenantToAssignDTO.CTENANT_ID)" HeaderText="Id"></R_GridTextColumn>
+        <R_GridTextColumn FieldName="@nameof(TenantToAssignDTO.CTENANT_NAME)" HeaderText="Name"></R_GridTextColumn>
+    </R_GridColumns>
+</R_Grid>
+
+<R_StackLayout Row Class="justify-content-start">
+    <R_ItemLayout xs="2">
+        <R_Button OnClick="Process">
+            Process
+        </R_Button>
+    </R_ItemLayout>
+    <R_ItemLayout xs="2">
+        <R_Button OnClick="Cancel">
+            Cancel
+        </R_Button>
+    </R_ItemLayout>
+</R_StackLayout>

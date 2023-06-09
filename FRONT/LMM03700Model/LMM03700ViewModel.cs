@@ -17,11 +17,9 @@ namespace LMM03700Model
         private LMM03700Model _model = new LMM03700Model();
         public ObservableCollection<TenantClassificationGroupDTO> TenantClassificationGroupList { get; set; } = new ObservableCollection<TenantClassificationGroupDTO>();
         public TenantClassificationGroupDTO TenantClassificationGroup { get; set; } = new TenantClassificationGroupDTO();
-
         public List<PropertyDTO> PropertyList { get; set; } = new List<PropertyDTO>();
-
         public PropertyDTO Propertiy { get; set; } = new PropertyDTO();
-        public string _propertyId = "";
+        public string _propertyId { get; set; } = "";
 
         public async Task GetTenantClassGroupList()
         {
@@ -91,6 +89,5 @@ namespace LMM03700Model
             }
             loEx.ThrowExceptionIfErrors();
         }
-
     }
 }
