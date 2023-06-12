@@ -158,31 +158,31 @@ namespace LMM03700Model
             loEx.ThrowExceptionIfErrors();
         }
 
-        public async Task SaveMoveTenantCategory()
+        public async Task AssignTenantCategory()
         {
             R_Exception loException = new R_Exception();
-            var loTenantList = new List<TenantForMove>();
-            string lcTenantId = "";
+            var loTenantList = new List<TenantToAssignDTO>();
+            string CTENANTIDLIST = "";
             try
             {
-                foreach (TenantForMove item in loTenantList)
+                foreach (TenantToAssignDTO item in loTenantList)
                 {
                     if (item.LCHECKED == true)
                     {
-                        lcTenantId += "(" + item + "), ";
+                        CTENANTIDLIST += "(" + item + "), ";
                     }
                 }
 
-                if (!string.IsNullOrEmpty(lcTenantId))
+                if (!string.IsNullOrEmpty(CTENANTIDLIST))
                 {
-                    lcTenantId = lcTenantId.Substring(0, lcTenantId.Length - 2); // Remove the last comma and space
+                    CTENANTIDLIST = CTENANTIDLIST.Substring(0, CTENANTIDLIST.Length - 2); // Remove the last comma and space
                 }
 
-                //R_FrontContext.R_SetContext(ContextConstant.LMM03001_TENANT_ID_CONTEXT, lcTenantId);
-                //R_FrontContext.R_SetContext(ContextConstant.LMM03001_PROPERTY_ID_CONTEXT, loProperty.CPROPERTY_ID);
-                //R_FrontContext.R_SetContext(ContextConstant.LMM03001_FROM_TENANT_CATEGORY_ID_CONTEXT, loFromTenantCategory.CTENANT_CATEGORY_ID);
-                //R_FrontContext.R_SetContext(ContextConstant.LMM03001_TO_TENANT_CATEGORY_ID_CONTEXT, loToTenantCategory.CTENANT_CATEGORY_ID);
-                //await loModel.SaveMoveTenantCategoryAsync();
+                R_FrontContext.R_SetContext(LMM03700ContextConstant.CTENANTIDLIST, CTENANTIDLIST);
+                R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.CPROPERTY_ID, _propertyId);
+                R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.CTENANT_CLASSIFICATION_ID, _tenantClassificationId);
+                R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.CTENANT_CLASSIFICATION_GROUP_ID, _tenantClassificationGroupId);
+                await _model.assin();
             }
             catch (Exception ex)
             {

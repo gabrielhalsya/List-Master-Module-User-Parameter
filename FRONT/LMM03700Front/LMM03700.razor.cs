@@ -359,6 +359,8 @@ namespace LMM03700Front
         }
         private async Task R_After_Open_PopupAssignTenant(R_AfterOpenPopupEventArgs eventArgs)
         {
+            var loResult = (TenantToAssignDTO)eventArgs.Result;
+            var lo
             await _gridTRef.R_RefreshGrid(null);
         }
         #endregion
@@ -366,7 +368,7 @@ namespace LMM03700Front
         #region Tab2-Move Tenant
         private void R_Before_Open_Popup_MoveTenant(R_BeforeOpenPopupEventArgs eventArgs)
         {
-            eventArgs.TargetPageType = typeof(PopupAssignTenant);
+            //eventArgs.TargetPageType = typeof(PopupAssignTenant);
         }
         private async Task R_After_Open_Popup_MoveTenant(R_AfterOpenPopupEventArgs eventArgs)
         {

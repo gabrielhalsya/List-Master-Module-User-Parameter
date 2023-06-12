@@ -1,25 +1,27 @@
 ﻿@using LMM03700Common.DTO_s;
 @inherits R_Page
-
-<R_Grid @ref="@_gridTenantRef"
-        DataSource="_viewTCModel.TenantList"
-        R_ServiceGetListRecord="GetListRecord"
+<R_Grid @ref="@_Grid"
+        DataSource="_viewModelTC.TenantList"
+        R_ServiceGetListRecord="R_ServiceGetListRecordAsync"
         Pageable
         PageSize="10">
     <R_GridColumns>
-        <R_GridTextColumn FieldName="@nameof(TenantToAssignDTO.CTENANT_ID)" HeaderText="Id"></R_GridTextColumn>
-        <R_GridTextColumn FieldName="@nameof(TenantToAssignDTO.CTENANT_NAME)" HeaderText="Name"></R_GridTextColumn>
+        <R_GridTextColumn FieldName="@nameof(TenantToAssignDTO.CTENANT_ID)" HeaderText="Tenant Id"></R_GridTextColumn>
+        <R_GridTextColumn FieldName="@nameof(TenantToAssignDTO.CTENANT_NAME)" HeaderText="Tenant Name"></R_GridTextColumn>
+        <R_GridTextColumn FieldName="@nameof(TenantToAssignDTO.CTENANT_CATEGORY_NAME)" HeaderText="Tenant Category"></R_GridTextColumn>
+        <R_GridTextColumn FieldName="@nameof(TenantToAssignDTO.CTENANT_TYPE_NAME)" HeaderText="Tenant Type"></R_GridTextColumn>
+        <R_GridTextColumn FieldName="@nameof(TenantToAssignDTO.CPHONE)" HeaderText="Phone 1"></R_GridTextColumn>
+        <R_GridTextColumn FieldName="@nameof(TenantToAssignDTO.CEMAIL)" HeaderText="Email"></R_GridTextColumn>
     </R_GridColumns>
 </R_Grid>
-
-<R_StackLayout Row Class="justify-content-start">
+<R_StackLayout Row Class="justify-content-end">
     <R_ItemLayout xs="2">
-        <R_Button OnClick="Process">
+        <R_Button OnClick="Button_OnClickOkAsync">
             Process
         </R_Button>
     </R_ItemLayout>
     <R_ItemLayout xs="2">
-        <R_Button OnClick="Cancel">
+        <R_Button OnClick="Button_OnClickCloseAsync">
             Cancel
         </R_Button>
     </R_ItemLayout>

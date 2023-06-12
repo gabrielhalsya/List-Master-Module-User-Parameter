@@ -252,5 +252,40 @@ namespace LMM03700Back
             loEx.ThrowExceptionIfErrors();
             return loRtn;
         }
+
+        public AssignTenantResultDTO AssignTenant(AssignTenantDBParamDTO poParam)
+        {
+            AssignTenantResultDTO loRtn = new AssignTenantResultDTO();
+            R_Exception loEx = new R_Exception();
+            R_Db loDB;
+            DbConnection loConn;
+            DbCommand loCmd;
+            string lcQuery;
+            try
+            {
+                loDB = new R_Db();
+                loConn = loDB.GetConnection("R_DefaultConnectionString");
+                loCmd = loDB.GetCommand();
+
+                lcQuery = "RSP_LM_ASSIGN_TENANT_CLASS";
+                loCmd.CommandType = CommandType.StoredProcedure;
+                loCmd.CommandText = lcQuery;
+
+                loDB.R_AddCommandParameter(loCmd, "@CCOMPANY_ID", DbType.String, 20, poParam.CCOMPANY_ID);
+                loDB.R_AddCommandParameter(loCmd, "@CPROPERTY_ID", DbType.String, 20, poParam.CPROPERTY_ID);
+                loDB.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_GROUP_ID", DbType.String, 20, poParam.CTENANT_CLASSIFICATION_GROUP_ID);
+                loDB.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_ID", DbType.String, 20, poParam.CTENANT_CLASSIFICATION_ID);
+                loDB.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 8, poParam.CUSER_ID);
+                loDB.R_AddCommandParameter(loCmd, "@CTENANTID_LIST", DbType.String,poParam.CTENANTID_LIST.Length , poParam.CTENANTID_LIST);
+                var loResult = loDB.SqlExecQuery(loConn, loCmd, true);
+                loRtn = R_Utility.R_ConvertTo<AssignTenantResultDTO>(loResult).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                loEx.Add(ex);
+            }
+            loEx.ThrowExceptionIfErrors();
+            return loRtn;
+        }
     }
 }

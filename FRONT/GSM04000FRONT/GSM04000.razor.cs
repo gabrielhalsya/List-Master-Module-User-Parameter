@@ -110,7 +110,7 @@ namespace GSM04000Front
             if (eventArgs.ConductorMode == R_eConductorMode.Edit)
             {
                 var loParam = (GSM04000DTO)eventArgs.Data;
-                if (loParam.LEVERYONE!=true)
+                if (loParam.LEVERYONE != true)
                 {
                     await R_MessageBox.Show("Confirmation", "changing this will delete all assinged user on this dept", R_eMessageBoxButtonType.OKCancel);
                 }
@@ -158,9 +158,8 @@ namespace GSM04000Front
         {
             var loEx = new R_Exception();
             try
-            {
-                
-                R_MessageBox.Show("Confirm", "Change this will delete assigned user on this department", R_eMessageBoxButtonType.OKCancel);
+            { 
+                //R_MessageBox.Show("Confirm", "Change this will delete assigned user on this department", R_eMessageBoxButtonType.OKCancel);
                 await _deptViewModel.SaveDepartment((GSM04000DTO)eventArgs.Data, (eCRUDMode)eventArgs.ConductorMode);
                 eventArgs.Result = _deptViewModel.Department;
             }
@@ -195,7 +194,6 @@ namespace GSM04000Front
         //        R_MessageBox.Show("Confirm","Change this will delete assigned user on this department",R_eMessageBoxButtonType.OKCancel);
         //    }
         //}
-
 
         #endregion
 
@@ -264,7 +262,6 @@ namespace GSM04000Front
             {
                 return;
             }
-
             await _deptUserViewModel.AssignUserToDept(new GSM04100DTO()
             {
                 CDEPT_CODE = loDeptode.CDEPT_CODE,
@@ -313,28 +310,36 @@ namespace GSM04000Front
         private R_GridLookupColumn LookupColumn;
         private void Dept_Before_Open_Lookup(R_BeforeOpenGridLookupColumnEventArgs eventArgs)
         {
-            //jika butuh param
-            //var loParam = new GSL00900ParameterDTO();
-            //eventArgs.Parameter = loParam;
-
             //membedakan columname dan mengarahkan tampil lookup
             switch (eventArgs.ColumnName)
             {
-                case "CCENTER":
-                    eventArgs.TargetPageType = typeof(GSL00900);
-                    break;
-
-                //case "CMANAGER":
-                //    eventArgs.TargetPageType=typeof(GSL00900);
+                //case "CCENTER":
+                //    eventArgs.TargetPageType = typeof(GSL00900);
                 //    break;
+                case "CMANAGER_NAME":
+                    eventArgs.TargetPageType = typeof(GSL01000);
+                    break;
             }
-            
+
         }
         private void Dept_After_Open_Lookup(R_AfterOpenGridLookupColumnEventArgs eventArgs)
         {
             //mengambil result dari popup dan set ke data row
             var loTempResult = R_FrontUtility.ConvertObjectToObject<GSM04000DTO>(eventArgs.Result);
-            ((GSM04000DTO)eventArgs.ColumnData).CCENTER_CODE = loTempResult.CCENTER_CODE;
+            if (loTempResult == null)
+            {
+                return;
+            }
+            ((GSM04000DTO)eventArgs.ColumnData).CMANAGER_NAME = loTempResult.CMANAGER_NAME;
+            //switch (eventArgs.ColumnName)
+            //{
+            //    case "CCENTER":
+            //        ((GSM04000DTO)eventArgs.ColumnData).CCENTER_CODE = loTempResult.CCENTER_CODE;
+            //        break;
+            //    case "CMANAGER":
+            //        ((GSM04000DTO)eventArgs.ColumnData).CMANAGER_NAME = loTempResult.CMANAGER_NAME;
+            //        break;
+            //}
         }
         #endregion
 

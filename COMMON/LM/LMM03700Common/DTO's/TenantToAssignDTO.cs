@@ -17,5 +17,6 @@ namespace LMM03700Common.DTO_s
         public string CPHONE { get; set; }
         public string CEMAIL { get; set; }
         public string CUSER_ID { get; set; }
+        public bool LCHECKED { get; set; }
     }
 }

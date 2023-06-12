@@ -153,7 +153,7 @@ namespace GSM04000Back
                 try
                 {
                     loDb.SqlExecNonQuery(loConn, loCmd, false);
-
+                    
                 }
                 catch (Exception ex)
                 {

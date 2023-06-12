@@ -10,6 +10,7 @@ namespace LMM03700Common
         IAsyncEnumerable<TenantClassificationDTO> GetTenantClassificationList();
         IAsyncEnumerable<TenantDTO> GetAssignedTenantList();
         IAsyncEnumerable<TenantToAssignDTO> GetTenantList();
+        AssignTenantResultDTO AssignTenant();
     }
 
 }
