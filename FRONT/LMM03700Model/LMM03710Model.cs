@@ -27,40 +27,10 @@ namespace LMM03700Model
                 plSendWithToken)
         {
         }
-
-        public AssignTenantResultDTO AssignTenant()
-        {
-            throw new NotImplementedException();
-        }
-        public async Task<AssignTenantResultDTO> AssignTenantAsync()
-        {
-            var loEx = new R_Exception();
-            AssignTenantResultDTO loResult = null;
-
-            try
-            {
-                R_HTTPClientWrapper.httpClientName = DEFAULT_HTTP_NAME;
-                loResult = await R_HTTPClientWrapper.R_APIRequestObject<AssignTenantResultDTO> (
-                    _RequestServiceEndPoint,
-                    nameof(ILMM03710.AssignTenant),
-                    DEFAULT_MODULE, _SendWithContext,
-                    _SendWithToken);
-            }
-            catch (Exception ex)
-            {
-                loEx.Add(ex);
-            }
-
-            loEx.ThrowExceptionIfErrors();
-
-            return loResult;
-        }
-
         public IAsyncEnumerable<TenantDTO> GetAssignedTenantList()
         {
             throw new NotImplementedException();
         }
-
         public async Task<List<TenantDTO>> GetAssignedTenantListAsync()
         {
             var loEx = new R_Exception();
@@ -85,12 +55,10 @@ namespace LMM03700Model
             return loResult;
 
         }
-
         public IAsyncEnumerable<TenantClassificationDTO> GetTenantClassificationList()
         {
             throw new NotImplementedException();
         }
-
         public async Task<List<TenantClassificationDTO>> GetTenantClassificationListAsync()
         {
             var loEx = new R_Exception();
@@ -115,12 +83,10 @@ namespace LMM03700Model
             return loResult;
 
         }
-
         public IAsyncEnumerable<TenantToAssignDTO> GetTenantList()
         {
             throw new NotImplementedException();
         }
-
         public async Task<List<TenantToAssignDTO>> GetTenantListAsync()
         {
             var loEx = new R_Exception();
@@ -145,8 +111,32 @@ namespace LMM03700Model
             return loResult;
 
         }
+        public AssignTenantResultDTO AssignTenant()
+        {
+            throw new NotImplementedException();
+        }
+        public async Task<AssignTenantResultDTO> AssignTenantAsync()
+        {
+            var loEx = new R_Exception();
+            AssignTenantResultDTO loResult = null;
 
+            try
+            {
+                R_HTTPClientWrapper.httpClientName = DEFAULT_HTTP_NAME;
+                loResult = await R_HTTPClientWrapper.R_APIRequestObject<AssignTenantResultDTO>(
+                    _RequestServiceEndPoint,
+                    nameof(ILMM03710.AssignTenant),
+                    DEFAULT_MODULE, _SendWithContext,
+                    _SendWithToken);
+            }
+            catch (Exception ex)
+            {
+                loEx.Add(ex);
+            }
 
+            loEx.ThrowExceptionIfErrors();
 
+            return loResult;
+        }
     }
 }

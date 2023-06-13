@@ -22,6 +22,7 @@ namespace LMM03700Model
         public ObservableCollection<TenantToAssignDTO> TenantList { get; set; } = new ObservableCollection<TenantToAssignDTO>();
         public TenantClassificationGroupDTO TenantClassiGrp { get; set; } = new TenantClassificationGroupDTO();
         public TenantClassificationDTO TenantClass { get; set; } = new TenantClassificationDTO();
+        public TenantDTO _TenantToAssignID { get; set; }  = new TenantDTO();
 
         public string _propertyId { get; set; } = "";
         public bool _Tab2IsActive { get; set; } = false;
@@ -158,31 +159,16 @@ namespace LMM03700Model
             loEx.ThrowExceptionIfErrors();
         }
 
-        public async Task AssignTenantCategory()
+        public async Task AssignTenantCategory(List<TenantToAssignDTO> poListParam)
         {
             R_Exception loException = new R_Exception();
-            var loTenantList = new List<TenantToAssignDTO>();
-            string CTENANTIDLIST = "";
             try
             {
-                foreach (TenantToAssignDTO item in loTenantList)
-                {
-                    if (item.LCHECKED == true)
-                    {
-                        CTENANTIDLIST += "(" + item + "), ";
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(CTENANTIDLIST))
-                {
-                    CTENANTIDLIST = CTENANTIDLIST.Substring(0, CTENANTIDLIST.Length - 2); // Remove the last comma and space
-                }
-
-                R_FrontContext.R_SetContext(LMM03700ContextConstant.CTENANTIDLIST, CTENANTIDLIST);
                 R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.CPROPERTY_ID, _propertyId);
                 R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.CTENANT_CLASSIFICATION_ID, _tenantClassificationId);
                 R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.CTENANT_CLASSIFICATION_GROUP_ID, _tenantClassificationGroupId);
-                await _model.assin();
+                R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.OTENANT, poListParam);
+                await _model.AssignTenantAsync();
             }
             catch (Exception ex)
             {

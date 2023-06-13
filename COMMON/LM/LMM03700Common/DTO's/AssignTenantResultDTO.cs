@@ -7,5 +7,6 @@ namespace LMM03700Common.DTO_s
 {
     public class AssignTenantResultDTO : R_APIResultBaseDTO
     {
+        //public List<TenantDTO> Tenant { get; set; }
     }
 }

@@ -1,4 +1,7 @@
 ﻿
+using LMM03700Common.DTO_s;
+using System.Collections.Generic;
+
 namespace LMM03700Common
 {
     public class LMM03700ContextConstant
@@ -8,5 +11,6 @@ namespace LMM03700Common
         public const string CTENANT_CLASSIFICATION_ID = "CTENANT_CLASSIFICATION_ID";
         public const string CACTION = "CACTION";
         public const string CTENANTIDLIST = "CTENANTIDLIST";
+        public const string OTENANT="OTENANT";
     }
 }

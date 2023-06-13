@@ -1,24 +1,17 @@
-﻿using R_BlazorFrontEnd.Controls;
-using Microsoft.AspNetCore.Components;
-using R_BlazorFrontEnd.Controls;
-using R_BlazorFrontEnd.Controls.Base;
-using R_BlazorFrontEnd.Excel;
-using R_BlazorFrontEnd.Controls.DataControls;
-using R_BlazorFrontEnd.Controls.Events;
-using R_BlazorFrontEnd.Enums;
-using R_BlazorFrontEnd.Exceptions;
-using R_CommonFrontBackAPI;
+﻿using BlazorClientHelper;
 using GSM04000Common;
 using GSM04000Model;
-using R_BlazorFrontEnd.Helpers;
-using R_BlazorFrontEnd;
-using BlazorClientHelper;
-using Lookup_GSCOMMON;
 using Lookup_GSFRONT;
-using Lookup_GSCOMMON.DTOs;
-using R_BlazorFrontEnd.Controls.Grid.Columns;
+using Microsoft.AspNetCore.Components;
+using R_BlazorFrontEnd;
+using R_BlazorFrontEnd.Controls;
+using R_BlazorFrontEnd.Controls.DataControls;
+using R_BlazorFrontEnd.Controls.Events;
 using R_BlazorFrontEnd.Controls.MessageBox;
-using System.Diagnostics.Tracing;
+using R_BlazorFrontEnd.Enums;
+using R_BlazorFrontEnd.Exceptions;
+using R_BlazorFrontEnd.Helpers;
+using R_CommonFrontBackAPI;
 
 namespace GSM04000Front
 {
@@ -52,8 +45,10 @@ namespace GSM04000Front
         }
 
         #region Department(PARENT)
-        private string loLabelActiveInactive = "";
-        private R_Popup R_PopupCheck;
+        private string loLabelActiveInactive = "Active/Inactive";
+        private R_Popup R_PopupAssignUser;
+        private R_Popup R_PopupActiveInactive;
+
         private async Task DeptGrid_ServiceGetListRecord(R_ServiceGetListRecordEventArgs eventArgs)
         {
             var loEx = new R_Exception();
@@ -61,6 +56,11 @@ namespace GSM04000Front
             {
                 await _deptViewModel.GetDepartmentList();
                 eventArgs.ListEntityResult = _deptViewModel.DepartmentList;
+                if(eventArgs.ListEntityResult==null)
+                {
+                    R_PopupActiveInactive.Enabled = false;
+                    R_PopupAssignUser.Enabled = false;
+                }
             }
             catch (Exception ex)
             {
@@ -73,7 +73,6 @@ namespace GSM04000Front
             if (eventArgs.ConductorMode == R_eConductorMode.Normal)
             {
                 var loParam = (GSM04000DTO)eventArgs.Data;
-
                 var loDeptode = (GSM04100DTO)_conGridDeptUserRef.R_GetCurrentData();
                 loDeptode.CDEPT_CODE = loParam.CDEPT_CODE;
                 loDeptode.CDEPT_NAME = loParam.CDEPT_NAME;
@@ -91,17 +90,15 @@ namespace GSM04000Front
                     loLabelActiveInactive = "Activate";
                     _deptViewModel.ActiveDept = true;
                 }
-
-
                 //set to view model child
                 _deptUserViewModel.DepartmentCode = loParam.CDEPT_CODE;
                 if (loParam.LEVERYONE == true)
                 {
-                    R_PopupCheck.Enabled = false;
+                    R_PopupAssignUser.Enabled = false;
                 }
                 else
                 {
-                    R_PopupCheck.Enabled = true;
+                    R_PopupAssignUser.Enabled = true;
                 }
 
                 await _gridDeptUserRef.R_RefreshGrid(loParam);
@@ -306,8 +303,6 @@ namespace GSM04000Front
         #endregion
 
         #region GridLookup
-        //this think is wait till framerork fixed
-        private R_GridLookupColumn LookupColumn;
         private void Dept_Before_Open_Lookup(R_BeforeOpenGridLookupColumnEventArgs eventArgs)
         {
             //membedakan columname dan mengarahkan tampil lookup

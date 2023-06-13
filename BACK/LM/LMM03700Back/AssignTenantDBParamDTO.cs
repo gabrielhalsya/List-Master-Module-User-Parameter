@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LMM03700Common.DTO_s;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,5 +15,6 @@ namespace LMM03700Back
         public string CTENANT_CLASSIFICATION_ID { get; set; }
         public string CUSER_ID { get; set; }
         public string CTENANTID_LIST { get; set; }
+        public List<TenantToAssignDTO> LTENANTS { get; set; }
     }
 }

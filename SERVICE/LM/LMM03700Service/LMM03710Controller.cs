@@ -199,14 +199,14 @@ namespace LMM03700Service
             {
                 loCls = new LMM03710Cls();
                 loRtn = new AssignTenantResultDTO();
-                loRtn= loCls.AssignTenant(new AssignTenantDBParamDTO()
+                loRtn= loCls.AssignTenantTempMethod(new AssignTenantDBParamDTO()
                 {
                     CPROPERTY_ID = R_Utility.R_GetStreamingContext<string>(LMM03700ContextConstant.CPROPERTY_ID),
                     CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID,
                     CUSER_ID = R_BackGlobalVar.USER_ID,
                     CTENANT_CLASSIFICATION_GROUP_ID = R_Utility.R_GetStreamingContext<string>(LMM03700ContextConstant.CTENANT_CLASSIFICATION_GROUP_ID),
                     CTENANT_CLASSIFICATION_ID = R_Utility.R_GetStreamingContext<string>(LMM03700ContextConstant.CTENANT_CLASSIFICATION_ID),
-                    CTENANTID_LIST = R_Utility.R_GetStreamingContext<string>(LMM03700ContextConstant.CTENANTIDLIST)
+                    LTENANTS = R_Utility.R_GetStreamingContext<List<TenantToAssignDTO>>(LMM03700ContextConstant.OTENANT)
                 });
             }
             catch (Exception ex)

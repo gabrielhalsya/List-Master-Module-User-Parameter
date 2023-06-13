@@ -92,9 +92,9 @@ namespace LMM03700Front
                     case "TC":
                         _viewTCModel._Tab2IsActive = true;
                         break;
-                    //case "TGC":
-                    //    await _gridT1_TCGRef.R_RefreshGrid(null);
-                    //    break;
+                        //case "TGC":
+                        //    await _gridT1_TCGRef.R_RefreshGrid(null);
+                        //    break;
                 }
             }
             catch (Exception ex)
@@ -313,7 +313,7 @@ namespace LMM03700Front
             var loEx = new R_Exception();
             try
             {
-                var loEntity = R_FrontUtility.ConvertObjectToObject<TenantClassificationDTO> (eventArgs.Data);
+                var loEntity = R_FrontUtility.ConvertObjectToObject<TenantClassificationDTO>(eventArgs.Data);
                 _viewTCModel._tenantClassificationId = loEntity.CTENANT_CLASSIFICATION_ID;
                 await _gridTRef.R_RefreshGrid(null);
             }
@@ -359,9 +359,21 @@ namespace LMM03700Front
         }
         private async Task R_After_Open_PopupAssignTenant(R_AfterOpenPopupEventArgs eventArgs)
         {
-            var loResult = (TenantToAssignDTO)eventArgs.Result;
-            var lo
-            await _gridTRef.R_RefreshGrid(null);
+            R_Exception loEx = new R_Exception();
+            try
+            {
+                var loResult = (TenantToAssignDTO)eventArgs.Result;
+                if (loResult != null)
+                {
+                    await _viewTCModel.AssignTenantCategory(new List<TenantToAssignDTO>() { loResult });
+                    await _gridTRef.R_RefreshGrid(null);
+                }
+            }
+            catch (Exception ex)
+            {
+                loEx.Add(ex);
+            }
+            loEx.ThrowExceptionIfErrors();
         }
         #endregion
 
@@ -372,7 +384,7 @@ namespace LMM03700Front
         }
         private async Task R_After_Open_Popup_MoveTenant(R_AfterOpenPopupEventArgs eventArgs)
         {
-            await _gridTRef.R_RefreshGrid(null);
+            //await _gridTRef.R_RefreshGrid(null);
         }
         #endregion
     }

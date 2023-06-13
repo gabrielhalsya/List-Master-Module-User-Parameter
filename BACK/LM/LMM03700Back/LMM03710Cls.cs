@@ -5,6 +5,8 @@ using R_CommonFrontBackAPI;
 using System.Data.Common;
 using System.Data;
 using R_APICommonDTO;
+using System.Windows.Input;
+using System.Transactions;
 
 namespace LMM03700Back
 {
@@ -252,37 +254,117 @@ namespace LMM03700Back
             loEx.ThrowExceptionIfErrors();
             return loRtn;
         }
+        //public AssignTenantResultDTO AssignTenant(AssignTenantDBParamDTO poParam)
+        //{
+        //    AssignTenantResultDTO loRtn = new AssignTenantResultDTO();
+        //    R_Exception loEx = new R_Exception();
+        //    R_Db loDB;
+        //    DbConnection loConn;
+        //    DbCommand loCmd;
+        //    string lcQuery;
+        //    try
+        //    {
+        //        loDB = new R_Db();
+        //        loConn = loDB.GetConnection("R_DefaultConnectionString");
+        //        loCmd = loDB.GetCommand();
 
-        public AssignTenantResultDTO AssignTenant(AssignTenantDBParamDTO poParam)
+        //        lcQuery = "RSP_LM_ASSIGN_TENANT_CLASS";
+        //        loCmd.CommandType = CommandType.StoredProcedure;
+        //        loCmd.CommandText = lcQuery;
+
+        //        loDB.R_AddCommandParameter(loCmd, "@CCOMPANY_ID", DbType.String, 20, poParam.CCOMPANY_ID);
+        //        loDB.R_AddCommandParameter(loCmd, "@CPROPERTY_ID", DbType.String, 20, poParam.CPROPERTY_ID);
+        //        loDB.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_GROUP_ID", DbType.String, 20, poParam.CTENANT_CLASSIFICATION_GROUP_ID);
+        //        loDB.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_ID", DbType.String, 20, poParam.CTENANT_CLASSIFICATION_ID);
+        //        loDB.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 8, poParam.CUSER_ID);
+        //        loDB.R_AddCommandParameter(loCmd, "@CTENANTID_LIST", DbType.Object, poParam.CTENANTID_LIST.Length, poParam.CTENANTID_LIST);
+        //        var loResult = loDB.SqlExecQuery(loConn, loCmd, true);
+        //        loRtn = R_Utility.R_ConvertTo<AssignTenantResultDTO>(loResult).FirstOrDefault();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        loEx.Add(ex);
+        //    }
+        //    loEx.ThrowExceptionIfErrors();
+        //    return loRtn;
+        //}
+        //public void AssignTenantUsingTextQuery(AssignTenantDBParamDTO poParam)
+        //{
+        //    R_Exception loEx = new R_Exception();
+        //    R_Db loDB;
+        //    DbConnection loConn;
+        //    DbCommand loCmd;
+        //    string lcQuery;
+        //    try
+        //    {
+        //        loDB = new R_Db();
+        //        loConn = loDB.GetConnection("R_DefaultConnectionString");
+        //        loCmd = loDB.GetCommand();
+
+        //        lcQuery = "DECLARE @CTENANT_LIST AS RDT_TENANT_LIST; INSERT INTO @CTENANT_LIST (CTENANT_ID) VALUES (@CTENANT_ID);";
+        //        loCmd.CommandText = lcQuery;
+        //        foreach (var item in poParam.LTENANTS)
+        //        {
+        //            loDB.R_AddCommandParameter(loCmd, "@CTENANT_ID", DbType.String, 20, item.CTENANT_ID);
+        //            loDB.SqlExecQuery(loConn, loCmd, true);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        loEx.Add(ex);
+        //    }
+        //    loEx.ThrowExceptionIfErrors();
+
+        //}
+        public AssignTenantResultDTO AssignTenantTempMethod(AssignTenantDBParamDTO poParam)
         {
             AssignTenantResultDTO loRtn = new AssignTenantResultDTO();
-            R_Exception loEx = new R_Exception();
-            R_Db loDB;
-            DbConnection loConn;
+            var loEx = new R_Exception();
+            var loDb = new R_Db();
+            DbConnection loConn = null;
             DbCommand loCmd;
-            string lcQuery;
             try
             {
-                loDB = new R_Db();
-                loConn = loDB.GetConnection("R_DefaultConnectionString");
-                loCmd = loDB.GetCommand();
-
-                lcQuery = "RSP_LM_ASSIGN_TENANT_CLASS";
-                loCmd.CommandType = CommandType.StoredProcedure;
-                loCmd.CommandText = lcQuery;
-
-                loDB.R_AddCommandParameter(loCmd, "@CCOMPANY_ID", DbType.String, 20, poParam.CCOMPANY_ID);
-                loDB.R_AddCommandParameter(loCmd, "@CPROPERTY_ID", DbType.String, 20, poParam.CPROPERTY_ID);
-                loDB.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_GROUP_ID", DbType.String, 20, poParam.CTENANT_CLASSIFICATION_GROUP_ID);
-                loDB.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_ID", DbType.String, 20, poParam.CTENANT_CLASSIFICATION_ID);
-                loDB.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 8, poParam.CUSER_ID);
-                loDB.R_AddCommandParameter(loCmd, "@CTENANTID_LIST", DbType.String,poParam.CTENANTID_LIST.Length , poParam.CTENANTID_LIST);
-                var loResult = loDB.SqlExecQuery(loConn, loCmd, true);
-                loRtn = R_Utility.R_ConvertTo<AssignTenantResultDTO>(loResult).FirstOrDefault();
+                using (var TransScope = new TransactionScope(TransactionScopeOption.Required))
+                {
+                    loCmd = loDb.GetCommand();
+                    loConn = loDb.GetConnection();
+                    string lcQuery = "DECLARE @CTENANT_LIST AS RDT_TENANT_LIST ";
+                    if (poParam.LTENANTS != null && poParam.LTENANTS.Count > 0)
+                    {
+                        lcQuery += "INSERT INTO @CTENANT_LIST (CTENANT_ID) VALUES ";
+                        foreach (var loRate in poParam.LTENANTS)
+                        {
+                            lcQuery += $"('{loRate.CTENANT_ID}'),";
+                        }
+                        lcQuery = lcQuery.Substring(0, lcQuery.Length - 1) + " ";
+                    }
+                    lcQuery += "EXECUTE RSP_LM_ASSIGN_TENANT_CLASS " +
+                       $"@CCOMPANY_ID = '{poParam.CCOMPANY_ID}' " +
+                       $",@CPROPERTY_ID = '{poParam.CPROPERTY_ID}' " +
+                       $",@CTENANT_CLASSIFICATION_GROUP_ID = '{poParam.CTENANT_CLASSIFICATION_GROUP_ID}' " +
+                       $",@CTENANT_CLASSIFICATION_ID = '{poParam.@CTENANT_CLASSIFICATION_ID}' " +
+                       $",@CUSER_LOGIN_ID = '{poParam.CUSER_ID}' " +
+                       $",@CTENANT_LIST = @CTENANT_LIST ";
+                    var loResult = loDb.SqlExecQuery(lcQuery, loConn, false);
+                    loRtn = R_Utility.R_ConvertTo<AssignTenantResultDTO>(loResult).FirstOrDefault();
+                    TransScope.Complete();
+                }
             }
             catch (Exception ex)
             {
                 loEx.Add(ex);
+            }
+            finally
+            {
+                if (loConn != null)
+                {
+                    if (loConn.State != System.Data.ConnectionState.Closed)
+                        loConn.Close();
+
+                    loConn.Dispose();
+                    loConn = null;
+                }
             }
             loEx.ThrowExceptionIfErrors();
             return loRtn;
