@@ -5,8 +5,7 @@ using System.Text;
 
 namespace LMM03700Common.DTO_s
 {
-    public class AssignTenantResultDTO : R_APIResultBaseDTO
+    public class MoveTenantResult :R_APIResultBaseDTO
     {
-        //public List<TenantDTO> Tenant { get; set; }
     }
 }

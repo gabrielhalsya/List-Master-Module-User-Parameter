@@ -316,9 +316,8 @@ namespace LMM03700Back
         //    loEx.ThrowExceptionIfErrors();
 
         //}
-        public AssignTenantResultDTO AssignTenantTempMethod(AssignTenantDBParamDTO poParam)
+        public void AssignTenantTempMethod(AssignTenantDBParamDTO poParam)
         {
-            AssignTenantResultDTO loRtn = new AssignTenantResultDTO();
             var loEx = new R_Exception();
             var loDb = new R_Db();
             DbConnection loConn = null;
@@ -347,7 +346,6 @@ namespace LMM03700Back
                        $",@CUSER_LOGIN_ID = '{poParam.CUSER_ID}' " +
                        $",@CTENANT_LIST = @CTENANT_LIST ";
                     var loResult = loDb.SqlExecQuery(lcQuery, loConn, false);
-                    loRtn = R_Utility.R_ConvertTo<AssignTenantResultDTO>(loResult).FirstOrDefault();
                     TransScope.Complete();
                 }
             }
@@ -367,7 +365,6 @@ namespace LMM03700Back
                 }
             }
             loEx.ThrowExceptionIfErrors();
-            return loRtn;
         }
     }
 }

@@ -190,16 +190,15 @@ namespace LMM03700Service
         }
 
         [HttpPost]
-        public AssignTenantResultDTO AssignTenant()
+        public AssignTenantResult AssignTenant()
         {
-            AssignTenantResultDTO loRtn= null;
+            AssignTenantResult loRtn = new AssignTenantResult();
             R_Exception loException = new R_Exception();
             LMM03710Cls loCls;
             try
             {
                 loCls = new LMM03710Cls();
-                loRtn = new AssignTenantResultDTO();
-                loRtn= loCls.AssignTenantTempMethod(new AssignTenantDBParamDTO()
+                loCls.AssignTenantTempMethod(new AssignTenantDBParamDTO()
                 {
                     CPROPERTY_ID = R_Utility.R_GetStreamingContext<string>(LMM03700ContextConstant.CPROPERTY_ID),
                     CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID,
