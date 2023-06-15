@@ -27,7 +27,7 @@ namespace LMM03700Model
             try
             {
                 R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.CPROPERTY_ID, _propertyId);
-                var loResult = await _model.GetUserParamListAsync();
+                var loResult = await _model.GetTenantClassRecord();
                 TenantClassificationGroupList = new ObservableCollection<TenantClassificationGroupDTO>(loResult);
             }
             catch (Exception ex)

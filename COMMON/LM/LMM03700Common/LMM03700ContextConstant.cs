@@ -12,5 +12,8 @@ namespace LMM03700Common
         public const string CACTION = "CACTION";
         public const string CTENANTIDLIST = "CTENANTIDLIST";
         public const string OTENANT="OTENANT";
+        public const string CTO_TENANT_CLASSIFICATION_ID = "CTO_TENANT_CLASSIFICATION_ID";
+        public const string CFROM_TENANT_CLASSIFICATION_ID = "CFROM_TENANT_CLASSIFICATION_ID"; 
+        public const string LIST_CTENANT_ID = "LIST_CTENANT_ID"; 
     }
 }

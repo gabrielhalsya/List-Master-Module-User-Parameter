@@ -40,8 +40,7 @@ namespace LMM03700Model
             throw new NotImplementedException();
         }
 
-
-        public async Task<List<TenantClassificationGroupDTO>> GetUserParamListAsync()
+        public async Task<List<TenantClassificationGroupDTO>> GetTenantClassRecord()
         {
             var loEx = new R_Exception();
             List<TenantClassificationGroupDTO> loResult = null;

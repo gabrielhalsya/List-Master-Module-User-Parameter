@@ -19,15 +19,26 @@ namespace LMM03700Model
         public ObservableCollection<TenantClassificationGroupDTO> TenantClassGrpList { get; set; } = new ObservableCollection<TenantClassificationGroupDTO>();
         public ObservableCollection<TenantClassificationDTO> TenantClassList { get; set; } = new ObservableCollection<TenantClassificationDTO>();
         public ObservableCollection<TenantDTO> AssignedTenantList { get; set; } = new ObservableCollection<TenantDTO>();
-        public ObservableCollection<TenantToAssignDTO> TenantList { get; set; } = new ObservableCollection<TenantToAssignDTO>();
+        public ObservableCollection<TenantGridPopupDTO> TenantToAssignList { get; set; } = new ObservableCollection<TenantGridPopupDTO>();
+        public ObservableCollection<TenantGridPopupDTO> TenantToMoveList { get; set; } = new ObservableCollection<TenantGridPopupDTO>();
         public TenantClassificationGroupDTO TenantClassiGrp { get; set; } = new TenantClassificationGroupDTO();
         public TenantClassificationDTO TenantClass { get; set; } = new TenantClassificationDTO();
-        public TenantDTO _TenantToAssignID { get; set; }  = new TenantDTO();
+
+        //for move popup
+        public List<TenantClassificationDTO> TenantClassListForMoveTenant { get; set; } = new List<TenantClassificationDTO>();
+        public TenantClassificationDTO TenantClassForMoveTenant { get; set; } = new TenantClassificationDTO();
+
+        //end-formove popup
 
         public string _propertyId { get; set; } = "";
         public bool _Tab2IsActive { get; set; } = false;
         public string _tenantClassificationId = "";
         public string _tenantClassificationGroupId = "";
+
+        //this string is using to move tenant
+        public string _toTenantClassificationId = "";
+        public string _fromTenantClassificationId = "";
+        //end
 
         #region TenantClassificaiton
         public async Task GetTenantClassList()
@@ -58,9 +69,10 @@ namespace LMM03700Model
             var loEx = new R_Exception();
             try
             {
+                TenantClassificationDTO loResult = new TenantClassificationDTO(); 
                 poNewEntity.CPROPERTY_ID = _propertyId;
                 poNewEntity.CTENANT_CLASSIFICATION_GROUP_ID = _tenantClassificationGroupId;
-                var loResult = await _model.R_ServiceSaveAsync(poNewEntity, peCRUDMode);
+                loResult = await _model.R_ServiceSaveAsync(poNewEntity, peCRUDMode);
                 TenantClass = R_FrontUtility.ConvertObjectToObject<TenantClassificationDTO>(loResult);
             }
             catch (Exception ex)
@@ -96,7 +108,7 @@ namespace LMM03700Model
             try
             {
                 R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.CPROPERTY_ID, _propertyId);
-                var loResult = await _modelTenantClassGrp.GetUserParamListAsync();
+                var loResult = await _modelTenantClassGrp.GetTenantClassRecord();
                 TenantClassGrpList = new ObservableCollection<TenantClassificationGroupDTO>(loResult);
             }
             catch (Exception ex)
@@ -105,7 +117,6 @@ namespace LMM03700Model
             }
             loEx.ThrowExceptionIfErrors();
         }
-
         public async Task GetTenantClassGroupRecord(TenantClassificationGroupDTO loParam)
         {
             R_Exception loEx = new R_Exception();
@@ -140,8 +151,9 @@ namespace LMM03700Model
             }
             loEx.ThrowExceptionIfErrors();
         }
-
-        public async Task GetTenantList(TenantToAssignDTO poParam)
+        
+        #region AssignTenant
+        public async Task GetTenantToAssignList(TenantGridPopupDTO poParam)
         {
             R_Exception loEx = new R_Exception();
             try
@@ -149,8 +161,8 @@ namespace LMM03700Model
                 R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.CPROPERTY_ID, poParam.CPROPERTY_ID);
                 R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.CTENANT_CLASSIFICATION_ID, poParam.CTENANT_CLASSIFICATION_ID);
                 R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.CTENANT_CLASSIFICATION_GROUP_ID, poParam.CTENANT_CLASSIFICATION_GROUP_ID);
-                var loResult = await _model.GetTenantListAsync();
-                TenantList = new ObservableCollection<TenantToAssignDTO>(loResult);
+                var loResult = await _model.GetTenanToAssigntListAsync();
+                TenantToAssignList = new ObservableCollection<TenantGridPopupDTO>(loResult);
             }
             catch (Exception ex)
             {
@@ -158,8 +170,7 @@ namespace LMM03700Model
             }
             loEx.ThrowExceptionIfErrors();
         }
-
-        public async Task AssignTenantCategory(List<TenantToAssignDTO> poListParam)
+        public async Task AssignTenantCategory(List<TenantGridPopupDTO> poListParam)
         {
             R_Exception loException = new R_Exception();
             try
@@ -177,6 +188,77 @@ namespace LMM03700Model
         EndBlock:
             loException.ThrowExceptionIfErrors();
         }
+        #endregion
+
+        #region MoveTenant
+        public async Task GetTenantClassListForMove()
+        {
+            R_Exception loEx = new R_Exception();
+            try
+            {
+                R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.CPROPERTY_ID, _propertyId);
+                R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.CTENANT_CLASSIFICATION_GROUP_ID, _tenantClassificationGroupId);
+                var loResult = await _model.GetTenantClassificationListAsync();
+                TenantClassListForMoveTenant = new List<TenantClassificationDTO>(loResult);
+            }
+            catch (Exception ex)
+            {
+                loEx.Add(ex);
+            }
+            loEx.ThrowExceptionIfErrors();
+        }
+        public async Task GetTenantListToMove(TenantGridPopupDTO poParam)
+        {
+            R_Exception loEx = new R_Exception();
+            try
+            {
+                R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.CPROPERTY_ID, poParam.CPROPERTY_ID);
+                R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.CTENANT_CLASSIFICATION_ID, poParam.CTENANT_CLASSIFICATION_ID);
+                var loResult = await _model.GetTenanToMoveListAsync();
+                TenantToMoveList = new ObservableCollection<TenantGridPopupDTO>(loResult);
+            }
+            catch (Exception ex)
+            {
+                loEx.Add(ex);
+            }
+            loEx.ThrowExceptionIfErrors();
+        }
+        public async Task MoveTenant(List<string> plParam)
+        {
+            R_Exception loException = new R_Exception();
+            try
+            {
+                R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.CPROPERTY_ID, _propertyId);
+                R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.CTENANT_CLASSIFICATION_GROUP_ID, _tenantClassificationGroupId);
+                R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.CFROM_TENANT_CLASSIFICATION_ID, _fromTenantClassificationId);
+                R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.CTO_TENANT_CLASSIFICATION_ID, _toTenantClassificationId);
+                R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.LIST_CTENANT_ID, plParam);
+                await _model.MoveTenantAsync();
+            }
+            catch (Exception ex)
+            {
+                loException.Add(ex);
+            }
+        EndBlock:
+            loException.ThrowExceptionIfErrors();
+        }
+        public async Task GetTenantClassForMoveRecord(TenantClassificationDTO loParam)
+        {
+            loParam.CPROPERTY_ID = _propertyId;
+            loParam.CTENANT_CLASSIFICATION_GROUP_ID = _tenantClassificationGroupId;
+            var loResult = await _model.R_ServiceGetRecordAsync(loParam);
+            TenantClassForMoveTenant = R_FrontUtility.ConvertObjectToObject<TenantClassificationDTO>(loResult);
+        }
+
+        public async Task GetTenantClassRecordForMove(TenantClassificationDTO loParam)
+        {
+            loParam.CPROPERTY_ID = _propertyId;
+            loParam.CTENANT_CLASSIFICATION_GROUP_ID = _tenantClassificationGroupId;
+            var loResult = await _model.R_ServiceGetRecordAsync(loParam);
+            TenantClassForMoveTenant = R_FrontUtility.ConvertObjectToObject<TenantClassificationDTO>(loResult);
+        }
+        #endregion
+
         #endregion
     }
 }

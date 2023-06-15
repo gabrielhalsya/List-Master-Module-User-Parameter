@@ -16,7 +16,7 @@ namespace LMM03700Front
     public partial class PopupAssignTenant : R_Page
     {
         private LMM03710ViewModel _viewModelTC= new  LMM03710ViewModel();
-        private R_Grid<TenantToAssignDTO> _Grid;
+        private R_Grid<TenantGridPopupDTO> _Grid;
         protected override async Task R_Init_From_Master(object poParameter)
         {
             var loEx = new R_Exception();
@@ -37,8 +37,8 @@ namespace LMM03700Front
             var loEx = new R_Exception();
             try
             {
-                var loParam = R_FrontUtility.ConvertObjectToObject<TenantToAssignDTO>(eventArgs.Parameter);
-                await _viewModelTC.GetTenantList(loParam);
+                var loParam = R_FrontUtility.ConvertObjectToObject<TenantGridPopupDTO>(eventArgs.Parameter);
+                await _viewModelTC.GetTenantToAssignList(loParam);
             }
             catch (Exception ex)
             {

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LMM03700Common.DTO_s
 {
-    public class TenantToAssignDTO
+    public class TenantGridPopupDTO
     {
         public string CCOMPANY_ID { get; set; }
         public string CPROPERTY_ID { get; set; }

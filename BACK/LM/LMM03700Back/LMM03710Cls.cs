@@ -220,9 +220,9 @@ namespace LMM03700Back
             loEx.ThrowExceptionIfErrors();
             return loRtn;
         }
-        public List<TenantToAssignDTO> GetTenantList(TenantClassificationDBListMaintainParamDTO loParam)
+        public List<TenantGridPopupDTO> GetTenanToAssigntList(TenantClassificationDBListMaintainParamDTO loParam)
         {
-            List<TenantToAssignDTO> loRtn = new List<TenantToAssignDTO>();
+            List<TenantGridPopupDTO> loRtn = new List<TenantGridPopupDTO>();
             R_Exception loEx = new R_Exception();
             R_Db loDB;
             DbConnection loConn;
@@ -245,7 +245,7 @@ namespace LMM03700Back
                 loDB.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 8, loParam.CUSER_ID);
 
                 var loRtnTemp = loDB.SqlExecQuery(loConn, loCmd, true);
-                loRtn = R_Utility.R_ConvertTo<TenantToAssignDTO>(loRtnTemp).ToList();
+                loRtn = R_Utility.R_ConvertTo<TenantGridPopupDTO>(loRtnTemp).ToList();
             }
             catch (Exception ex)
             {
@@ -254,69 +254,7 @@ namespace LMM03700Back
             loEx.ThrowExceptionIfErrors();
             return loRtn;
         }
-        //public AssignTenantResultDTO AssignTenant(AssignTenantDBParamDTO poParam)
-        //{
-        //    AssignTenantResultDTO loRtn = new AssignTenantResultDTO();
-        //    R_Exception loEx = new R_Exception();
-        //    R_Db loDB;
-        //    DbConnection loConn;
-        //    DbCommand loCmd;
-        //    string lcQuery;
-        //    try
-        //    {
-        //        loDB = new R_Db();
-        //        loConn = loDB.GetConnection("R_DefaultConnectionString");
-        //        loCmd = loDB.GetCommand();
-
-        //        lcQuery = "RSP_LM_ASSIGN_TENANT_CLASS";
-        //        loCmd.CommandType = CommandType.StoredProcedure;
-        //        loCmd.CommandText = lcQuery;
-
-        //        loDB.R_AddCommandParameter(loCmd, "@CCOMPANY_ID", DbType.String, 20, poParam.CCOMPANY_ID);
-        //        loDB.R_AddCommandParameter(loCmd, "@CPROPERTY_ID", DbType.String, 20, poParam.CPROPERTY_ID);
-        //        loDB.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_GROUP_ID", DbType.String, 20, poParam.CTENANT_CLASSIFICATION_GROUP_ID);
-        //        loDB.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_ID", DbType.String, 20, poParam.CTENANT_CLASSIFICATION_ID);
-        //        loDB.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 8, poParam.CUSER_ID);
-        //        loDB.R_AddCommandParameter(loCmd, "@CTENANTID_LIST", DbType.Object, poParam.CTENANTID_LIST.Length, poParam.CTENANTID_LIST);
-        //        var loResult = loDB.SqlExecQuery(loConn, loCmd, true);
-        //        loRtn = R_Utility.R_ConvertTo<AssignTenantResultDTO>(loResult).FirstOrDefault();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        loEx.Add(ex);
-        //    }
-        //    loEx.ThrowExceptionIfErrors();
-        //    return loRtn;
-        //}
-        //public void AssignTenantUsingTextQuery(AssignTenantDBParamDTO poParam)
-        //{
-        //    R_Exception loEx = new R_Exception();
-        //    R_Db loDB;
-        //    DbConnection loConn;
-        //    DbCommand loCmd;
-        //    string lcQuery;
-        //    try
-        //    {
-        //        loDB = new R_Db();
-        //        loConn = loDB.GetConnection("R_DefaultConnectionString");
-        //        loCmd = loDB.GetCommand();
-
-        //        lcQuery = "DECLARE @CTENANT_LIST AS RDT_TENANT_LIST; INSERT INTO @CTENANT_LIST (CTENANT_ID) VALUES (@CTENANT_ID);";
-        //        loCmd.CommandText = lcQuery;
-        //        foreach (var item in poParam.LTENANTS)
-        //        {
-        //            loDB.R_AddCommandParameter(loCmd, "@CTENANT_ID", DbType.String, 20, item.CTENANT_ID);
-        //            loDB.SqlExecQuery(loConn, loCmd, true);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        loEx.Add(ex);
-        //    }
-        //    loEx.ThrowExceptionIfErrors();
-
-        //}
-        public void AssignTenantTempMethod(AssignTenantDBParamDTO poParam)
+        public void AssignTenant(AssignTenantDBParamDTO poParam)
         {
             var loEx = new R_Exception();
             var loDb = new R_Db();
@@ -366,5 +304,93 @@ namespace LMM03700Back
             }
             loEx.ThrowExceptionIfErrors();
         }
+
+        #region movetenant
+        public List<TenantGridPopupDTO> GetTenanToMoveList(TenantClassificationDBListMaintainParamDTO loParam)
+        {
+            List<TenantGridPopupDTO> loRtn = new List<TenantGridPopupDTO>();
+            R_Exception loEx = new R_Exception();
+            R_Db loDB;
+            DbConnection loConn;
+            DbCommand loCmd;
+            string lcQuery;
+            try
+            {
+                loDB = new R_Db();
+                loConn = loDB.GetConnection("R_DefaultConnectionString");
+                loCmd = loDB.GetCommand();
+
+                lcQuery = "RSP_LM_GET_TENANT_LIST_CLASS";
+                loCmd.CommandType = CommandType.StoredProcedure;
+                loCmd.CommandText = lcQuery;
+
+                loDB.R_AddCommandParameter(loCmd, "@CCOMPANY_ID", DbType.String, 20, loParam.CCOMPANY_ID);
+                loDB.R_AddCommandParameter(loCmd, "@CPROPERTY_ID", DbType.String, 20, loParam.CPROPERTY_ID);
+                loDB.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_ID", DbType.String, 20, loParam.CTENANT_CLASSIFICATION_ID);
+                //loDB.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_GROUP_ID", DbType.String, 20, loParam.CTENANT_CLASSIFICATION_GROUP_ID);
+                loDB.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 8, loParam.CUSER_ID);
+
+                var loRtnTemp = loDB.SqlExecQuery(loConn, loCmd, true);
+                loRtn = R_Utility.R_ConvertTo<TenantGridPopupDTO>(loRtnTemp).ToList();
+            }
+            catch (Exception ex)
+            {
+                loEx.Add(ex);
+            }
+            loEx.ThrowExceptionIfErrors();
+            return loRtn;
+        }
+        public void MoveTenant(MoveTenantDBParamDTO poParam)
+        {
+            var loEx = new R_Exception();
+            var loDb = new R_Db();
+            DbConnection loConn = null;
+            DbCommand loCmd;
+            try
+            {
+                using (var TransScope = new TransactionScope(TransactionScopeOption.Required))
+                {
+                    loCmd = loDb.GetCommand();
+                    loConn = loDb.GetConnection();
+                    string lcQuery = "DECLARE @CTENANT_LIST AS RDT_TENANT_LIST ";
+                    if (poParam.LIST_CTENANT_ID != null && poParam.LIST_CTENANT_ID.Count > 0)
+                    {
+                        lcQuery += "INSERT INTO @CTENANT_LIST (CTENANT_ID) VALUES ";
+                        foreach (string loRate in poParam.LIST_CTENANT_ID)
+                        {
+                            lcQuery += $"('{loRate}'),";
+                        }
+                        lcQuery = lcQuery.Substring(0, lcQuery.Length - 1) + " ";
+                    }
+                    lcQuery += " EXEC RSP_LM_MOVE_TENANT_CLASS " +
+                       $"@CCOMPANY_ID = '{poParam.CCOMPANY_ID}' " +
+                       $",@CPROPERTY_ID = '{poParam.CPROPERTY_ID}' " +
+                       $",@CTENANT_CLASSIFICATION_GROUP_ID = '{poParam.CTENANT_CLASSIFICATION_GROUP_ID}' " +
+                       $",@CFROM_TENANT_CLASSIFICATION_ID = '{poParam.CFROM_TENANT_CLASSIFICATION_ID}' " +
+                       $",@CTO_TENANT_CLASSIFICATION_ID = '{poParam.CTO_TENANT_CLASSIFICATION_ID}' " +
+                       $",@CUSER_LOGIN_ID = '{poParam.CUSER_ID}' " +
+                       $",@CTENANT_LIST = @CTENANT_LIST ";
+                    var loResult = loDb.SqlExecQuery(lcQuery, loConn, false);
+                    TransScope.Complete();
+                }
+            }
+            catch (Exception ex)
+            {
+                loEx.Add(ex);
+            }
+            finally
+            {
+                if (loConn != null)
+                {
+                    if (loConn.State != System.Data.ConnectionState.Closed)
+                        loConn.Close();
+
+                    loConn.Dispose();
+                    loConn = null;
+                }
+            }
+            loEx.ThrowExceptionIfErrors();
+        }
+        #endregion
     }
 }
