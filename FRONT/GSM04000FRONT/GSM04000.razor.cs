@@ -1,12 +1,14 @@
 ﻿using BlazorClientHelper;
 using GSM04000Common;
 using GSM04000Model;
+using Lookup_GSCOMMON.DTOs;
 using Lookup_GSFRONT;
 using Microsoft.AspNetCore.Components;
 using R_BlazorFrontEnd;
 using R_BlazorFrontEnd.Controls;
 using R_BlazorFrontEnd.Controls.DataControls;
 using R_BlazorFrontEnd.Controls.Events;
+using R_BlazorFrontEnd.Controls.Grid.Columns;
 using R_BlazorFrontEnd.Controls.MessageBox;
 using R_BlazorFrontEnd.Enums;
 using R_BlazorFrontEnd.Exceptions;
@@ -182,7 +184,6 @@ namespace GSM04000Front
             }
             loEx.ThrowExceptionIfErrors();
         }
-
         //private async Task DeptGrid_OnChecked(R_SetEventArgs eventArgs)
         //{
         //    //var loParam = (GSM04000DTO)eventArgs.
@@ -303,14 +304,17 @@ namespace GSM04000Front
         #endregion
 
         #region GridLookup
+        private R_GridLookupColumn LookupColumn;
         private void Dept_Before_Open_Lookup(R_BeforeOpenGridLookupColumnEventArgs eventArgs)
         {
+            
             //membedakan columname dan mengarahkan tampil lookup
             switch (eventArgs.ColumnName)
             {
-                //case "CCENTER":
-                //    eventArgs.TargetPageType = typeof(GSL00900);
-                //    break;
+                case "CCENTER":
+                    eventArgs.Parameter = new GSL00900ParameterDTO();
+                    eventArgs.TargetPageType = typeof(GSL00900);
+                    break;
                 case "CMANAGER_NAME":
                     eventArgs.TargetPageType = typeof(GSL01000);
                     break;
@@ -320,21 +324,21 @@ namespace GSM04000Front
         private void Dept_After_Open_Lookup(R_AfterOpenGridLookupColumnEventArgs eventArgs)
         {
             //mengambil result dari popup dan set ke data row
-            var loTempResult = R_FrontUtility.ConvertObjectToObject<GSM04000DTO>(eventArgs.Result);
-            if (loTempResult == null)
+            if (eventArgs.Result == null)
             {
                 return;
             }
-            ((GSM04000DTO)eventArgs.ColumnData).CMANAGER_NAME = loTempResult.CMANAGER_NAME;
-            //switch (eventArgs.ColumnName)
-            //{
-            //    case "CCENTER":
-            //        ((GSM04000DTO)eventArgs.ColumnData).CCENTER_CODE = loTempResult.CCENTER_CODE;
-            //        break;
-            //    case "CMANAGER":
-            //        ((GSM04000DTO)eventArgs.ColumnData).CMANAGER_NAME = loTempResult.CMANAGER_NAME;
-            //        break;
-            //}
+            switch (eventArgs.ColumnName)
+            {
+                case "CCENTER":
+                    var loTempResult = R_FrontUtility.ConvertObjectToObject<GSL00900DTO>(eventArgs.Result);
+                    ((GSM04000DTO)eventArgs.ColumnData).CCENTER_CODE = loTempResult.CCENTER_CODE;
+                    break; 
+                case "CMANAGER_NAME":
+                    var loTempResult2 = R_FrontUtility.ConvertObjectToObject<GSL01000DTO>(eventArgs.Result);
+                    ((GSM04000DTO)eventArgs.ColumnData).CMANAGER_NAME = loTempResult2.CUSER_ID;
+                    break;
+            }
         }
         #endregion
 

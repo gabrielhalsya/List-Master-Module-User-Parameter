@@ -17,7 +17,7 @@ namespace LMM03700Back
             R_Exception loEx = new R_Exception();
             TenantClassificationDTO loRtn = null;
             R_Db loDB;
-            DbConnection loConn;
+            DbConnection loConn=null;
             DbCommand loCmd;
             string lcQuery;
             try
@@ -25,7 +25,7 @@ namespace LMM03700Back
                 loDB = new R_Db();
                 loConn = loDB.GetConnection("R_DefaultConnectionString");
                 loCmd = loDB.GetCommand();
-
+                R_ExternalException.R_SP_Init_Exception(loConn);
                 lcQuery = "RSP_LM_MAINTAIN_TENANT_CLASS";
                 loCmd.CommandType = CommandType.StoredProcedure;
                 loCmd.CommandText = lcQuery;
@@ -37,11 +37,32 @@ namespace LMM03700Back
                 loDB.R_AddCommandParameter(loCmd, "@CTENANT_CLASSIFICATION_NAME", DbType.String, 50, poEntity.CTENANT_CLASSIFICATION_NAME);
                 loDB.R_AddCommandParameter(loCmd, "@CACTION", DbType.String, 50, "DELETE");
                 loDB.R_AddCommandParameter(loCmd, "@CUSER_ID", DbType.String, 50, poEntity.CUSER_ID);
-                loDB.SqlExecNonQuery(loConn, loCmd, true);
+                try
+                {
+                    loDB.SqlExecNonQuery(loConn, loCmd, false);
+                }
+                catch (Exception ex)
+                {
+                    loEx.Add(ex);
+                }
+
+                loEx.Add(R_ExternalException.R_SP_Get_Exception(loConn));
             }
             catch (Exception ex)
             {
                 loEx.Add(ex);
+            }
+            finally
+            {
+                if (loConn != null)
+                {
+                    if (loConn.State != ConnectionState.Closed)
+                    {
+                        loConn.Close();
+                    }
+
+                    loConn.Dispose();
+                }
             }
         EndBlock:
             loEx.ThrowExceptionIfErrors();

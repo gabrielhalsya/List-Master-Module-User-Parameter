@@ -7,8 +7,8 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\BACK\LM\LMM00200Back\LMM00200Back.csproj" />
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+		<ProjectReference Include="..\..\..\BACK\LM\LMM00200Back\LMM00200Back.csproj" />
 		<ProjectReference Include="..\..\..\COMMON\LM\LMM00200Common\LMM00200Common.csproj" />
 	</ItemGroup>
 
