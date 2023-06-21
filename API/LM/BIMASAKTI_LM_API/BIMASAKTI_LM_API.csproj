@@ -15,6 +15,7 @@
 		<ProjectReference Include="..\..\..\SERVICE\GS\BlazorMenuService\BlazorMenuService.csproj" />
 		<ProjectReference Include="..\..\..\SERVICE\GS\R_SecurityPolicyService\R_SecurityPolicyService.csproj" />
 		<ProjectReference Include="..\..\..\SERVICE\GS\R_SecurityTokenService\R_SecurityTokenService.csproj" />
+		<ProjectReference Include="..\..\..\SERVICE\LM\LMM00200Service\LMM00200Service.csproj" />
 		<ProjectReference Include="..\..\..\SERVICE\LM\LMM03700Service\LMM03700Service.csproj" />
 	</ItemGroup>
 

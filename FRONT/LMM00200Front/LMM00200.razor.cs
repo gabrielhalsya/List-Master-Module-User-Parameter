@@ -75,7 +75,7 @@ namespace LMM00200Front
             if (eventArgs.ConductorMode == R_eConductorMode.Normal)
             {
                 var loParam = (LMM00200DTO)eventArgs.Data;
-                _viewModel.liUserParamCode=loParam.CCODE;
+                _viewModel.liUserParamCode = loParam.CCODE;
                 if (loParam.LACTIVE)
                 {
                     _labelActiveInactive = "Inactive";
@@ -88,7 +88,7 @@ namespace LMM00200Front
                     _viewModel.ActiveDept = true;
                     _viewModel._action = "ACTIVE";
                 }
-                _viewModel.CUSER_LEVEL_OPERATOR_SIGN=loParam.CUSER_LEVEL_OPERATOR_SIGN;
+                _viewModel.CUSER_LEVEL_OPERATOR_SIGN = loParam.CUSER_LEVEL_OPERATOR_SIGN;
             }
         }
 
@@ -148,9 +148,20 @@ namespace LMM00200Front
         #region Active/Inactive
         private async Task R_Before_Open_Popup_ActivateInactive(R_BeforeOpenPopupEventArgs eventArgs)
         {
-            await _viewModel.ActiveInactiveProcessAsync();
-            await _gridRef.R_RefreshGrid(null);
-            await _viewModel.GetUserParamRecord(new LMM00200DTO());
+            R_Exception loEx = new R_Exception();
+            try
+            {
+                await _viewModel.ActiveInactiveProcessAsync();
+                var loParam = R_FrontUtility.ConvertObjectToObject<LMM00200DTO>(_conductorRef.R_GetCurrentData());
+                await _viewModel.GetUserParamRecord(loParam);
+                await _conductorRef.R_SetCurrentData(_viewModel.loUserParam);
+            }
+            catch (Exception ex)
+            {
+                loEx.Add(ex);
+            }
+            loEx.ThrowExceptionIfErrors();
+
         }
         #endregion
     }
