@@ -235,6 +235,7 @@ namespace LMM03700Front
                 var loParam = R_FrontUtility.ConvertObjectToObject<TenantClassificationDTO>(eventArgs.Data);
                 _viewTCModel._tenantClassificationGroupId = loParam.CTENANT_CLASSIFICATION_GROUP_ID;
                 await _gridTCRef.R_RefreshGrid(null);
+                await _gridTCRef.AutoFitAllColumnsAsync();
                 _viewTCModel.AssignedTenantList = null;
             }
             catch (Exception ex)
@@ -316,6 +317,7 @@ namespace LMM03700Front
                 var loEntity = R_FrontUtility.ConvertObjectToObject<TenantClassificationDTO>(eventArgs.Data);
                 _viewTCModel._tenantClassificationId = loEntity.CTENANT_CLASSIFICATION_ID;
                 await _gridTRef.R_RefreshGrid(null);
+                await _gridTRef.AutoFitAllColumnsAsync();
             }
             catch (Exception ex)
             {
@@ -426,6 +428,8 @@ namespace LMM03700Front
                 }
                 _viewTCModel._tenantClassificationId = (string)eventArgs.Result;
                 await _gridTCRef.R_RefreshGrid(null);
+                await _gridTCRef.AutoFitAllColumnsAsync();
+
             }
             catch (Exception ex)
             {

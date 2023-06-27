@@ -31,6 +31,10 @@ namespace GSM04000Front
         [Inject] private R_IExcel _excelProvider { get; set; }
         [Inject] IClientHelper _clientHelper { get; set; }
 
+
+        private R_Popup R_PopupAssignUser;
+        private R_Popup R_PopupActiveInactive;
+        private string loLabelActiveInactive = "Active/Inactive";
         protected override async Task R_Init_From_Master(object poParameter)
         {
             var loEx = new R_Exception();
@@ -49,11 +53,6 @@ namespace GSM04000Front
         }
 
         #region Department(PARENT)
-        private string loLabelActiveInactive = "Active/Inactive";
-        
-        private R_Popup R_PopupAssignUser;
-        private R_Popup R_PopupActiveInactive;
-   
         private async Task DeptGrid_ServiceGetListRecord(R_ServiceGetListRecordEventArgs eventArgs)
         {
             var loEx = new R_Exception();
@@ -193,9 +192,9 @@ namespace GSM04000Front
             }
             loEx.ThrowExceptionIfErrors();
         }
+        #endregion//Department(PARENT)
 
         #region GridLookup
-        private R_GridLookupColumn LookupColumn;
         private void Dept_Before_Open_Lookup(R_BeforeOpenGridLookupColumnEventArgs eventArgs)
         {
 
@@ -203,6 +202,7 @@ namespace GSM04000Front
             switch (eventArgs.ColumnName)
             {
                 case "CCENTER":
+                    eventArgs.Parameter = new GSL00900ParameterDTO();
                     eventArgs.TargetPageType = typeof(GSL00900);
                     break;
                 case "CMANAGER_NAME":
@@ -232,7 +232,6 @@ namespace GSM04000Front
         }
         #endregion//GridLookup
 
-        #endregion//Department(PARENT)
 
         #region DepartmentUser(CHILD)
         private async Task DeptUserGrid_ServiceGetListRecord(R_ServiceGetListRecordEventArgs eventArgs)
@@ -361,6 +360,7 @@ namespace GSM04000Front
             {
                 loEx.Add(ex);
             }
+            loEx.ThrowExceptionIfErrors();
             R_DisplayException(loEx);
         }
         #endregion

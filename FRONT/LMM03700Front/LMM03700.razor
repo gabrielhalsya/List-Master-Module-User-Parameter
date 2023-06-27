@@ -81,7 +81,9 @@
                         AllowAddNewRow="true"
                         AllowDeleteRow="true"
                         AllowEditRow="true"
-                        R_ServiceGetListRecord="T2_TC_ServiceGetListRecord">
+                        R_ServiceGetListRecord="T2_TC_ServiceGetListRecord"
+                        
+                        >
                     <R_GridColumns>
                         <R_GridTextColumn FieldName="@nameof(TenantClassificationDTO.CTENANT_CLASSIFICATION_ID)" HeaderText="Tenant Classification Id" R_EnableAdd></R_GridTextColumn>
                         <R_GridTextColumn FieldName="@nameof(TenantClassificationDTO.CTENANT_CLASSIFICATION_NAME)" HeaderText="Tenant Classification Name" R_EnableAdd R_EnableEdit></R_GridTextColumn>
@@ -125,7 +127,8 @@
                             R_ServiceGetListRecord="@T2_T_ServiceGetListRecord"
                             AllowAddNewRow="false"
                             AllowDeleteRow="false"
-                            AllowEditRow="false">
+                            AllowEditRow="false" 
+                            >
                         <R_GridColumns>
                             <R_GridTextColumn FieldName="@nameof(TenantDTO.CTENANT_ID)" HeaderText="Tenant ID"></R_GridTextColumn>
                             <R_GridTextColumn FieldName="@nameof(TenantDTO.CTENANT_NAME)" HeaderText="Tenant Name"></R_GridTextColumn>
