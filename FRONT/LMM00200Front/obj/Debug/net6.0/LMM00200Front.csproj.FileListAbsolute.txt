@@ -43,11 +43,6 @@ D:\RealCode\RSF\BIMASAKTI_11\1.00\PROGRAM\BS Program\SOURCE\FRONT\LMM00200Front\
 D:\RealCode\RSF\BIMASAKTI_11\1.00\PROGRAM\BS Program\SOURCE\FRONT\LMM00200Front\obj\Debug\net6.0\refint\LMM00200Front.dll
 D:\RealCode\RSF\BIMASAKTI_11\1.00\PROGRAM\BS Program\SOURCE\FRONT\LMM00200Front\obj\Debug\net6.0\LMM00200Front.pdb
 D:\RealCode\RSF\BIMASAKTI_11\1.00\PROGRAM\BS Program\SOURCE\FRONT\LMM00200Front\obj\Debug\net6.0\ref\LMM00200Front.dll
-D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\obj\Debug\net6.0\LMM00200Front.csproj.AssemblyReference.cache
-D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\obj\Debug\net6.0\LMM00200Front.GeneratedMSBuildEditorConfig.editorconfig
-D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\obj\Debug\net6.0\LMM00200Front.AssemblyInfoInputs.cache
-D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\obj\Debug\net6.0\LMM00200Front.AssemblyInfo.cs
-D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\obj\Debug\net6.0\LMM00200Front.csproj.CoreCompileInputs.cache
 D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\bin\Debug\net6.0\LMM00200Front.deps.json
 D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\bin\Debug\net6.0\LMM00200Front.dll
 D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\bin\Debug\net6.0\LMM00200Front.pdb
@@ -66,6 +61,11 @@ D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\bin\Debug\net6.0\R_Authentication
 D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\bin\Debug\net6.0\LMM00200Model.pdb
 D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\bin\Debug\net6.0\LMM00200Common.pdb
 D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\bin\Debug\net6.0\id\R_BlazorFrontEnd.Controls.resources.dll
+D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\obj\Debug\net6.0\LMM00200Front.csproj.AssemblyReference.cache
+D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\obj\Debug\net6.0\LMM00200Front.GeneratedMSBuildEditorConfig.editorconfig
+D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\obj\Debug\net6.0\LMM00200Front.AssemblyInfoInputs.cache
+D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\obj\Debug\net6.0\LMM00200Front.AssemblyInfo.cs
+D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\obj\Debug\net6.0\LMM00200Front.csproj.CoreCompileInputs.cache
 D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\obj\Debug\net6.0\staticwebassets\msbuild.LMM00200Front.Microsoft.AspNetCore.StaticWebAssets.props
 D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\obj\Debug\net6.0\staticwebassets\msbuild.build.LMM00200Front.props
 D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.LMM00200Front.props
@@ -79,4 +79,3 @@ D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\obj\Debug\net6.0\LMM00200Front.dl
 D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\obj\Debug\net6.0\refint\LMM00200Front.dll
 D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\obj\Debug\net6.0\LMM00200Front.pdb
 D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\obj\Debug\net6.0\ref\LMM00200Front.dll
-D:\repos\BS Program\SOURCE\FRONT\LMM00200Front\bin\Debug\net6.0\LMM00200Front.staticwebassets.runtime.json

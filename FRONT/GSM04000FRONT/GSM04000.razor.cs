@@ -14,6 +14,7 @@ using R_BlazorFrontEnd.Enums;
 using R_BlazorFrontEnd.Exceptions;
 using R_BlazorFrontEnd.Helpers;
 using R_CommonFrontBackAPI;
+using System.Net.Http.Headers;
 
 namespace GSM04000Front
 {
@@ -37,6 +38,7 @@ namespace GSM04000Front
             try
             {
                 await _gridDeptRef.R_RefreshGrid(null);
+                await _gridDeptRef.AutoFitAllColumnsAsync();
             }
             catch (Exception ex)
             {
@@ -48,9 +50,10 @@ namespace GSM04000Front
 
         #region Department(PARENT)
         private string loLabelActiveInactive = "Active/Inactive";
+        
         private R_Popup R_PopupAssignUser;
         private R_Popup R_PopupActiveInactive;
-
+   
         private async Task DeptGrid_ServiceGetListRecord(R_ServiceGetListRecordEventArgs eventArgs)
         {
             var loEx = new R_Exception();
@@ -165,7 +168,6 @@ namespace GSM04000Front
             var loEx = new R_Exception();
             try
             {
-                //R_MessageBox.Show("Confirm", "Change this will delete assigned user on this department", R_eMessageBoxButtonType.OKCancel);
                 await _deptViewModel.SaveDepartment((GSM04000DTO)eventArgs.Data, (eCRUDMode)eventArgs.ConductorMode);
                 eventArgs.Result = _deptViewModel.Department;
             }
@@ -191,7 +193,46 @@ namespace GSM04000Front
             }
             loEx.ThrowExceptionIfErrors();
         }
-        #endregion
+
+        #region GridLookup
+        private R_GridLookupColumn LookupColumn;
+        private void Dept_Before_Open_Lookup(R_BeforeOpenGridLookupColumnEventArgs eventArgs)
+        {
+
+            //membedakan columname dan mengarahkan tampil lookup
+            switch (eventArgs.ColumnName)
+            {
+                case "CCENTER":
+                    eventArgs.TargetPageType = typeof(GSL00900);
+                    break;
+                case "CMANAGER_NAME":
+                    eventArgs.TargetPageType = typeof(GSL01000);
+                    break;
+            }
+
+        }
+        private void Dept_After_Open_Lookup(R_AfterOpenGridLookupColumnEventArgs eventArgs)
+        {
+            //mengambil result dari popup dan set ke data row
+            if (eventArgs.Result == null)
+            {
+                return;
+            }
+            switch (eventArgs.ColumnName)
+            {
+                case "CCENTER":
+                    var loTempResult = R_FrontUtility.ConvertObjectToObject<GSL00900DTO>(eventArgs.Result);
+                    ((GSM04000DTO)eventArgs.ColumnData).CCENTER_CODE = loTempResult.CCENTER_CODE;
+                    break;
+                case "CMANAGER_NAME":
+                    var loTempResult2 = R_FrontUtility.ConvertObjectToObject<GSL01000DTO>(eventArgs.Result);
+                    ((GSM04000DTO)eventArgs.ColumnData).CMANAGER_CODE = loTempResult2.CUSER_ID;
+                    break;
+            }
+        }
+        #endregion//GridLookup
+
+        #endregion//Department(PARENT)
 
         #region DepartmentUser(CHILD)
         private async Task DeptUserGrid_ServiceGetListRecord(R_ServiceGetListRecordEventArgs eventArgs)
@@ -298,45 +339,6 @@ namespace GSM04000Front
         private void R_Before_Open_PopupUpload(R_BeforeOpenPopupEventArgs eventArgs)
         {
             eventArgs.TargetPageType = typeof(GSM04000PopupUpload);
-        }
-        #endregion
-
-        #region GridLookup
-        private R_GridLookupColumn LookupColumn;
-        private void Dept_Before_Open_Lookup(R_BeforeOpenGridLookupColumnEventArgs eventArgs)
-        {
-
-            //membedakan columname dan mengarahkan tampil lookup
-            switch (eventArgs.ColumnName)
-            {
-                case "CCENTER":
-                    eventArgs.Parameter = new GSL00900ParameterDTO();
-                    eventArgs.TargetPageType = typeof(GSL00900);
-                    break;
-                case "CMANAGER_NAME":
-                    eventArgs.TargetPageType = typeof(GSL01000);
-                    break;
-            }
-
-        }
-        private void Dept_After_Open_Lookup(R_AfterOpenGridLookupColumnEventArgs eventArgs)
-        {
-            //mengambil result dari popup dan set ke data row
-            if (eventArgs.Result == null)
-            {
-                return;
-            }
-            switch (eventArgs.ColumnName)
-            {
-                case "CCENTER":
-                    var loTempResult = R_FrontUtility.ConvertObjectToObject<GSL00900DTO>(eventArgs.Result);
-                    ((GSM04000DTO)eventArgs.ColumnData).CCENTER_CODE = loTempResult.CCENTER_CODE;
-                    break;
-                case "CMANAGER_NAME":
-                    var loTempResult2 = R_FrontUtility.ConvertObjectToObject<GSL01000DTO>(eventArgs.Result);
-                    ((GSM04000DTO)eventArgs.ColumnData).CMANAGER_NAME = loTempResult2.CUSER_ID;
-                    break;
-            }
         }
         #endregion
 

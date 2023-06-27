@@ -16,7 +16,8 @@
                 AllowDeleteRow="true"
                 AllowEditRow="true"
                 R_Before_Open_Grid_Lookup="Dept_Before_Open_Lookup"
-                R_After_Open_Grid_Lookup="Dept_After_Open_Lookup">
+                R_After_Open_Grid_Lookup="Dept_After_Open_Lookup"
+                Width="900px">
             <R_GridColumns>
                 <R_GridTextColumn FieldName="@nameof(GSM04000DTO.CDEPT_CODE)" HeaderText="Department Code" R_EnableAdd></R_GridTextColumn>
                 <R_GridTextColumn FieldName="@nameof(GSM04000DTO.CDEPT_NAME)" HeaderText="Department Name" R_EnableAdd R_EnableEdit></R_GridTextColumn>
@@ -32,15 +33,15 @@
     </R_ItemLayout>
     <R_StackLayout xs="4" Row="true" Class="m-1">
         <R_ItemLayout xs="1">
-            <R_Button OnClick="@DownloadTemplateAsync">
+            <R_Button OnClick="@DownloadTemplateAsync" R_ConductorGridSource="_conGridDeptRef" R_EnableOther>
                 <R_Label>Template</R_Label>
             </R_Button>
         </R_ItemLayout>
         <R_ItemLayout xs="1" Class="ms-1">
-            <R_Popup R_Before_Open_Popup="R_Before_Open_PopupUpload" Enabled="false"><R_Label>Upload</R_Label></R_Popup>
+            <R_Popup R_Before_Open_Popup="R_Before_Open_PopupUpload" R_ConductorGridSource="_conGridDeptRef"  Enabled="false"><R_Label>Upload</R_Label></R_Popup>
         </R_ItemLayout>
         <R_ItemLayout xs="1" Class="ms-1">
-            <R_Popup @ref="R_PopupAssignUser" R_Before_Open_Popup="@R_Before_Open_PopupAssignUser" R_After_Open_Popup="@R_After_Open_PopupAssignUser">
+            <R_Popup @ref="R_PopupAssignUser" R_Before_Open_Popup="@R_Before_Open_PopupAssignUser" R_After_Open_Popup="@R_After_Open_PopupAssignUser" R_ConductorGridSource="_conGridDeptRef" R_EnableOther>
                 <R_Label>Assign User</R_Label>
             </R_Popup>
         </R_ItemLayout>
@@ -54,26 +55,25 @@
         </R_ItemLayout>
     </R_StackLayout>
 
-    <R_StackLayout Row Class="mt-4">
-        <H5>ASSIGNED USERS</H5>
+    <R_StackLayout Row Class="mt-5">
+        <R_Label FontStyle="R_eFontStyle.Bold">ASSIGNED USERS</R_Label>
     </R_StackLayout>
-
     <R_StackLayout Row>
-        <R_ItemLayout xs="3">
+        <R_ItemLayout xs="1">
             <R_Label>Department</R_Label>
         </R_ItemLayout>
-        <R_ItemLayout xs="3">
+        <R_ItemLayout xs="2">
             <R_TextBox @bind-Value="@_deptUserViewModel.Data.CDEPT_CODE"
                        R_ConductorGridSource="@_conGridDeptUserRef" Enabled=false></R_TextBox>
         </R_ItemLayout>
-        <R_ItemLayout xs="6">
+        <R_ItemLayout xs="3">
             <R_TextBox @bind-Value="@_deptUserViewModel.Data.CDEPT_NAME"
                        R_ConductorGridSource="@_conGridDeptUserRef" Enabled=false></R_TextBox>
         </R_ItemLayout>
     </R_StackLayout>
 
     <R_StackLayout Row>
-        <R_ItemLayout xs="6">
+        <R_ItemLayout xs="9">
             <R_Grid @ref="_gridDeptUserRef"
                     DataSource="@_deptUserViewModel.DepartmentUserList"
                     R_ConductorGridSource="_conGridDeptUserRef"

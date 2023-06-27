@@ -4,12 +4,17 @@
 @using LMM03700Common;
 @inherits R_Page
 
-<R_ItemLayout Class="my-4" xs="3">
-    <R_ComboBox Data="@_viewTCGModel.PropertyList"
-    @bind-Value="@_viewTCGModel._propertyId"
-                ValueField="@nameof(PropertyDTO.CPROPERTY_ID)"
-                TextField="@nameof(PropertyDTO.CPROPERTY_NAME)" OnChanged="@DpOnchanged"></R_ComboBox>
-</R_ItemLayout>
+<R_StackLayout Class="my-4" Row>
+    <R_ItemLayout xs="1">
+        <R_Label FontStyle="R_eFontStyle.Bold">PROPERTY</R_Label>
+    </R_ItemLayout>
+    <R_ItemLayout xs="2">
+        <R_ComboBox Data="@_viewTCGModel.PropertyList"
+                    @bind-Value="@_viewTCGModel._propertyId"
+                    ValueField="@nameof(PropertyDTO.CPROPERTY_ID)"
+                    TextField="@nameof(PropertyDTO.CPROPERTY_NAME)" OnChanged="@DpOnchanged"></R_ComboBox>
+    </R_ItemLayout>
+</R_StackLayout>
 <R_TabStrip OnActiveTabIndexChanged="ChangeTab">
     <R_TabStripTab Title="Tenant Classificaiton Group" id="TGC">
         <R_StackLayout>
@@ -22,7 +27,8 @@
                         AllowAddNewRow="true"
                         AllowDeleteRow="true"
                         AllowEditRow="true"
-                        R_ServiceGetListRecord="@TCG_ServiceGetListRecord">
+                        R_ServiceGetListRecord="@TCG_ServiceGetListRecord"
+                        Width="1000px">
                     <R_GridColumns>
                         <R_GridTextColumn FieldName="@nameof(TenantClassificationGroupDTO.CTENANT_CLASSIFICATION_GROUP_ID)" HeaderText="Tenant Classification Group Id" R_EnableAdd></R_GridTextColumn>
                         <R_GridTextColumn FieldName="@nameof(TenantClassificationGroupDTO.CTENANT_CLASSIFICATION_GROUP_NAME)" HeaderText="Tenant Classification Group Name" R_EnableAdd R_EnableEdit></R_GridTextColumn>
@@ -50,7 +56,6 @@
             <R_ItemLayout xs="3">
                 <R_Grid @ref="@_gridT2_TCGRef"
                         DataSource="@_viewTCModel.TenantClassGrpList"
-                        Pageable="true"
                         R_ConductorGridSource="@_conT2_TCGRef"
                         R_GridType="@R_eGridType.Original"
                         R_ServiceGetListRecord="@T2_TCG_ServiceGetListRecord"

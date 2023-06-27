@@ -11,12 +11,12 @@ namespace GSM04000Common
         public string CDEPT_NAME { get; set; }
         public string CCENTER_CODE { get; set; }
         public string CCENTER_NAME { get; set; }
+        public string CMANAGER_CODE { get; set; }
         public string CMANAGER_NAME { get; set; }
         public bool LEVERYONE { get; set; }
         public bool LACTIVE { get; set; }
         public string CUPDATE_BY { get; set; }
         public DateTime DUPDATE_DATE { get; set; }
-
         public string CUSER_ID { get;set; }
     }
 }

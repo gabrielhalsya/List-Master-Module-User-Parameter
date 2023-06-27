@@ -25,6 +25,7 @@ namespace LMM00200Front
             try
             {
                 await _gridRef.R_RefreshGrid(null);
+                await _gridRef.AutoFitAllColumnsAsync();
             }
             catch (Exception ex)
             {

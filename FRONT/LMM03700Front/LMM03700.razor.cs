@@ -66,6 +66,7 @@ namespace LMM03700Front
             {
                 _viewTCModel._propertyId = _viewTCGModel._propertyId; //assign property_id as param grid
                 await _gridT1_TCGRef.R_RefreshGrid(null); //refresh grid tab 1
+                await _gridT1_TCGRef.AutoFitAllColumnsAsync();
                 if (_viewTCModel._Tab2IsActive) //the status tab Tab2IsActive will true on changed tab
                 {
                     await _gridT2_TCGRef.R_RefreshGrid(null);
@@ -380,6 +381,10 @@ namespace LMM03700Front
             R_Exception loEx = new R_Exception();
             try
             {
+                if (eventArgs.Result == null)
+                {
+                    return;
+                }
                 var loResult = (List<SelectedTenantGridPopupDTO>)eventArgs.Result;
                 var loSelectedResult = loResult.Where(obj => (bool)obj.GetType().GetProperty("LSELECTED").GetValue(obj)).ToList();
 
@@ -415,6 +420,10 @@ namespace LMM03700Front
             R_Exception loEx = new R_Exception();
             try
             {
+                if (eventArgs.Result==null)
+                {
+                    return;
+                }
                 _viewTCModel._tenantClassificationId = (string)eventArgs.Result;
                 await _gridTCRef.R_RefreshGrid(null);
             }
