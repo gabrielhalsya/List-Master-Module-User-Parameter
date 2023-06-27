@@ -1,6 +1,7 @@
 ﻿using LMM03700Common.DTO_s;
 using LMM03700Model;
 using R_BlazorFrontEnd.Controls;
+using R_BlazorFrontEnd.Controls.DataControls;
 using R_BlazorFrontEnd.Controls.Events;
 using R_BlazorFrontEnd.Controls.MessageBox;
 using R_BlazorFrontEnd.Exceptions;
@@ -10,8 +11,10 @@ namespace LMM03700Front
 {
     public partial class PopupMoveTenant : R_Page
     {
+        private R_ConductorGrid _conTenantToMoveRef;
+        private R_Grid<SelectedTenantGridPopupDTO> _Grid;
+
         private LMM03710ViewModel _viewModelTC = new LMM03710ViewModel();
-        private R_Grid<TenantGridPopupDTO> _Grid;
         protected override async Task R_Init_From_Master(object poParameter)
         {
             var loEx = new R_Exception();
@@ -46,7 +49,6 @@ namespace LMM03700Front
             }
             R_DisplayException(loEx);
         }
-
         private async Task TenantClassDetail(object poParam)
         {
             var loEx = new R_Exception();
@@ -63,7 +65,6 @@ namespace LMM03700Front
             }
             R_DisplayException(loEx);
         }
-
         private async Task R_ServiceGetListRecordAsync(R_ServiceGetListRecordEventArgs eventArgs)
         {
             var loEx = new R_Exception();
@@ -80,21 +81,50 @@ namespace LMM03700Front
 
             R_DisplayException(loEx);
         }
+        
+        #region ProcesButton
         public async Task Button_OnClickOkAsync()
-            {
-            var loData = R_FrontUtility.ConvertObjectToObject<TenantGridPopupDTO>(_Grid.GetCurrentData());
-            if (_viewModelTC._toTenantClassificationId == ""|| _viewModelTC._toTenantClassificationId == null)
-            {
-                R_MessageBox.Show("","Please select Tennat Classification Destination",R_eMessageBoxButtonType.OK);
-                return;
-            }
-            _viewModelTC._fromTenantClassificationId = _viewModelTC.TenantClassForMoveTenant.CTENANT_CLASSIFICATION_ID;
-            await _viewModelTC.MoveTenant(new List<string>() { loData.CTENANT_ID });
-            await this.Close(true, loData);
+        {
+            await _conTenantToMoveRef.R_SaveBatch();
         }
         public async Task Button_OnClickCloseAsync()
         {
             await this.Close(true, null);
         }
+        #endregion
+        #region Save Batch
+        private void R_BeforeSaveBatch(R_BeforeSaveBatchEventArgs events)
+        {
+            if (_viewModelTC._toTenantClassificationId == "" || _viewModelTC._toTenantClassificationId == null)
+            {
+                R_MessageBox.Show("", "Please select Tennat Classification Destination", R_eMessageBoxButtonType.OK);
+                return;
+            }
+        }
+        private async Task R_ServiceSaveBatchAsync(R_ServiceSaveBatchEventArgs eventArgs)
+        {
+            var loEx = new R_Exception();
+
+            try
+            {
+                var loData = (List<SelectedTenantGridPopupDTO>)eventArgs.Data;
+                var loListIdTenantString = loData.Where(dto => dto.LSELECTED).Select(dto => dto.CTENANT_ID).ToList();
+                _viewModelTC._fromTenantClassificationId = _viewModelTC.TenantClassForMoveTenant.CTENANT_CLASSIFICATION_ID;
+                await _viewModelTC.MoveTenant(loListIdTenantString);
+            }
+            catch (Exception ex)
+            {
+                loEx.Add(ex);
+            }
+
+            loEx.ThrowExceptionIfErrors();
+        }
+        private async Task R_AfterSaveBatchAsync(R_AfterSaveBatchEventArgs eventArgs)
+        {
+            await this.Close(true, _viewModelTC._toTenantClassificationId);
+        }
+        #endregion
+
+        
     }
 }

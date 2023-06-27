@@ -21,8 +21,7 @@ namespace GSM04000Model
         public R_ContextHeader _ContextHeader { get; set; }
         public string DepartmentCode { get; set; } = "";
         public bool ActiveDept { get; set; }
-        public bool IsUserDeptExist { get; set; }=false;
-
+        public bool IsUserDeptExist { get; set; }
 
         public async Task GetDepartmentList()
         {
@@ -119,6 +118,21 @@ namespace GSM04000Model
                 R_FrontContext.R_SetContext(ContextConstant.CDEPT_CODE, DepartmentCode);
                 var loResult = await _model.CheckIsUserDeptExistAsync();
                 IsUserDeptExist = loResult.UserDeptExist;
+            }
+            catch (Exception ex)
+            {
+                loEx.Add(ex);
+            }
+            loEx.ThrowExceptionIfErrors();
+        }
+
+        public async Task DeleteAssignedUserWhenChangeEveryone()
+        {
+            R_Exception loEx = new R_Exception();
+            try
+            {
+                R_FrontContext.R_SetContext(ContextConstant.CDEPT_CODE, DepartmentCode);
+                var loResult = await _model.DeleteDeptUserWhenChaningEveryoneAsync();
             }
             catch (Exception ex)
             {

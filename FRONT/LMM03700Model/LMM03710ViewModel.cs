@@ -19,8 +19,9 @@ namespace LMM03700Model
         public ObservableCollection<TenantClassificationGroupDTO> TenantClassGrpList { get; set; } = new ObservableCollection<TenantClassificationGroupDTO>();
         public ObservableCollection<TenantClassificationDTO> TenantClassList { get; set; } = new ObservableCollection<TenantClassificationDTO>();
         public ObservableCollection<TenantDTO> AssignedTenantList { get; set; } = new ObservableCollection<TenantDTO>();
-        public ObservableCollection<TenantGridPopupDTO> TenantToAssignList { get; set; } = new ObservableCollection<TenantGridPopupDTO>();
-        public ObservableCollection<TenantGridPopupDTO> TenantToMoveList { get; set; } = new ObservableCollection<TenantGridPopupDTO>();
+        //public ObservableCollection<TenantGridPopupDTO> TenantToAssignList { get; set; } = new ObservableCollection<TenantGridPopupDTO>();
+        public ObservableCollection<SelectedTenantGridPopupDTO> TenantToAssignList { get; set; } = new ObservableCollection<SelectedTenantGridPopupDTO>();
+        public ObservableCollection<SelectedTenantGridPopupDTO> TenantToMoveList { get; set; } = new ObservableCollection<SelectedTenantGridPopupDTO>();
         public TenantClassificationGroupDTO TenantClassiGrp { get; set; } = new TenantClassificationGroupDTO();
         public TenantClassificationDTO TenantClass { get; set; } = new TenantClassificationDTO();
 
@@ -30,10 +31,10 @@ namespace LMM03700Model
 
         //end-formove popup
 
-        public string _propertyId { get; set; } = "";
+        public string _propertyId { get; set; }
         public bool _Tab2IsActive { get; set; } = false;
-        public string _tenantClassificationId = "";
-        public string _tenantClassificationGroupId = "";
+        public string _tenantClassificationId { get; set; }
+        public string _tenantClassificationGroupId { get; set; }
 
         //this string is using to move tenant
         public string _toTenantClassificationId = "";
@@ -162,7 +163,9 @@ namespace LMM03700Model
                 R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.CTENANT_CLASSIFICATION_ID, poParam.CTENANT_CLASSIFICATION_ID);
                 R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.CTENANT_CLASSIFICATION_GROUP_ID, poParam.CTENANT_CLASSIFICATION_GROUP_ID);
                 var loResult = await _model.GetTenanToAssigntListAsync();
-                TenantToAssignList = new ObservableCollection<TenantGridPopupDTO>(loResult);
+                //TenantToAssignList = new ObservableCollection<TenantGridPopupDTO>(loResult);
+                var loResultWithSelectProperty = R_FrontUtility.ConvertCollectionToCollection<SelectedTenantGridPopupDTO>(loResult);
+                TenantToAssignList = new ObservableCollection<SelectedTenantGridPopupDTO>(loResultWithSelectProperty);
             }
             catch (Exception ex)
             {
@@ -170,7 +173,7 @@ namespace LMM03700Model
             }
             loEx.ThrowExceptionIfErrors();
         }
-        public async Task AssignTenantCategory(List<TenantGridPopupDTO> poListParam)
+        public async Task AssignTenantCategory(IList<TenantGridPopupDTO> poListParam)
         {
             R_Exception loException = new R_Exception();
             try
@@ -215,7 +218,8 @@ namespace LMM03700Model
                 R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.CPROPERTY_ID, poParam.CPROPERTY_ID);
                 R_FrontContext.R_SetStreamingContext(LMM03700ContextConstant.CTENANT_CLASSIFICATION_ID, poParam.CTENANT_CLASSIFICATION_ID);
                 var loResult = await _model.GetTenanToMoveListAsync();
-                TenantToMoveList = new ObservableCollection<TenantGridPopupDTO>(loResult);
+                var loResultWithSelectProperty = R_FrontUtility.ConvertCollectionToCollection<SelectedTenantGridPopupDTO>(loResult);
+                TenantToMoveList = new ObservableCollection<SelectedTenantGridPopupDTO>(loResultWithSelectProperty);
             }
             catch (Exception ex)
             {
@@ -242,14 +246,6 @@ namespace LMM03700Model
         EndBlock:
             loException.ThrowExceptionIfErrors();
         }
-        public async Task GetTenantClassForMoveRecord(TenantClassificationDTO loParam)
-        {
-            loParam.CPROPERTY_ID = _propertyId;
-            loParam.CTENANT_CLASSIFICATION_GROUP_ID = _tenantClassificationGroupId;
-            var loResult = await _model.R_ServiceGetRecordAsync(loParam);
-            TenantClassForMoveTenant = R_FrontUtility.ConvertObjectToObject<TenantClassificationDTO>(loResult);
-        }
-
         public async Task GetTenantClassRecordForMove(TenantClassificationDTO loParam)
         {
             loParam.CPROPERTY_ID = _propertyId;

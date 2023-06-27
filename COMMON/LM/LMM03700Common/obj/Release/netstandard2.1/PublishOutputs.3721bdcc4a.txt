@@ -1,0 +1,9 @@
+C:\Users\gabriel.codeid\Desktop\LMM03700Common.dll
+C:\Users\gabriel.codeid\Desktop\LMM03700Common.deps.json
+C:\Users\gabriel.codeid\Desktop\LMM03700Common.pdb
+C:\Users\gabriel.codeid\Desktop\R_APICommon.dll
+C:\Users\gabriel.codeid\Desktop\R_APICommonDTO.dll
+C:\Users\gabriel.codeid\Desktop\R_CommonFrontBackAPI.dll
+C:\Users\gabriel.codeid\Desktop\R_Security.dll
+C:\Users\gabriel.codeid\Desktop\R_ContextBackEnd.dll
+C:\Users\gabriel.codeid\Desktop\R_ContextEnumAndInterface.dll

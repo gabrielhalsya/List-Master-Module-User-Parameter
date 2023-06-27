@@ -1,0 +1,13 @@
+C:\Users\gabriel.codeid\Desktop\test\LMM00200Model.dll
+C:\Users\gabriel.codeid\Desktop\test\LMM00200Model.deps.json
+C:\Users\gabriel.codeid\Desktop\test\LMM00200Model.pdb
+C:\Users\gabriel.codeid\Desktop\test\LMM00200Common.dll
+C:\Users\gabriel.codeid\Desktop\test\R_APIClient.dll
+C:\Users\gabriel.codeid\Desktop\test\R_APICommonDTO.dll
+C:\Users\gabriel.codeid\Desktop\test\R_BlazorFrontEnd.dll
+C:\Users\gabriel.codeid\Desktop\test\R_BusinessObjectFront.dll
+C:\Users\gabriel.codeid\Desktop\test\R_CommonFrontBackAPI.dll
+C:\Users\gabriel.codeid\Desktop\test\R_ContextFrontEnd.dll
+C:\Users\gabriel.codeid\Desktop\test\R_ContextEnumAndInterface.dll
+C:\Users\gabriel.codeid\Desktop\test\R_AuthenticationEnumAndInterface.dll
+C:\Users\gabriel.codeid\Desktop\test\LMM00200Common.pdb

@@ -1,0 +1,17 @@
+D:\repos\BS Program\SOURCE\COMMON\LM\LMM00200Common\bin\Release\netstandard2.1\LMM00200Common.deps.json
+D:\repos\BS Program\SOURCE\COMMON\LM\LMM00200Common\bin\Release\netstandard2.1\LMM00200Common.dll
+D:\repos\BS Program\SOURCE\COMMON\LM\LMM00200Common\bin\Release\netstandard2.1\LMM00200Common.pdb
+D:\repos\BS Program\SOURCE\COMMON\LM\LMM00200Common\bin\Release\netstandard2.1\R_APICommon.dll
+D:\repos\BS Program\SOURCE\COMMON\LM\LMM00200Common\bin\Release\netstandard2.1\R_APICommonDTO.dll
+D:\repos\BS Program\SOURCE\COMMON\LM\LMM00200Common\bin\Release\netstandard2.1\R_CommonFrontBackAPI.dll
+D:\repos\BS Program\SOURCE\COMMON\LM\LMM00200Common\bin\Release\netstandard2.1\R_Security.dll
+D:\repos\BS Program\SOURCE\COMMON\LM\LMM00200Common\bin\Release\netstandard2.1\R_ContextBackEnd.dll
+D:\repos\BS Program\SOURCE\COMMON\LM\LMM00200Common\bin\Release\netstandard2.1\R_ContextEnumAndInterface.dll
+D:\repos\BS Program\SOURCE\COMMON\LM\LMM00200Common\obj\Release\netstandard2.1\LMM00200Common.csproj.AssemblyReference.cache
+D:\repos\BS Program\SOURCE\COMMON\LM\LMM00200Common\obj\Release\netstandard2.1\LMM00200Common.GeneratedMSBuildEditorConfig.editorconfig
+D:\repos\BS Program\SOURCE\COMMON\LM\LMM00200Common\obj\Release\netstandard2.1\LMM00200Common.AssemblyInfoInputs.cache
+D:\repos\BS Program\SOURCE\COMMON\LM\LMM00200Common\obj\Release\netstandard2.1\LMM00200Common.AssemblyInfo.cs
+D:\repos\BS Program\SOURCE\COMMON\LM\LMM00200Common\obj\Release\netstandard2.1\LMM00200Common.csproj.CoreCompileInputs.cache
+D:\repos\BS Program\SOURCE\COMMON\LM\LMM00200Common\obj\Release\netstandard2.1\LMM00200Common.csproj.CopyComplete
+D:\repos\BS Program\SOURCE\COMMON\LM\LMM00200Common\obj\Release\netstandard2.1\LMM00200Common.dll
+D:\repos\BS Program\SOURCE\COMMON\LM\LMM00200Common\obj\Release\netstandard2.1\LMM00200Common.pdb

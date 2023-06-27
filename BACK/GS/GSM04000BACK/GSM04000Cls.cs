@@ -1,4 +1,5 @@
-﻿
+﻿using Castle.Core.Internal;
+using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using GSM04000Common;
 using R_BackEnd;
 using R_Common;
@@ -10,6 +11,7 @@ using System.Data.Common;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
+using System.Windows.Input;
 
 namespace GSM04000Back
 {
@@ -247,19 +249,17 @@ namespace GSM04000Back
         {
             R_Exception loException = new R_Exception();
             bool loRtn = true;
-            R_Db loDb;
-            String lcCmd;
             try
             {
-
-                lcCmd = "SELECT TOP 1 1 FROM GSM_DEPT_USER (NOLOCK) WHERE CCOMPANY_ID = '{0}' AND CDEPT_CODE = '{1}'";
-                loDb = new R_Db();
-                var loRtnTemp = loDb.SqlExecObjectQuery<GSM04000DTO>(
-                    lcCmd,
-                    poEntity.CCOMPANY_ID,
-                    poEntity.CDEPT_CODE
-                    ).FirstOrDefault();
-                loRtn = loRtnTemp != null ? true : false;
+                R_Db loDb = new R_Db();
+                DbConnection loConn = loDb.GetConnection("R_DefaultConnectionString");
+                string lcQuery = $"SELECT TOP 1 1 FROM GSM_DEPT_USER (NOLOCK) WHERE CCOMPANY_ID = @CCOMPANY_ID AND CDEPT_CODE = @CDEPT_CODE";
+                DbCommand loCmd = loDb.GetCommand();
+                loCmd.CommandText = lcQuery;
+                loDb.R_AddCommandParameter(loCmd, "@CCOMPANY_ID", DbType.String, 50, poEntity.CCOMPANY_ID);
+                loDb.R_AddCommandParameter(loCmd, "@CDEPT_CODE", DbType.String, 50, poEntity.CDEPT_CODE);
+                var loResult = loDb.SqlExecQuery(loConn, loCmd, true);
+                loRtn = loResult == null ? false : true;
             }
             catch (Exception ex)
             {
@@ -270,32 +270,33 @@ namespace GSM04000Back
             return loRtn;
         }
 
-        //public void DeleteAssignedUserDept(GSM04000DTO poEntity)
-        //{
+        public void DeleteAssignedUserDept(GSM04000DTO poEntity)
+        {
+            R_Exception loEx = new R_Exception();
+            string lcCmd = "";
+            R_Db loDb;
+            DbCommand loCmd;
+            DbConnection loConn;
+            try
+            {
+                loDb = new R_Db();
+                loConn = loDb.GetConnection();
+                loCmd = loDb.GetCommand();
+                lcCmd = "DELETE GSM_DEPT_USER WHERE CCOMPANY_ID = @CCOMPANY_ID AND CDEPT_CODE = @CDEPT_CODE";
+                loCmd.CommandType = CommandType.Text;
+                loCmd.CommandText = lcCmd;
+                loDb.R_AddCommandParameter(loCmd, "@CCOMPANY_ID", DbType.String, 8, poEntity.CCOMPANY_ID);
+                loDb.R_AddCommandParameter(loCmd, "@CDEPT_CODE", DbType.String, 8, poEntity.CDEPT_CODE);
+                loDb = new R_Db();
+                loDb.SqlExecNonQuery(loConn,loCmd,true);
+            }
+            catch (Exception ex)
+            {
+                loEx.Add(ex);
+            }
+        EndBlock:
+            loEx.ThrowExceptionIfErrors();
 
-        //    R_Exception loEx = new R_Exception();
-        //    string lcCmd = "";
-        //    R_Db loDb;
-        //    DbCommand loCmd;
-        //    DbConnection loConn = null;
-        //    try
-        //    {
-        //        loDb = new R_Db();
-        //        loConn = loDb.GetConnection();
-        //        loCmd = loDb.GetCommand();
-        //        lcCmd = "DELETE GSM_DEPT_USER WHERE CCOMPANY_ID = '{0}' AND CDEPT_CODE = '{1}'";
-        //        loCmd.CommandType = CommandType.StoredProcedure;
-        //        loCmd.CommandText = lcCmd;
-        //        loDb = new R_Db();
-        //        loDb.SqlExecNonQuery(loConn, lcCmd, false);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        loEx.Add(ex);
-        //    }
-        //EndBlock:
-        //    loEx.ThrowExceptionIfErrors();
-
-        //}
+        }
     }
 }

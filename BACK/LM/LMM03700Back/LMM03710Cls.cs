@@ -241,6 +241,8 @@ namespace LMM03700Back
             loEx.ThrowExceptionIfErrors();
             return loRtn;
         }
+
+        #region AssignTenant
         public List<TenantGridPopupDTO> GetTenanToAssigntList(TenantClassificationDBListMaintainParamDTO loParam)
         {
             List<TenantGridPopupDTO> loRtn = new List<TenantGridPopupDTO>();
@@ -325,8 +327,9 @@ namespace LMM03700Back
             }
             loEx.ThrowExceptionIfErrors();
         }
+        #endregion
 
-        #region movetenant
+        #region MoveTenant
         public List<TenantGridPopupDTO> GetTenanToMoveList(TenantClassificationDBListMaintainParamDTO loParam)
         {
             List<TenantGridPopupDTO> loRtn = new List<TenantGridPopupDTO>();

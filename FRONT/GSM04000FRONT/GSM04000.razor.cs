@@ -58,7 +58,7 @@ namespace GSM04000Front
             {
                 await _deptViewModel.GetDepartmentList();
                 eventArgs.ListEntityResult = _deptViewModel.DepartmentList;
-                if(eventArgs.ListEntityResult==null)
+                if (eventArgs.ListEntityResult == null)
                 {
                     R_PopupActiveInactive.Enabled = false;
                     R_PopupAssignUser.Enabled = false;
@@ -137,11 +137,18 @@ namespace GSM04000Front
             try
             {
                 var loData = (GSM04000DTO)eventArgs.Data;
-
-                await _deptViewModel.CheckIsUserDeptExist();
-                if (_deptViewModel.IsUserDeptExist)
+                if (_deptViewModel.Department.LEVERYONE == false && loData.LEVERYONE == true)
                 {
-                    R_MessageBox.Show("Delete Confirmation", "Changing Value Everyone will delete User for this Department", R_eMessageBoxButtonType.OKCancel);
+                    _deptViewModel.CheckIsUserDeptExist();
+                    if (_deptViewModel.IsUserDeptExist)
+                    {
+                        var loConfirm = await R_MessageBox.Show("Delete Confirmation", "Changing Value Everyone will delete User for this Department", R_eMessageBoxButtonType.OKCancel);
+                        if (loConfirm == R_eMessageBoxResult.Cancel)
+                        {
+                            eventArgs.Cancel = true;
+                        }
+                        await _deptViewModel.DeleteAssignedUserWhenChangeEveryone();
+                    }
                 }
             }
             catch (Exception ex)
@@ -157,7 +164,7 @@ namespace GSM04000Front
         {
             var loEx = new R_Exception();
             try
-            { 
+            {
                 //R_MessageBox.Show("Confirm", "Change this will delete assigned user on this department", R_eMessageBoxButtonType.OKCancel);
                 await _deptViewModel.SaveDepartment((GSM04000DTO)eventArgs.Data, (eCRUDMode)eventArgs.ConductorMode);
                 eventArgs.Result = _deptViewModel.Department;
@@ -184,15 +191,6 @@ namespace GSM04000Front
             }
             loEx.ThrowExceptionIfErrors();
         }
-        //private async Task DeptGrid_OnChecked(R_SetEventArgs eventArgs)
-        //{
-        //    //var loParam = (GSM04000DTO)eventArgs.
-        //    if (eventArgs.Enable)
-        //    {
-        //        R_MessageBox.Show("Confirm","Change this will delete assigned user on this department",R_eMessageBoxButtonType.OKCancel);
-        //    }
-        //}
-
         #endregion
 
         #region DepartmentUser(CHILD)
@@ -307,7 +305,7 @@ namespace GSM04000Front
         private R_GridLookupColumn LookupColumn;
         private void Dept_Before_Open_Lookup(R_BeforeOpenGridLookupColumnEventArgs eventArgs)
         {
-            
+
             //membedakan columname dan mengarahkan tampil lookup
             switch (eventArgs.ColumnName)
             {
@@ -333,7 +331,7 @@ namespace GSM04000Front
                 case "CCENTER":
                     var loTempResult = R_FrontUtility.ConvertObjectToObject<GSL00900DTO>(eventArgs.Result);
                     ((GSM04000DTO)eventArgs.ColumnData).CCENTER_CODE = loTempResult.CCENTER_CODE;
-                    break; 
+                    break;
                 case "CMANAGER_NAME":
                     var loTempResult2 = R_FrontUtility.ConvertObjectToObject<GSL01000DTO>(eventArgs.Result);
                     ((GSM04000DTO)eventArgs.ColumnData).CMANAGER_NAME = loTempResult2.CUSER_ID;

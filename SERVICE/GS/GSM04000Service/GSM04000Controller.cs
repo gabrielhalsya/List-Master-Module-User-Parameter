@@ -17,18 +17,18 @@ namespace GSM04000Service
         public IAsyncEnumerable<GSM04000DTO> GetGSM04000List()
         {
             R_Exception loException = new R_Exception();
-            List<GSM04000DTO> loRtnTemp= null;
+            List<GSM04000DTO> loRtnTemp = null;
             GSM04000ListDBParameterDTO loDbParam;
             GSM04000Cls loCls;
             try
-            {                 
+            {
                 loCls = new GSM04000Cls();
                 loRtnTemp = loCls.GetList(new GSM04000ListDBParameterDTO()
                 {
                     CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID,
                     CUSER_LOGIN_ID = R_BackGlobalVar.USER_ID
-                });                
-            }   
+                });
+            }
             catch (Exception ex)
             {
                 loException.Add(ex);
@@ -145,15 +145,14 @@ namespace GSM04000Service
         [HttpPost]
         public GSM04000CheckUserExistResultDTO CheckIsUserDeptExist()
         {
-
             R_Exception loException = new R_Exception();
-            GSM04000CheckUserExistResultDTO loRtn=null;
+            GSM04000CheckUserExistResultDTO loRtn = null;
             GSM04000Cls loCls;
             GSM04000DTO loParameter = null;
             try
             {
                 loCls = new GSM04000Cls(); //create cls class instance
-                loRtn=new GSM04000CheckUserExistResultDTO();            
+                loRtn = new GSM04000CheckUserExistResultDTO();
                 loParameter = new GSM04000DTO();
                 loParameter.CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID;
                 loParameter.CDEPT_CODE = R_Utility.R_GetStreamingContext<string>(ContextConstant.CDEPT_CODE);
@@ -168,5 +167,27 @@ namespace GSM04000Service
             return loRtn;
         }
 
+        [HttpPost]
+        public GSM04000DeleteAssignedUserWhenEveryoneTrueDTO DeleteDeptUserWhenChaningEveryone()
+        {
+            R_Exception loException = new R_Exception();
+            GSM04000Cls loCls;
+            GSM04000DTO loParameter = null;
+            try
+            {
+                loCls = new GSM04000Cls(); //create cls class instance
+                loCls.DeleteAssignedUserDept(new GSM04000DTO() { 
+                    CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID, 
+                    CDEPT_CODE = R_Utility.R_GetStreamingContext<string>(ContextConstant.CDEPT_CODE)
+            });
+        }
+            catch (Exception ex)
+            {
+                loException.Add(ex);
+            }
+    EndBlock:
+            loException.ThrowExceptionIfErrors();
+            return new GSM04000DeleteAssignedUserWhenEveryoneTrueDTO() { LSUCCESS = true};
+}
     }
 }

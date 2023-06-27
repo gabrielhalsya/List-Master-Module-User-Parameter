@@ -234,7 +234,7 @@ namespace LMM03700Front
                 var loParam = R_FrontUtility.ConvertObjectToObject<TenantClassificationDTO>(eventArgs.Data);
                 _viewTCModel._tenantClassificationGroupId = loParam.CTENANT_CLASSIFICATION_GROUP_ID;
                 await _gridTCRef.R_RefreshGrid(null);
-                await _gridTRef.R_RefreshGrid(null);
+                _viewTCModel.AssignedTenantList = null;
             }
             catch (Exception ex)
             {
@@ -380,10 +380,13 @@ namespace LMM03700Front
             R_Exception loEx = new R_Exception();
             try
             {
-                var loResult = (TenantGridPopupDTO)eventArgs.Result;
-                if (loResult != null)
+                var loResult = (List<SelectedTenantGridPopupDTO>)eventArgs.Result;
+                var loSelectedResult = loResult.Where(obj => (bool)obj.GetType().GetProperty("LSELECTED").GetValue(obj)).ToList();
+
+                var loAssignTenantParam = R_FrontUtility.ConvertCollectionToCollection<TenantGridPopupDTO>(loSelectedResult);
+                if (loAssignTenantParam.Count > 0)
                 {
-                    await _viewTCModel.AssignTenantCategory(new List<TenantGridPopupDTO>() { loResult });
+                    await _viewTCModel.AssignTenantCategory(loAssignTenantParam);
                     await _gridTRef.R_RefreshGrid(null);
                 }
             }
@@ -396,7 +399,6 @@ namespace LMM03700Front
         #endregion
 
         #region Tab2-Move Tenant
-
         private void R_Before_Open_Popup_MoveTenant(R_BeforeOpenPopupEventArgs eventArgs)
         {
             var loParam = new TenantGridPopupDTO()
@@ -413,16 +415,7 @@ namespace LMM03700Front
             R_Exception loEx = new R_Exception();
             try
             {
-                //CARA 1
-                //var loResult = (TenantGridPopupDTO)eventArgs.Result;
-                //if (loResult != null)
-                //{
-                //    await _viewTCModel.MoveTenant(new List<string>() { loResult.CTENANT_ID });
-                //    await _gridTCRef.R_RefreshGrid(null);
-                //    await _gridTRef.R_RefreshGrid(null);
-                //}
-
-                //CARA 2 MOVETENANT DARI POPUP.CS
+                _viewTCModel._tenantClassificationId = (string)eventArgs.Result;
                 await _gridTCRef.R_RefreshGrid(null);
             }
             catch (Exception ex)

@@ -1,0 +1,140 @@
+{
+  "version": 3,
+  "targets": {
+    "net6.0": {
+      "LMM00200Back/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "LMM00200Common": "1.0.0",
+          "RSP_LM_MAINTAIN_USER_PARAMResources": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/LMM00200Back.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/LMM00200Back.dll": {}
+        }
+      },
+      "LMM00200Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.1",
+        "compile": {
+          "bin/placeholder/LMM00200Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/LMM00200Common.dll": {}
+        }
+      },
+      "RSP_LM_MAINTAIN_USER_PARAMResources/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.1",
+        "compile": {
+          "bin/placeholder/RSP_LM_MAINTAIN_USER_PARAMResources.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/RSP_LM_MAINTAIN_USER_PARAMResources.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "LMM00200Back/1.0.0": {
+      "type": "project",
+      "path": "../../../BACK/LM/LMM00200Back/LMM00200Back.csproj",
+      "msbuildProject": "../../../BACK/LM/LMM00200Back/LMM00200Back.csproj"
+    },
+    "LMM00200Common/1.0.0": {
+      "type": "project",
+      "path": "../../../COMMON/LM/LMM00200Common/LMM00200Common.csproj",
+      "msbuildProject": "../../../COMMON/LM/LMM00200Common/LMM00200Common.csproj"
+    },
+    "RSP_LM_MAINTAIN_USER_PARAMResources/1.0.0": {
+      "type": "project",
+      "path": "../../../BACK/LM/LM_SPR/RSP_LM_MAINTAIN_USER_PARAMResources/RSP_LM_MAINTAIN_USER_PARAMResources.csproj",
+      "msbuildProject": "../../../BACK/LM/LM_SPR/RSP_LM_MAINTAIN_USER_PARAMResources/RSP_LM_MAINTAIN_USER_PARAMResources.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net6.0": [
+      "LMM00200Back >= 1.0.0",
+      "LMM00200Common >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\gabriel.codeid\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "D:\\repos\\BS Program\\SOURCE\\SERVICE\\LM\\LMM00200Service\\LMM00200Service.csproj",
+      "projectName": "LMM00200Service",
+      "projectPath": "D:\\repos\\BS Program\\SOURCE\\SERVICE\\LM\\LMM00200Service\\LMM00200Service.csproj",
+      "packagesPath": "C:\\Users\\gabriel.codeid\\.nuget\\packages\\",
+      "outputPath": "D:\\repos\\BS Program\\SOURCE\\SERVICE\\LM\\LMM00200Service\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\gabriel.codeid\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net6.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {},
+        "https://nuget.telerik.com/v3/index.json": {},
+        "https://packagesource": {},
+        "https://www1.realta.net/realtanuget/nuget": {}
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "projectReferences": {
+            "D:\\repos\\BS Program\\SOURCE\\BACK\\LM\\LMM00200Back\\LMM00200Back.csproj": {
+              "projectPath": "D:\\repos\\BS Program\\SOURCE\\BACK\\LM\\LMM00200Back\\LMM00200Back.csproj"
+            },
+            "D:\\repos\\BS Program\\SOURCE\\COMMON\\LM\\LMM00200Common\\LMM00200Common.csproj": {
+              "projectPath": "D:\\repos\\BS Program\\SOURCE\\COMMON\\LM\\LMM00200Common\\LMM00200Common.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net6.0": {
+        "targetAlias": "net6.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.AspNetCore.App": {
+            "privateAssets": "none"
+          },
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

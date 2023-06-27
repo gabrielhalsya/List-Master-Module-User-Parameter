@@ -14,7 +14,6 @@ namespace GSM04000Model
         private const string DEFAULT_CHECKPOINT_NAME = "api/GSM04000";
         private const string DEFAULT_MODULE = "GS";
 
-
         public GSM04000Model(
             string pcHttpClientName = DEFAULT_HTTP_NAME,
             string pcRequestServiceEndPoint = DEFAULT_CHECKPOINT_NAME,
@@ -91,6 +90,11 @@ namespace GSM04000Model
 
         }
 
+        public GSM04000CheckUserExistResultDTO CheckIsUserDeptExist()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<GSM04000CheckUserExistResultDTO> CheckIsUserDeptExistAsync()
         {
             R_Exception loEx = new R_Exception();
@@ -112,10 +116,30 @@ namespace GSM04000Model
             return loRtn;
         }
 
-        public GSM04000CheckUserExistResultDTO CheckIsUserDeptExist()
+        public GSM04000DeleteAssignedUserWhenEveryoneTrueDTO DeleteDeptUserWhenChaningEveryone()
         {
             throw new NotImplementedException();
         }
 
+        public async Task<GSM04000DeleteAssignedUserWhenEveryoneTrueDTO> DeleteDeptUserWhenChaningEveryoneAsync()
+        {
+            R_Exception loEx = new R_Exception();
+            GSM04000DeleteAssignedUserWhenEveryoneTrueDTO loRtn = new GSM04000DeleteAssignedUserWhenEveryoneTrueDTO();
+            try
+            {
+                R_HTTPClientWrapper.httpClientName = _HttpClientName;
+
+                loRtn = await R_HTTPClientWrapper.R_APIRequestObject<GSM04000DeleteAssignedUserWhenEveryoneTrueDTO>(
+                    _RequestServiceEndPoint,
+                    nameof(IGSM04000.DeleteDeptUserWhenChaningEveryone),
+                    DEFAULT_MODULE, _SendWithContext,
+                    _SendWithToken);
+            }
+            catch (Exception ex)
+            {
+                loEx.Add(ex);
+            }
+            return loRtn;
+        }
     }
 }
