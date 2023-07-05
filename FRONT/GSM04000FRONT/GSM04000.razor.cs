@@ -31,7 +31,6 @@ namespace GSM04000Front
         [Inject] private R_IExcel _excelProvider { get; set; }
         [Inject] IClientHelper _clientHelper { get; set; }
 
-
         private R_Popup R_PopupAssignUser;
         private R_Popup R_PopupActiveInactive;
         private string loLabelActiveInactive = "Active/Inactive";
@@ -141,7 +140,7 @@ namespace GSM04000Front
                 var loData = (GSM04000DTO)eventArgs.Data;
                 if (_deptViewModel.Department.LEVERYONE == false && loData.LEVERYONE == true)
                 {
-                    _deptViewModel.CheckIsUserDeptExist();
+                    _deptViewModel.CheckIsUserDeptExistAsync();
                     if (_deptViewModel.IsUserDeptExist)
                     {
                         var loConfirm = await R_MessageBox.Show("Delete Confirmation", "Changing Value Everyone will delete User for this Department", R_eMessageBoxButtonType.OKCancel);

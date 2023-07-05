@@ -1,0 +1,5 @@
+D:\repos\BS Program\SOURCE\BACK\GL\GLM00200Back\obj\Debug\net6.0\GLM00200Back.csproj.AssemblyReference.cache
+D:\repos\BS Program\SOURCE\BACK\GL\GLM00200Back\obj\Debug\net6.0\GLM00200Back.GeneratedMSBuildEditorConfig.editorconfig
+D:\repos\BS Program\SOURCE\BACK\GL\GLM00200Back\obj\Debug\net6.0\GLM00200Back.AssemblyInfoInputs.cache
+D:\repos\BS Program\SOURCE\BACK\GL\GLM00200Back\obj\Debug\net6.0\GLM00200Back.AssemblyInfo.cs
+D:\repos\BS Program\SOURCE\BACK\GL\GLM00200Back\obj\Debug\net6.0\GLM00200Back.csproj.CoreCompileInputs.cache

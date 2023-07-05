@@ -35,11 +35,9 @@ namespace GSM04000Model
         }
 
         public async Task<List<GSM04000DTO>> GetGSM04000ListAsync()
-
         {
             var loEx = new R_Exception();
             List<GSM04000DTO> loResult = null;
-
             try
             {
                 R_HTTPClientWrapper.httpClientName = DEFAULT_HTTP_NAME;
@@ -58,7 +56,6 @@ namespace GSM04000Model
             loEx.ThrowExceptionIfErrors();
 
             return loResult;
-
         }
 
         public GSM04000ActiveInactiveDTO RSP_GS_ACTIVE_INACTIVE_DEPTMethod()

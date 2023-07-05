@@ -1,0 +1,129 @@
+﻿@page "/GLM00200"
+@using GLM00200Common;
+@attribute [R_Page(Title = "RecurringList")]
+@inherits R_Page
+
+<R_PredefinedDock R_InstantiateDock="@Predef_RecurringEntry" R_AfterOpenPredefinedDock="@AfterPredef_RecurringEntry"></R_PredefinedDock>
+<R_PredefinedDock R_InstantiateDock="@Predef_ActualJournalList" R_AfterOpenPredefinedDock="@AfterPredef_ActualJournalList"></R_PredefinedDock>
+
+<R_StackLayout Row="true">
+    <R_ItemLayout>
+        <R_Label>Department</R_Label>
+    </R_ItemLayout>
+    <R_ItemLayout>
+        <R_Lookup @bind-value="_journalVM.SearchParam.CDEPT_CODE"></R_Lookup>
+    </R_ItemLayout>
+    <R_ItemLayout>
+        <R_TextBox @bind-value="_journalVM.SearchParam.CDEPT_NAME"></R_TextBox>
+    </R_ItemLayout>
+    <R_ItemLayout>
+        <R_Label>Next Journal Period</R_Label>
+    </R_ItemLayout>
+    <R_ItemLayout xs="1">
+        <R_ComboBox @bind-Value="@_journalVM.Journal.IPERIOD" Data="_journalVM.Period"></R_ComboBox>
+    </R_ItemLayout>
+    <R_ItemLayout xs="1">
+        <R_NumericTextBox @bind-Value="@_journalVM.Year" Min="2000"></R_NumericTextBox>
+    </R_ItemLayout>
+    <R_ItemLayout>
+        <R_Label>Status</R_Label>
+    </R_ItemLayout>
+    <R_ItemLayout>
+        <R_ComboBox @bind-Value="@_journalVM.SearchParam.CSTATUS" Data="_journalVM.Status"></R_ComboBox>
+    </R_ItemLayout>
+    <R_ItemLayout>
+        <R_TextBox @bind-Value="_journalVM.SearchParam.CSEARCH_TEXT"></R_TextBox>
+    </R_ItemLayout>
+    <R_ItemLayout>
+        <R_Button>Search</R_Button>
+    </R_ItemLayout>
+    <R_ItemLayout>
+        <R_Button>Show All</R_Button>
+    </R_ItemLayout>
+</R_StackLayout>
+
+<R_Grid @ref="@_gridJournal"
+        DataSource="@_journalVM.JournalList"
+        Pageable
+        R_ConductorGridSource="_conJournal"
+        R_GridType="R_eGridType.Original" R_ServiceGetListRecord="JournalGrid_ServiceGetListRecord" AllowAddNewRow="false"
+        AllowDeleteRow="false"
+        AllowEditRow="false"
+        Width="1000px">
+    <R_GridColumns>
+        <R_GridTextColumn FieldName="@nameof(JournalGridDTO.CREF_NO)" HeaderText="Reference No."></R_GridTextColumn>
+        <R_GridNumericColumn FieldName="@nameof(JournalGridDTO.IFREQUENCY)" HeaderText="Freq."></R_GridNumericColumn>
+        <R_GridNumericColumn FieldName="@nameof(JournalGridDTO.IPERIOD)" HeaderText="Interval(Month)"></R_GridNumericColumn>
+        <R_GridDatePickerColumn FieldName="@nameof(JournalGridDTO.CSTART_DATE)" HeaderText="Start Date"></R_GridDatePickerColumn>
+        <R_GridDatePickerColumn FieldName="@nameof(JournalGridDTO.CNEXT_DATE)" HeaderText="Next Date"></R_GridDatePickerColumn>
+        <R_GridTextColumn FieldName="@nameof(JournalGridDTO.CTRANS_DESC)" HeaderText="Description"></R_GridTextColumn>
+        <R_GridTextColumn FieldName="@nameof(JournalGridDTO.CCURRENCY_CODE)" HeaderText="Currency"></R_GridTextColumn>
+        <R_GridNumericColumn FieldName="@nameof(JournalGridDTO.NTRANS_AMOUNT)" HeaderText="Amount"></R_GridNumericColumn>
+        <R_GridTextColumn FieldName="@nameof(JournalGridDTO.CSTATUS_NAME)" HeaderText="Status"></R_GridTextColumn>
+        <R_GridTextColumn FieldName="@nameof(JournalGridDTO.CDOC_NO)" HeaderText="Document No."></R_GridTextColumn>
+        <R_GridDatePickerColumn FieldName="@nameof(JournalGridDTO.CDOC_DATE)" HeaderText="Document Date"></R_GridDatePickerColumn>
+        <R_GridTextColumn FieldName="@nameof(JournalGridDTO.CUPDATE_BY)" HeaderText="Updated By"></R_GridTextColumn>
+        <R_GridDatePickerColumn FieldName="@nameof(JournalGridDTO.DUPDATE_DATE)" HeaderText="Updated Date"></R_GridDatePickerColumn>
+        <R_GridTextColumn FieldName="@nameof(JournalGridDTO.CCREATE_BY)" HeaderText="Updated By"></R_GridTextColumn>
+        <R_GridDatePickerColumn FieldName="@nameof(JournalGridDTO.DCREATE_DATE)" HeaderText="Updated Date"></R_GridDatePickerColumn>
+    </R_GridColumns>
+</R_Grid>
+
+<R_ConductorGrid @ref="_conJournal"
+                 R_ViewModel="_journalVM"
+                      R_IsHeader
+                 R_ServiceGetRecord="JournalGrid_ServiceGetRecord"
+                 R_Display="JournalGrid_Display">
+</R_ConductorGrid>
+
+<R_Grid Class="mt-3" @ref="@_gridJournalDet"
+        DataSource="@_journalVM.JournaDetailList"
+        Pageable
+        R_ConductorGridSource="_conJournalDet"
+        R_GridType="R_eGridType.Original" R_ServiceGetListRecord="JournalDetGrid_ServiceGetListRecord" AllowAddNewRow="false"
+        AllowDeleteRow="false"
+        AllowEditRow="false"
+        Width="1000px">
+    <R_GridColumns>
+        <R_GridNumericColumn FieldName="@nameof(JournalDetailGridDTO.INO)" HeaderText="No."></R_GridNumericColumn>
+        <R_GridTextColumn FieldName="@nameof(JournalDetailGridDTO.CGLACCOUNT_NO)" HeaderText="Account No."></R_GridTextColumn>
+        <R_GridTextColumn FieldName="@nameof(JournalDetailGridDTO.CGLACCOUNT_NAME)" HeaderText="Account No"></R_GridTextColumn>
+        <R_GridTextColumn FieldName="@nameof(JournalDetailGridDTO.CCENTER_NAME)" HeaderText="Center"></R_GridTextColumn>
+        <R_GridTextColumn FieldName="@nameof(JournalDetailGridDTO.CDBCR)" HeaderText="D/C"></R_GridTextColumn>
+        <R_GridNumericColumn FieldName="@nameof(JournalDetailGridDTO.NDEBIT)" HeaderText="Debit"></R_GridNumericColumn>
+        <R_GridNumericColumn FieldName="@nameof(JournalDetailGridDTO.NCREDIT)" HeaderText="Credit"></R_GridNumericColumn>
+        <R_GridTextColumn FieldName="@nameof(JournalDetailGridDTO.CDETAIL_DESC)" HeaderText="Description"></R_GridTextColumn>
+        <R_GridNumericColumn FieldName="@nameof(JournalDetailGridDTO.NLDEBIT)" HeaderText="DB (Local)"></R_GridNumericColumn>
+        <R_GridNumericColumn FieldName="@nameof(JournalDetailGridDTO.NLCREDIT)" HeaderText="CR (Local)"></R_GridNumericColumn>
+        <R_GridNumericColumn FieldName="@nameof(JournalDetailGridDTO.NBDEBIT)" HeaderText="DB (Base)"></R_GridNumericColumn>
+        <R_GridNumericColumn FieldName="@nameof(JournalDetailGridDTO.NBCREDIT)" HeaderText="CR (Base)"></R_GridNumericColumn>
+    </R_GridColumns>
+</R_Grid>
+
+<R_ConductorGrid @ref="_conJournalDet"
+                 R_ViewModel="_journalVM"
+                 R_ConductorParent="_conJournal">
+</R_ConductorGrid>
+
+<R_StackLayout Row>
+    <R_ItemLayout xs="1">
+        <R_Button>Approve</R_Button>
+    </R_ItemLayout>
+    <R_ItemLayout xs="1">
+        <R_Button>Commit</R_Button>
+    </R_ItemLayout>
+    <R_ItemLayout xs="1">
+        <R_Button>Rapid Approval</R_Button>
+    </R_ItemLayout>
+    <R_ItemLayout xs="1">
+        <R_Button>Rapid Commit</R_Button>
+    </R_ItemLayout>
+    <R_ItemLayout xs="1" Class="ms-2">
+        <R_Popup>Upload</R_Popup>
+    </R_ItemLayout>
+    <R_ItemLayout xs="1">
+        <R_Button>Template</R_Button>
+    </R_ItemLayout>
+</R_StackLayout>
+
+

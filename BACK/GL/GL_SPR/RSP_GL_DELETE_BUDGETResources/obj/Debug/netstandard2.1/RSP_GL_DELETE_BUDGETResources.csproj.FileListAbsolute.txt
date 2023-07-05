@@ -1,0 +1,12 @@
+D:\BIMASAKTI_11\1.00\PROGRAM\BS Program\SOURCE\BACK\GL\GL_SPR\RSP_GL_DELETE_BUDGETResources\bin\Debug\netstandard2.1\RSP_GL_DELETE_BUDGETResources.deps.json
+D:\BIMASAKTI_11\1.00\PROGRAM\BS Program\SOURCE\BACK\GL\GL_SPR\RSP_GL_DELETE_BUDGETResources\bin\Debug\netstandard2.1\RSP_GL_DELETE_BUDGETResources.dll
+D:\BIMASAKTI_11\1.00\PROGRAM\BS Program\SOURCE\BACK\GL\GL_SPR\RSP_GL_DELETE_BUDGETResources\bin\Debug\netstandard2.1\RSP_GL_DELETE_BUDGETResources.pdb
+D:\BIMASAKTI_11\1.00\PROGRAM\BS Program\SOURCE\BACK\GL\GL_SPR\RSP_GL_DELETE_BUDGETResources\obj\Debug\netstandard2.1\RSP_GL_DELETE_BUDGETResources.csproj.AssemblyReference.cache
+D:\BIMASAKTI_11\1.00\PROGRAM\BS Program\SOURCE\BACK\GL\GL_SPR\RSP_GL_DELETE_BUDGETResources\obj\Debug\netstandard2.1\RSP_GL_DELETE_BUDGETResources.csproj.GenerateResource.cache
+D:\BIMASAKTI_11\1.00\PROGRAM\BS Program\SOURCE\BACK\GL\GL_SPR\RSP_GL_DELETE_BUDGETResources\obj\Debug\netstandard2.1\RSP_GL_DELETE_BUDGETResources.GeneratedMSBuildEditorConfig.editorconfig
+D:\BIMASAKTI_11\1.00\PROGRAM\BS Program\SOURCE\BACK\GL\GL_SPR\RSP_GL_DELETE_BUDGETResources\obj\Debug\netstandard2.1\RSP_GL_DELETE_BUDGETResources.AssemblyInfoInputs.cache
+D:\BIMASAKTI_11\1.00\PROGRAM\BS Program\SOURCE\BACK\GL\GL_SPR\RSP_GL_DELETE_BUDGETResources\obj\Debug\netstandard2.1\RSP_GL_DELETE_BUDGETResources.AssemblyInfo.cs
+D:\BIMASAKTI_11\1.00\PROGRAM\BS Program\SOURCE\BACK\GL\GL_SPR\RSP_GL_DELETE_BUDGETResources\obj\Debug\netstandard2.1\RSP_GL_DELETE_BUDGETResources.csproj.CoreCompileInputs.cache
+D:\BIMASAKTI_11\1.00\PROGRAM\BS Program\SOURCE\BACK\GL\GL_SPR\RSP_GL_DELETE_BUDGETResources\obj\Debug\netstandard2.1\RSP_GL_DELETE_BUDGETResources.dll
+D:\BIMASAKTI_11\1.00\PROGRAM\BS Program\SOURCE\BACK\GL\GL_SPR\RSP_GL_DELETE_BUDGETResources\obj\Debug\netstandard2.1\RSP_GL_DELETE_BUDGETResources.pdb
+D:\BIMASAKTI_11\1.00\PROGRAM\BS Program\SOURCE\BACK\GL\GL_SPR\RSP_GL_DELETE_BUDGETResources\obj\Debug\netstandard2.1\RSP_GL_DELETE_BUDGETResources.RSP_GL_DELETE_BUDGETResources_msgrsc.resources

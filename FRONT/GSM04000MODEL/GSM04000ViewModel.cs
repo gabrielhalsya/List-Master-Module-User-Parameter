@@ -39,7 +39,6 @@ namespace GSM04000Model
                 loEx.Add(ex);
             }
             loEx.ThrowExceptionIfErrors();
-
         }
 
         public async Task GetDepartment(GSM04000DTO poDept)
@@ -65,7 +64,7 @@ namespace GSM04000Model
 
             try
             {
-                poNewEntity.CMANAGER_NAME= poNewEntity.CMANAGER_CODE;
+                poNewEntity.CMANAGER_NAME = poNewEntity.CMANAGER_CODE;
                 var loResult = await _model.R_ServiceSaveAsync(poNewEntity, peCRUDMode);
                 Department = loResult;
             }
@@ -112,7 +111,7 @@ namespace GSM04000Model
             loEx.ThrowExceptionIfErrors();
         }
 
-        public async Task CheckIsUserDeptExist()
+        public async Task CheckIsUserDeptExistAsync()
         {
             R_Exception loEx = new R_Exception();
             try
@@ -143,7 +142,7 @@ namespace GSM04000Model
             loEx.ThrowExceptionIfErrors();
         }
 
-        }
-
     }
+
 }
+

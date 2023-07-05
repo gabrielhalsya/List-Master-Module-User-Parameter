@@ -1444,14 +1444,6 @@
         },
         "runtime": {
           "BlazorMenuBack.dll": {}
-        },
-        "resources": {
-          "id/R_APIBackEnd.resources.dll": {
-            "locale": "id"
-          },
-          "ja/R_APIBackEnd.resources.dll": {
-            "locale": "ja"
-          }
         }
       },
       "BlazorMenuCommon/1.0.0": {
@@ -1542,6 +1534,14 @@
         },
         "runtime": {
           "Lookup_GSSERVICES.dll": {}
+        },
+        "resources": {
+          "id/R_APIBackEnd.resources.dll": {
+            "locale": "id"
+          },
+          "ja/R_APIBackEnd.resources.dll": {
+            "locale": "ja"
+          }
         }
       },
       "RSP_GS_MAINTAIN_DEPARTMENTResources/1.0.0": {
@@ -1619,6 +1619,14 @@
           }
         }
       },
+      "R_APICommon/1.0.0.0": {
+        "runtime": {
+          "R_APICommon.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "R_APIBackEnd/1.0.0.0": {
         "runtime": {
           "R_APIBackEnd.dll": {
@@ -1635,17 +1643,9 @@
           }
         }
       },
-      "R_APICommon/1.0.0.0": {
+      "R_CommonFrontBackAPI/1.0.0.0": {
         "runtime": {
-          "R_APICommon.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
-        }
-      },
-      "R_ContextBackEnd/1.0.0.0": {
-        "runtime": {
-          "R_ContextBackEnd.dll": {
+          "R_CommonFrontBackAPI.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
@@ -1659,17 +1659,17 @@
           }
         }
       },
-      "R_AuthenticationBack/1.0.0.0": {
+      "R_ContextBackEnd/1.0.0.0": {
         "runtime": {
-          "R_AuthenticationBack.dll": {
+          "R_ContextBackEnd.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
       },
-      "R_CommonFrontBackAPI/1.0.0.0": {
+      "R_AuthenticationBack/1.0.0.0": {
         "runtime": {
-          "R_CommonFrontBackAPI.dll": {
+          "R_AuthenticationBack.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
@@ -2941,17 +2941,17 @@
       "serviceable": false,
       "sha512": ""
     },
-    "R_APIBackEnd/1.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
     "R_APICommon/1.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
     },
-    "R_ContextBackEnd/1.0.0.0": {
+    "R_APIBackEnd/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "R_CommonFrontBackAPI/1.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
@@ -2961,12 +2961,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "R_AuthenticationBack/1.0.0.0": {
+    "R_ContextBackEnd/1.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
     },
-    "R_CommonFrontBackAPI/1.0.0.0": {
+    "R_AuthenticationBack/1.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
