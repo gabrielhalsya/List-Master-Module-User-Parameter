@@ -225,44 +225,6 @@
           "buildTransitive/netcoreapp3.1/_._": {}
         }
       },
-      "GFF00900COMMON/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.1",
-        "compile": {
-          "bin/placeholder/GFF00900COMMON.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/GFF00900COMMON.dll": {}
-        }
-      },
-      "GFF00900FRONT/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "dependencies": {
-          "GFF00900COMMON": "1.0.0",
-          "GFF00900Model": "1.0.0",
-          "Microsoft.AspNetCore.Components.Web": "6.0.15"
-        },
-        "compile": {
-          "bin/placeholder/GFF00900FRONT.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/GFF00900FRONT.dll": {}
-        }
-      },
-      "GFF00900Model/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.1",
-        "dependencies": {
-          "GFF00900COMMON": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/GFF00900Model.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/GFF00900Model.dll": {}
-        }
-      },
       "GLM00200Common/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
@@ -639,21 +601,6 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "GFF00900COMMON/1.0.0": {
-      "type": "project",
-      "path": "../../../../BS Shared Form/SOURCE/BACK/GFF00900COMMON/GFF00900COMMON.csproj",
-      "msbuildProject": "../../../../BS Shared Form/SOURCE/BACK/GFF00900COMMON/GFF00900COMMON.csproj"
-    },
-    "GFF00900FRONT/1.0.0": {
-      "type": "project",
-      "path": "../../../../BS Shared Form/SOURCE/FRONT/GFF00900FRONT/GFF00900FRONT.csproj",
-      "msbuildProject": "../../../../BS Shared Form/SOURCE/FRONT/GFF00900FRONT/GFF00900FRONT.csproj"
-    },
-    "GFF00900Model/1.0.0": {
-      "type": "project",
-      "path": "../../../../BS Shared Form/SOURCE/FRONT/GFF00900Model/GFF00900Model.csproj",
-      "msbuildProject": "../../../../BS Shared Form/SOURCE/FRONT/GFF00900Model/GFF00900Model.csproj"
-    },
     "GLM00200Common/1.0.0": {
       "type": "project",
       "path": "../../COMMON/GL/GLM00200COMMON/GLM00200Common.csproj",
@@ -682,9 +629,6 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "GFF00900COMMON >= 1.0.0",
-      "GFF00900FRONT >= 1.0.0",
-      "GFF00900Model >= 1.0.0",
       "GLM00200Common >= 1.0.0",
       "GLM00200Model >= 1.0.0",
       "Lookup_GSCOMMON >= 1.0.0",
@@ -733,17 +677,8 @@
             "D:\\repos\\BS Program\\SOURCE\\FRONT\\GLM00200MODEL\\GLM00200Model.csproj": {
               "projectPath": "D:\\repos\\BS Program\\SOURCE\\FRONT\\GLM00200MODEL\\GLM00200Model.csproj"
             },
-            "D:\\repos\\BS Shared Form\\SOURCE\\BACK\\GFF00900COMMON\\GFF00900COMMON.csproj": {
-              "projectPath": "D:\\repos\\BS Shared Form\\SOURCE\\BACK\\GFF00900COMMON\\GFF00900COMMON.csproj"
-            },
             "D:\\repos\\BS Shared Form\\SOURCE\\BACK\\Lookup_GSCOMMON\\Lookup_GSCOMMON.csproj": {
               "projectPath": "D:\\repos\\BS Shared Form\\SOURCE\\BACK\\Lookup_GSCOMMON\\Lookup_GSCOMMON.csproj"
-            },
-            "D:\\repos\\BS Shared Form\\SOURCE\\FRONT\\GFF00900FRONT\\GFF00900FRONT.csproj": {
-              "projectPath": "D:\\repos\\BS Shared Form\\SOURCE\\FRONT\\GFF00900FRONT\\GFF00900FRONT.csproj"
-            },
-            "D:\\repos\\BS Shared Form\\SOURCE\\FRONT\\GFF00900Model\\GFF00900Model.csproj": {
-              "projectPath": "D:\\repos\\BS Shared Form\\SOURCE\\FRONT\\GFF00900Model\\GFF00900Model.csproj"
             },
             "D:\\repos\\BS Shared Form\\SOURCE\\FRONT\\Lookup_GSFRONT\\Lookup_GSFRONT.csproj": {
               "projectPath": "D:\\repos\\BS Shared Form\\SOURCE\\FRONT\\Lookup_GSFRONT\\Lookup_GSFRONT.csproj"

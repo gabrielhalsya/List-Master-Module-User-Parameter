@@ -1,5 +1,7 @@
 ﻿using GLM00200Common;
 using GLM00200Model;
+using Lookup_GSCOMMON.DTOs;
+using Lookup_GSFRONT;
 using R_BlazorFrontEnd.Controls;
 using R_BlazorFrontEnd.Controls.DataControls;
 using R_BlazorFrontEnd.Controls.Events;
@@ -19,27 +21,42 @@ namespace GLM00200Front
         private R_Grid<JournalDetailGridDTO> _gridJournalDet;
         private R_ConductorGrid _conJournalDet;
 
-        protected override Task R_Init_From_Master(object poParameter)
+        protected override async Task R_Init_From_Master(object poParameter)
         {
-            return base.R_Init_From_Master(poParameter);
+            var loEx = new R_Exception();
+
+            try
+            {
+                await _journalVM.GetVAR_GSM_COMPANY_DTOAsync();
+                await _journalVM.GetVAR_GL_SYSTEM_PARAMAsync();
+                await _journalVM.GetCCURRENT_PERIOD_START_DATEAsync();
+                await _journalVM.GetCSOFT_PERIOD_START_DATEAsync();
+                await _journalVM.GetGSM_PERIODAsync();
+                await _journalVM.GetGSM_TRANSACTION_CODEAsync();
+                await _journalVM.GetIUNDO_COMMIT_JRNAsync();
+                await _journalVM.GetSTATUS_DTOAsync();
+            }
+            catch (Exception ex)
+            {
+                loEx.Add(ex);
+            }
+
+            loEx.ThrowExceptionIfErrors();
         }
-        
+
         #region TAB Predefined
         private void Predef_RecurringEntry(R_InstantiateDockEventArgs eventArgs)
         {
             eventArgs.TargetPageType = typeof(RecurringEntry);
             eventArgs.Parameter = "RECURRING ENTRY";
         }
-
         private void AfterPredef_RecurringEntry(R_AfterOpenPredefinedDockEventArgs eventArgs)
         { }
-
         private void Predef_ActualJournalList(R_InstantiateDockEventArgs eventArgs)
         {
             eventArgs.TargetPageType = typeof(ActualJournalList);
             eventArgs.Parameter = "ACTUAL JOURNAL LIST";
         }
-
         private void AfterPredef_ActualJournalList(R_AfterOpenPredefinedDockEventArgs eventArgs)
         { }
         #endregion
@@ -126,6 +143,35 @@ namespace GLM00200Front
         }
         #endregion
 
+        private async Task Dept_Before_Open_Lookup(R_BeforeOpenLookupEventArgs eventArgs)
+        {
+            var loEx = new R_Exception();
+            try
+            {
+                eventArgs.Parameter = new GSL00700ParameterDTO();
+                eventArgs.TargetPageType = typeof(GSL00700);
+            }
+            catch (Exception ex)
+            {
+                loEx.Add(ex);
+            }
+            loEx.ThrowExceptionIfErrors();
+        }
+        private async Task Dept_After_Open_Lookup(R_AfterOpenLookupEventArgs eventArgs)
+        {
+            var loEx = new R_Exception();
+            try
+            {
+                var loTempResult = R_FrontUtility.ConvertObjectToObject<GSL00700DTO>(eventArgs.Result);
+                _journalVM._SearchParam.CDEPT_CODE = loTempResult.CDEPT_CODE;
+                _journalVM._SearchParam.CDEPT_NAME = loTempResult.CDEPT_NAME;
+            }
+            catch (Exception ex)
+            {
+                loEx.Add(ex);
+            }
+            loEx.ThrowExceptionIfErrors();
+        }
 
     }
 }

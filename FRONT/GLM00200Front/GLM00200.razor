@@ -7,38 +7,41 @@
 <R_PredefinedDock R_InstantiateDock="@Predef_ActualJournalList" R_AfterOpenPredefinedDock="@AfterPredef_ActualJournalList"></R_PredefinedDock>
 
 <R_StackLayout Row="true">
-    <R_ItemLayout>
+    <R_ItemLayout xs="1">
         <R_Label>Department</R_Label>
     </R_ItemLayout>
-    <R_ItemLayout>
-        <R_Lookup @bind-value="_journalVM.SearchParam.CDEPT_CODE"></R_Lookup>
+    <R_ItemLayout xs="1">
+        <R_TextBox @bind-value="_journalVM._SearchParam.CDEPT_CODE" Enabled="false" CharacterCasing="R_eCharacterCasing.Upper"></R_TextBox>
     </R_ItemLayout>
     <R_ItemLayout>
-        <R_TextBox @bind-value="_journalVM.SearchParam.CDEPT_NAME"></R_TextBox>
+        <R_Lookup R_Before_Open_Lookup="Dept_Before_Open_Lookup" R_After_Open_Lookup="Dept_After_Open_Lookup">...</R_Lookup>
+    </R_ItemLayout>
+    <R_ItemLayout>
+        <R_TextBox @bind-value="_journalVM._SearchParam.CDEPT_NAME " Enabled="false"></R_TextBox>
     </R_ItemLayout>
     <R_ItemLayout>
         <R_Label>Next Journal Period</R_Label>
     </R_ItemLayout>
     <R_ItemLayout xs="1">
-        <R_ComboBox @bind-Value="@_journalVM.Journal.IPERIOD" Data="_journalVM.Period"></R_ComboBox>
+        <R_ComboBox @bind-Value="@_journalVM._SearchParam.CPERIOD_MM" Data="_journalVM.Period"></R_ComboBox>
     </R_ItemLayout>
     <R_ItemLayout xs="1">
-        <R_NumericTextBox @bind-Value="@_journalVM.Year" Min="2000"></R_NumericTextBox>
+        <R_NumericTextBox @bind-Value="@_journalVM._SearchParam.CPERIOD_YYYY" Min="_journalVM._GSM_PERIOD.IMIN_YEAR" Max="_journalVM._GSM_PERIOD.IMAX_YEAR"></R_NumericTextBox>
     </R_ItemLayout>
     <R_ItemLayout>
         <R_Label>Status</R_Label>
     </R_ItemLayout>
     <R_ItemLayout>
-        <R_ComboBox @bind-Value="@_journalVM.SearchParam.CSTATUS" Data="_journalVM.Status"></R_ComboBox>
+        <R_ComboBox @bind-Value="@_journalVM._SearchParam.CSTATUS" Data="_journalVM.Period"></R_ComboBox>
     </R_ItemLayout>
     <R_ItemLayout>
-        <R_TextBox @bind-Value="_journalVM.SearchParam.CSEARCH_TEXT"></R_TextBox>
+        <R_TextBox @bind-Value="_journalVM._SearchParam.CSEARCH_TEXT" MaxLength="200"></R_TextBox>
     </R_ItemLayout>
     <R_ItemLayout>
         <R_Button>Search</R_Button>
     </R_ItemLayout>
     <R_ItemLayout>
-        <R_Button>Show All</R_Button>
+        <R_Button OnClick="_journalVM.GetJournalList">Show All</R_Button>
     </R_ItemLayout>
 </R_StackLayout>
 

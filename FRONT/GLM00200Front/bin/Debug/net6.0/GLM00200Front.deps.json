@@ -8,9 +8,6 @@
     ".NETCoreApp,Version=v6.0": {
       "GLM00200Front/1.0.0": {
         "dependencies": {
-          "GFF00900COMMON": "1.0.0",
-          "GFF00900FRONT": "1.0.0",
-          "GFF00900Model": "1.0.0",
           "GLM00200Common": "1.0.0",
           "GLM00200Model": "1.0.0",
           "Lookup_GSCOMMON": "1.0.0",
@@ -155,29 +152,6 @@
         }
       },
       "System.Runtime.CompilerServices.Unsafe/6.0.0": {},
-      "GFF00900COMMON/1.0.0": {
-        "runtime": {
-          "GFF00900COMMON.dll": {}
-        }
-      },
-      "GFF00900FRONT/1.0.0": {
-        "dependencies": {
-          "GFF00900COMMON": "1.0.0",
-          "GFF00900Model": "1.0.0",
-          "Microsoft.AspNetCore.Components.Web": "6.0.15"
-        },
-        "runtime": {
-          "GFF00900FRONT.dll": {}
-        }
-      },
-      "GFF00900Model/1.0.0": {
-        "dependencies": {
-          "GFF00900COMMON": "1.0.0"
-        },
-        "runtime": {
-          "GFF00900Model.dll": {}
-        }
-      },
       "GLM00200Common/1.0.0": {
         "runtime": {
           "GLM00200Common.dll": {}
@@ -420,21 +394,6 @@
       "sha512": "sha512-/iUeP3tq1S0XdNNoMz5C9twLSrM/TH+qElHkXWaPvuNOt+99G75NrV0OS2EqHx5wMN7popYjpc8oTjC1y16DLg==",
       "path": "system.runtime.compilerservices.unsafe/6.0.0",
       "hashPath": "system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
-    },
-    "GFF00900COMMON/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "GFF00900FRONT/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "GFF00900Model/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
     },
     "GLM00200Common/1.0.0": {
       "type": "project",

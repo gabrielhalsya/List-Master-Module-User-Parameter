@@ -28,7 +28,6 @@ namespace GSM04000Model
         {
         }
 
-
         public IAsyncEnumerable<GSM04000DTO> GetGSM04000List()
         {
             throw new NotImplementedException();
