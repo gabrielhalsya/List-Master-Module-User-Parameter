@@ -1,5 +1,6 @@
 ﻿@page "/GLM00200"
 @using GLM00200Common;
+@using GLM00200Common.DTO_s;
 @attribute [R_Page(Title = "RecurringList")]
 @inherits R_Page
 
@@ -23,7 +24,7 @@
         <R_Label>Next Journal Period</R_Label>
     </R_ItemLayout>
     <R_ItemLayout xs="1">
-        <R_ComboBox @bind-Value="@_journalVM._SearchParam.CPERIOD_MM" Data="_journalVM.Period"></R_ComboBox>
+        <R_ComboBox @bind-Value="@_journalVM._SearchParam.CPERIOD_MM" Data="_journalVM.Periods" ValueField="@nameof(PeriodDTO.CPERIOD_MM_CODE)" TextField="@nameof(PeriodDTO.CPERIOD_MM_TEXT)"></R_ComboBox>
     </R_ItemLayout>
     <R_ItemLayout xs="1">
         <R_NumericTextBox @bind-Value="@_journalVM._SearchParam.CPERIOD_YYYY" Min="_journalVM._GSM_PERIOD.IMIN_YEAR" Max="_journalVM._GSM_PERIOD.IMAX_YEAR"></R_NumericTextBox>
@@ -32,16 +33,19 @@
         <R_Label>Status</R_Label>
     </R_ItemLayout>
     <R_ItemLayout>
-        <R_ComboBox @bind-Value="@_journalVM._SearchParam.CSTATUS" Data="_journalVM.Period"></R_ComboBox>
+        <R_ComboBox @bind-Value="@_journalVM._SearchParam.CSTATUS"
+                    Data="_journalVM._STATUS_LIST"
+                    ValueField="@nameof(VAR_STATUS_DTO.CCODE)"
+                    TextField="@nameof(VAR_STATUS_DTO.CNAME)"></R_ComboBox>
     </R_ItemLayout>
     <R_ItemLayout>
         <R_TextBox @bind-Value="_journalVM._SearchParam.CSEARCH_TEXT" MaxLength="200"></R_TextBox>
     </R_ItemLayout>
     <R_ItemLayout>
-        <R_Button>Search</R_Button>
+        <R_Button OnClick="SearchWithFilterAsync">Search</R_Button>
     </R_ItemLayout>
     <R_ItemLayout>
-        <R_Button OnClick="_journalVM.GetJournalList">Show All</R_Button>
+        <R_Button OnClick="SearchAllAsync">Show All</R_Button>
     </R_ItemLayout>
 </R_StackLayout>
 
@@ -49,7 +53,8 @@
         DataSource="@_journalVM.JournalList"
         Pageable
         R_ConductorGridSource="_conJournal"
-        R_GridType="R_eGridType.Original" R_ServiceGetListRecord="JournalGrid_ServiceGetListRecord" AllowAddNewRow="false"
+        R_GridType="R_eGridType.Original" R_ServiceGetListRecord="JournalGrid_ServiceGetListRecord" 
+        AllowAddNewRow="false"
         AllowDeleteRow="false"
         AllowEditRow="false"
         Width="1000px">

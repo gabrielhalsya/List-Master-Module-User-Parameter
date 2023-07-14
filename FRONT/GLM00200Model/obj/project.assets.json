@@ -11,6 +11,29 @@
         "runtime": {
           "bin/placeholder/GLM00200Common.dll": {}
         }
+      },
+      "Lookup_GSCOMMON/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.1",
+        "compile": {
+          "bin/placeholder/Lookup_GSCOMMON.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Lookup_GSCOMMON.dll": {}
+        }
+      },
+      "Lookup_GSModel/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.1",
+        "dependencies": {
+          "Lookup_GSCOMMON": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Lookup_GSModel.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Lookup_GSModel.dll": {}
+        }
       }
     }
   },
@@ -19,11 +42,23 @@
       "type": "project",
       "path": "../../COMMON/GL/GLM00200COMMON/GLM00200Common.csproj",
       "msbuildProject": "../../COMMON/GL/GLM00200COMMON/GLM00200Common.csproj"
+    },
+    "Lookup_GSCOMMON/1.0.0": {
+      "type": "project",
+      "path": "../../../../BS Shared Form/SOURCE/BACK/Lookup_GSCOMMON/Lookup_GSCOMMON.csproj",
+      "msbuildProject": "../../../../BS Shared Form/SOURCE/BACK/Lookup_GSCOMMON/Lookup_GSCOMMON.csproj"
+    },
+    "Lookup_GSModel/1.0.0": {
+      "type": "project",
+      "path": "../../../../BS Shared Form/SOURCE/FRONT/Lookup_GSModel/Lookup_GSModel.csproj",
+      "msbuildProject": "../../../../BS Shared Form/SOURCE/FRONT/Lookup_GSModel/Lookup_GSModel.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.1": [
-      "GLM00200Common >= 1.0.0"
+      "GLM00200Common >= 1.0.0",
+      "Lookup_GSCOMMON >= 1.0.0",
+      "Lookup_GSModel >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -63,6 +98,12 @@
           "projectReferences": {
             "D:\\repos\\BS Program\\SOURCE\\COMMON\\GL\\GLM00200COMMON\\GLM00200Common.csproj": {
               "projectPath": "D:\\repos\\BS Program\\SOURCE\\COMMON\\GL\\GLM00200COMMON\\GLM00200Common.csproj"
+            },
+            "D:\\repos\\BS Shared Form\\SOURCE\\BACK\\Lookup_GSCOMMON\\Lookup_GSCOMMON.csproj": {
+              "projectPath": "D:\\repos\\BS Shared Form\\SOURCE\\BACK\\Lookup_GSCOMMON\\Lookup_GSCOMMON.csproj"
+            },
+            "D:\\repos\\BS Shared Form\\SOURCE\\FRONT\\Lookup_GSModel\\Lookup_GSModel.csproj": {
+              "projectPath": "D:\\repos\\BS Shared Form\\SOURCE\\FRONT\\Lookup_GSModel\\Lookup_GSModel.csproj"
             }
           }
         }

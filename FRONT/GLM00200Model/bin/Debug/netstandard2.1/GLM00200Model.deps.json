@@ -10,6 +10,8 @@
       "GLM00200Model/1.0.0": {
         "dependencies": {
           "GLM00200Common": "1.0.0",
+          "Lookup_GSCOMMON": "1.0.0",
+          "Lookup_GSModel": "1.0.0",
           "R_APIClient": "1.0.0.0",
           "R_APICommonDTO": "1.0.0.0",
           "R_BlazorFrontEnd": "1.0.0.0",
@@ -24,6 +26,19 @@
       "GLM00200Common/1.0.0": {
         "runtime": {
           "GLM00200Common.dll": {}
+        }
+      },
+      "Lookup_GSCOMMON/1.0.0": {
+        "runtime": {
+          "Lookup_GSCOMMON.dll": {}
+        }
+      },
+      "Lookup_GSModel/1.0.0": {
+        "dependencies": {
+          "Lookup_GSCOMMON": "1.0.0"
+        },
+        "runtime": {
+          "Lookup_GSModel.dll": {}
         }
       },
       "R_APIClient/1.0.0.0": {
@@ -99,6 +114,16 @@
       "sha512": ""
     },
     "GLM00200Common/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Lookup_GSCOMMON/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Lookup_GSModel/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -9,6 +9,7 @@ using R_BlazorFrontEnd.Controls.MessageBox;
 using R_BlazorFrontEnd.Enums;
 using R_BlazorFrontEnd.Exceptions;
 using R_BlazorFrontEnd.Helpers;
+using System;
 
 namespace GLM00200Front
 {
@@ -24,9 +25,9 @@ namespace GLM00200Front
         protected override async Task R_Init_From_Master(object poParameter)
         {
             var loEx = new R_Exception();
-
             try
             {
+                await _journalVM.GetFirstDepartData();
                 await _journalVM.GetVAR_GSM_COMPANY_DTOAsync();
                 await _journalVM.GetVAR_GL_SYSTEM_PARAMAsync();
                 await _journalVM.GetCCURRENT_PERIOD_START_DATEAsync();
@@ -61,19 +62,64 @@ namespace GLM00200Front
         { }
         #endregion
 
+        #region Search
+        public async Task SearchAllAsync()
+        {
+            var loEx = new R_Exception();
+            try
+            {
+                await _gridJournal.R_RefreshGrid(null);
+                await _gridJournal.AutoFitAllColumnsAsync();
+                if (_journalVM.JournalList.Count == 0)
+                {
+                    R_MessageBox.Show("", "No data found!", R_eMessageBoxButtonType.OK);
+                }
+                else
+                {
+                    R_MessageBox.Show("", "GET LIST DETAIL DATA", R_eMessageBoxButtonType.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                loEx.Add(ex);
+            }
+            R_DisplayException(loEx);
+
+        }
+        public async Task SearchWithFilterAsync()
+        {
+            var loEx = new R_Exception();
+            try
+            {
+                await _gridJournal.R_RefreshGrid(true);
+                await _gridJournal.AutoFitAllColumnsAsync();
+                if (_journalVM.JournalList.Count == 0)
+                {
+                    R_MessageBox.Show("", "No data found!", R_eMessageBoxButtonType.OK);
+                }
+                else
+                {
+                    R_MessageBox.Show("", "GET LIST DETAIL DATA", R_eMessageBoxButtonType.OK);
+                }
+            }
+            catch (Exception ex)
+            {
+                loEx.Add(ex);
+            }
+            R_DisplayException(loEx);
+
+        }
+        #endregion
+
         #region JournalGrid
         private async Task JournalGrid_ServiceGetListRecord(R_ServiceGetListRecordEventArgs eventArgs)
         {
             var loEx = new R_Exception();
             try
             {
-                await _journalVM.GetJournalList();
+                var param = eventArgs.Parameter;
+                await _journalVM.ShowAllJournals();
                 eventArgs.ListEntityResult = _journalVM.JournalList;
-                //if (eventArgs.ListEntityResult == null)
-                //{
-                //    R_PopupActiveInactive.Enabled = false;
-                //    R_PopupAssignUser.Enabled = false;
-                //}
             }
             catch (Exception ex)
             {
@@ -98,7 +144,18 @@ namespace GLM00200Front
         }
         private async Task JournalGrid_Display(R_DisplayEventArgs eventArgs)
         {
-
+            R_Exception loEx = new R_Exception();
+            try
+            {
+                var loData = (JournalGridDTO)eventArgs.Data;
+                _journalVM._CREC_ID = loData.CREC_ID;
+                _gridJournalDet.R_RefreshGrid(null);                
+            }
+            catch (Exception ex)
+            {
+                loEx.Add(ex);
+            }
+            R_DisplayException(loEx);
         }
         #endregion
 
@@ -108,13 +165,8 @@ namespace GLM00200Front
             var loEx = new R_Exception();
             try
             {
-                //await _journalVM.GetJournalList();
-                //eventArgs.ListEntityResult = _journalVM.JournalList;
-                //if (eventArgs.ListEntityResult == null)
-                //{
-                //    R_PopupActiveInactive.Enabled = false;
-                //    R_PopupAssignUser.Enabled = false;
-                //}
+                await _journalVM.GetJournalDetailList();
+                eventArgs.ListEntityResult = _journalVM.JournaDetailList;
             }
             catch (Exception ex)
             {

@@ -8,6 +8,7 @@ using R_BlazorFrontEnd;
 using R_BlazorFrontEnd.Controls;
 using R_BlazorFrontEnd.Controls.DataControls;
 using R_BlazorFrontEnd.Controls.Events;
+using R_BlazorFrontEnd.Controls.Grid;
 using R_BlazorFrontEnd.Controls.Grid.Columns;
 using R_BlazorFrontEnd.Controls.MessageBox;
 using R_BlazorFrontEnd.Enums;
@@ -337,6 +338,21 @@ namespace GSM04000Front
         private void R_Before_Open_PopupUpload(R_BeforeOpenPopupEventArgs eventArgs)
         {
             eventArgs.TargetPageType = typeof(GSM04000PopupUpload);
+        }
+        #endregion
+
+        #region Rowrender
+        private void R_RowRender(R_GridRowRenderEventArgs eventArgs)
+        {
+            var loData = (GSM04000DTO)eventArgs.Data;
+
+           //if (loData.GenderId == "M")
+           // {
+           //     eventArgs.RowStyle = new R_GridRowRenderStyle
+           //     {
+           //         FontColor = "red"
+           //     };
+           // }
         }
         #endregion
 

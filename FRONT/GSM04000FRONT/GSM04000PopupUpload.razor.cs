@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Components;
 using R_BlazorFrontEnd;
 using Microsoft.AspNetCore.Components.Forms;
 using R_BlazorFrontEnd.Controls.Enums;
+using System.Collections.ObjectModel;
+using R_BlazorFrontEnd.Controls.Grid;
 
 namespace GSM04000Front
 {
@@ -19,9 +21,7 @@ namespace GSM04000Front
         private R_Grid<GSM04000DTO> _gridDeptExcelRef;
         private R_ConductorGrid _conGridDeptExcelRef;
         [Inject] private R_IExcel _excelProvider { get; set; }
-
         private R_eFileSelectAccept[] _accepts = { R_eFileSelectAccept.Excel };
-
         protected override async Task R_Init_From_Master(object poParameter)
         {
             var loEx = new R_Exception();
@@ -63,7 +63,21 @@ namespace GSM04000Front
             var loDataSet = _excelProvider.R_ReadFromExcel(loByteFile);
 
             var resultEmployee = R_FrontUtility.R_ConvertTo<GSM04000DTO>(loDataSet.Tables[0]);
-            //_deptViewModel.DepartmentExcelList = R_FrontUtility.ConvertCollectionToCollection<GSM04000DTO>(resultEmployee);
+            ObservableCollection<GSM04000DTO> listEmployee = new ObservableCollection<GSM04000DTO>(resultEmployee);
+            _deptViewModel.DepartmentExcelList = listEmployee;
+        }
+
+        private void R_RowRender(R_GridRowRenderEventArgs eventArgs)
+        {
+            var loData = (GSM04000DTO)eventArgs.Data;
+
+            if (loData.LACTIVE)
+            {
+                eventArgs.RowStyle = new R_GridRowRenderStyle
+                {
+                    FontColor = "red"
+                };
+            }
         }
     }
 }

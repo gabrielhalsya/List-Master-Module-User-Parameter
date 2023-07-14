@@ -180,6 +180,12 @@
             "projectReferences": {
               "D:\\repos\\BS Program\\SOURCE\\COMMON\\GL\\GLM00200COMMON\\GLM00200Common.csproj": {
                 "projectPath": "D:\\repos\\BS Program\\SOURCE\\COMMON\\GL\\GLM00200COMMON\\GLM00200Common.csproj"
+              },
+              "D:\\repos\\BS Shared Form\\SOURCE\\BACK\\Lookup_GSCOMMON\\Lookup_GSCOMMON.csproj": {
+                "projectPath": "D:\\repos\\BS Shared Form\\SOURCE\\BACK\\Lookup_GSCOMMON\\Lookup_GSCOMMON.csproj"
+              },
+              "D:\\repos\\BS Shared Form\\SOURCE\\FRONT\\Lookup_GSModel\\Lookup_GSModel.csproj": {
+                "projectPath": "D:\\repos\\BS Shared Form\\SOURCE\\FRONT\\Lookup_GSModel\\Lookup_GSModel.csproj"
               }
             }
           }

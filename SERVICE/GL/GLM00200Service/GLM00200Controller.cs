@@ -21,12 +21,13 @@ namespace GLM00200Service
             GLM00200Cls loCls;
             try
             {
+                var SearchParam = R_Utility.R_GetContext<RecurringJournalListParamDTO>(RecurringJournalContext.OSEARCH_PARAM);
                 loCls = new GLM00200Cls();
-                loRtnTemp = loCls.GetRecurringList(new RecurringJournalListParamDTO()
-                {
-                    //CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID,
-                    //CUSER_LOGIN_ID = R_BackGlobalVar.USER_ID
-                });
+                SearchParam.CLANGUAGE_ID = R_BackGlobalVar.CULTURE;
+                SearchParam.CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID;
+                SearchParam.CUSER_ID = R_BackGlobalVar.USER_ID;
+                SearchParam.CPERIOD_YYYYMM = SearchParam.CPERIOD_YYYY + SearchParam.CPERIOD_MM;
+                loRtnTemp = loCls.GetJournalList(SearchParam);
             }
             catch (Exception ex)
             {
@@ -36,11 +37,43 @@ namespace GLM00200Service
             loException.ThrowExceptionIfErrors();
             return JournalListStreamListHelper(loRtnTemp);
         }
-        
-        [HttpPost]
+
         private async IAsyncEnumerable<JournalGridDTO> JournalListStreamListHelper(List<JournalGridDTO> loRtnTemp)
         {
             foreach (JournalGridDTO loEntity in loRtnTemp)
+            {
+                yield return loEntity;
+            }
+        }
+
+        [HttpPost]
+        public IAsyncEnumerable<JournalDetailGridDTO> GetAllJournalDetailList()
+        {
+            R_Exception loException = new R_Exception();
+            List<JournalDetailGridDTO> loRtnTemp = null;
+            RecurringJournalListParamDTO loDbParam;
+            GLM00200Cls loCls;
+            try
+            {
+                loCls = new GLM00200Cls();
+                loRtnTemp = loCls.GetJournalDetailList(new RecurringJournalListParamDTO()
+                {
+                    CLANGUAGE_ID = R_BackGlobalVar.CULTURE,
+                    CREC_ID = R_Utility.R_GetContext<string>(RecurringJournalContext.CREC_ID)
+                });
+            }
+            catch (Exception ex)
+            {
+                loException.Add(ex);
+            }
+        EndBlock:
+            loException.ThrowExceptionIfErrors();
+            return JournalDetailListStreamListHelper(loRtnTemp);
+        }
+
+        private async IAsyncEnumerable<JournalDetailGridDTO> JournalDetailListStreamListHelper(List<JournalDetailGridDTO> loRtnTemp)
+        {
+            foreach (JournalDetailGridDTO loEntity in loRtnTemp)
             {
                 yield return loEntity;
             }
@@ -61,7 +94,25 @@ namespace GLM00200Service
         [HttpPost]
         public R_ServiceSaveResultDTO<JournalDTO> R_ServiceSave(R_ServiceSaveParameterDTO<JournalDTO> poParameter)
         {
-            throw new NotImplementedException();
+            R_ServiceSaveResultDTO<JournalDTO> loRtn = null;
+            R_Exception loException = new R_Exception();
+            GLM00200Cls loCls;
+            try
+            {
+                loCls = new GLM00200Cls();
+                loRtn = new R_ServiceSaveResultDTO<JournalDTO>();
+                poParameter.Entity.CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID;
+                poParameter.Entity.CUSER_ID = R_BackGlobalVar.USER_ID;
+                poParameter.Entity.CLANGUAGE_ID = R_BackGlobalVar.CULTURE;
+                loRtn.data = loCls.R_Save(poParameter.Entity, poParameter.CRUDMode);//call clsMethod to save
+            }
+            catch (Exception ex)
+            {
+                loException.Add(ex);
+            }
+        EndBlock:
+            loException.ThrowExceptionIfErrors();
+            return loRtn;
         }
 
         [HttpPost]
@@ -70,7 +121,27 @@ namespace GLM00200Service
             throw new NotImplementedException();
         }
 
-        //INIT DATA
+        [HttpPost]
+        public INIT_VAR_RESULT_DTO InitialData()
+        {
+            INIT_VAR_RESULT_DTO loRtn = null;
+            R_Exception loException = new R_Exception();
+            GLM00200Cls loCls;
+            try
+            {
+                loCls = new GLM00200Cls(); //create cls class instance
+                loRtn = new INIT_VAR_RESULT_DTO();
+            }
+            catch (Exception ex)
+            {
+                loException.Add(ex);
+            }
+        EndBlock:
+            loException.ThrowExceptionIfErrors();
+            return loRtn;
+        }
+
+        #region init
         [HttpPost]
         public VAR_GL_SYSTEM_PARAM_DTO GetVAR_GL_SYSTEM_PARAM()
         {
@@ -81,7 +152,7 @@ namespace GLM00200Service
             {
                 loCls = new GLM00200Cls(); //create cls class instance
                 loRtn = new VAR_GL_SYSTEM_PARAM_DTO();
-                loRtn.data = loCls.GetVAR_GL_SYSTEM_PARAM(
+                loRtn = loCls.GetVAR_GL_SYSTEM_PARAM(
                     new INIT_VAR_DB_PARAM()
                     {
                         CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID
@@ -106,7 +177,7 @@ namespace GLM00200Service
             {
                 loCls = new GLM00200Cls(); //create cls class instance
                 loRtn = new VAR_CCURRENT_PERIOD_START_DATE_DTO();
-                loRtn.data = loCls.GetCCURRENT_PERIOD_START_DATE(
+                loRtn = loCls.GetCCURRENT_PERIOD_START_DATE(
                     new INIT_VAR_DB_PARAM()
                     {
                         CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID,
@@ -133,7 +204,7 @@ namespace GLM00200Service
             {
                 loCls = new GLM00200Cls(); //create cls class instance
                 loRtn = new VAR_CSOFT_PERIOD_START_DATE_DTO();
-                loRtn.data = loCls.GetCSOFT_PERIOD_START_DATE(
+                loRtn = loCls.GetCSOFT_PERIOD_START_DATE(
                     new INIT_VAR_DB_PARAM()
                     {
                         CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID,
@@ -160,7 +231,7 @@ namespace GLM00200Service
             {
                 loCls = new GLM00200Cls(); //create cls class instance
                 loRtn = new VAR_IUNDO_COMMIT_JRN_DTO();
-                loRtn.data = loCls.GetIUNDO_COMMIT_JRN(
+                loRtn = loCls.GetIUNDO_COMMIT_JRN(
                     new INIT_VAR_DB_PARAM()
                     {
                         CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID
@@ -185,7 +256,7 @@ namespace GLM00200Service
             {
                 loCls = new GLM00200Cls(); //create cls class instance
                 loRtn = new VAR_GSM_TRANSACTION_CODE_DTO();
-                loRtn.data = loCls.GetGSM_TRANSACTION_CODE(
+                loRtn= loCls.GetGSM_TRANSACTION_CODE(
                     new INIT_VAR_DB_PARAM()
                     {
                         CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID
@@ -210,7 +281,7 @@ namespace GLM00200Service
             {
                 loCls = new GLM00200Cls(); //create cls class instance
                 loRtn = new VAR_GSM_PERIOD_DTO();
-                loRtn.data = loCls.GetGSM_PERIOD(
+                loRtn = loCls.GetGSM_PERIOD(
                     new INIT_VAR_DB_PARAM()
                     {
                         CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID
@@ -236,7 +307,8 @@ namespace GLM00200Service
                 loCls = new GLM00200Cls();
                 loRtnTemp = loCls.GetSTATUS_DTO(new INIT_VAR_DB_PARAM()
                 {
-                    CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID
+                    CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID,
+                    CLANGUAGE_ID = R_BackGlobalVar.CULTURE,
                 });
             }
             catch (Exception ex)
@@ -248,7 +320,6 @@ namespace GLM00200Service
             return StreamVAR_STATUS_DTOHelper(loRtnTemp);
         }
 
-        [HttpPost]
         private async IAsyncEnumerable<VAR_STATUS_DTO> StreamVAR_STATUS_DTOHelper(List<VAR_STATUS_DTO> loRtnTemp)
         {
             foreach (VAR_STATUS_DTO loEntity in loRtnTemp)
@@ -267,7 +338,7 @@ namespace GLM00200Service
             {
                 loCls = new GLM00200Cls(); //create cls class instance
                 loRtn = new VAR_GSM_COMPANY_DTO();
-                loRtn.data = loCls.GetVAR_GSM_COMPANY(
+                loRtn = loCls.GetVAR_GSM_COMPANY(
                     new INIT_VAR_DB_PARAM()
                     {
                         CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID
@@ -280,6 +351,38 @@ namespace GLM00200Service
         EndBlock:
             loException.ThrowExceptionIfErrors();
             return loRtn;
+        }
+
+        [HttpPost]
+        public IAsyncEnumerable<VAR_CURRENCY> GetVAR_CURRENCIES()
+        {
+            R_Exception loException = new R_Exception();
+            List<VAR_CURRENCY> loRtnTemp = null;
+            GLM00200Cls loCls;
+            try
+            {
+                loCls = new GLM00200Cls();
+                loRtnTemp = loCls.GetCurrency(new INIT_VAR_DB_PARAM()
+                {
+                    CCOMPANY_ID = R_BackGlobalVar.COMPANY_ID,
+                    CUSER_ID = R_BackGlobalVar.USER_ID,
+                });
+            }
+            catch (Exception ex)
+            {
+                loException.Add(ex);
+            }
+        EndBlock:
+            loException.ThrowExceptionIfErrors();
+            return StreamVAR_CURRENCY_DTOHelper(loRtnTemp);
+        }
+        #endregion
+        private async IAsyncEnumerable<VAR_CURRENCY> StreamVAR_CURRENCY_DTOHelper(List<VAR_CURRENCY> loRtnTemp)
+        {
+            foreach (VAR_CURRENCY loEntity in loRtnTemp)
+            {
+                yield return loEntity;
+            }
         }
     }
 }

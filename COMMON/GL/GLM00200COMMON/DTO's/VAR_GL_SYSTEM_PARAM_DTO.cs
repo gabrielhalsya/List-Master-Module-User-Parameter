@@ -7,11 +7,7 @@ namespace GLM00200Common.DTO_s
 {
     public class VAR_GL_SYSTEM_PARAM_DTO : R_APIResultBaseDTO
     {
-        public VAR_GL_SYSTEM_PARAM data { get; set; }
-    }
-
-    public class VAR_GL_SYSTEM_PARAM
-    {
+   
         public string CCLOSE_DEPT_CODE { get; set; }
         public string CCLOSSE_DEPT_NAME { get; set; }
         public string CRATETYPE_CODE { get; set; }

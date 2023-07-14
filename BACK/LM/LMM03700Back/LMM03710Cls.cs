@@ -387,7 +387,7 @@ namespace LMM03700Back
                         lcQuery = lcQuery.Substring(0, lcQuery.Length - 1) + " ";
                     }
                     lcQuery += " EXEC RSP_LM_MOVE_TENANT_CLASS " +
-                       $"@CCOMPANY_ID = '{poParam.CCOMPANY_ID}' " +
+                       $" @CCOMPANY_ID = '{poParam.CCOMPANY_ID}' " +
                        $",@CPROPERTY_ID = '{poParam.CPROPERTY_ID}' " +
                        $",@CTENANT_CLASSIFICATION_GROUP_ID = '{poParam.CTENANT_CLASSIFICATION_GROUP_ID}' " +
                        $",@CFROM_TENANT_CLASSIFICATION_ID = '{poParam.CFROM_TENANT_CLASSIFICATION_ID}' " +

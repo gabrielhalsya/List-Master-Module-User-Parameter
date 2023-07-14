@@ -7,12 +7,7 @@ namespace GLM00200Common
 {
     public class VAR_GSM_COMPANY_DTO : R_APIResultBaseDTO
     {
-        public VAR_GSM_COMPANY data { get; set; }
-
-
-    }
-    public class VAR_GSM_COMPANY
-    {
+   
         public string CCOGS_METHOD { get; set; }
         public bool LENABLE_CENTER_IS { get; set; }
         public bool LENABLE_CENTER_BS { get; set; }

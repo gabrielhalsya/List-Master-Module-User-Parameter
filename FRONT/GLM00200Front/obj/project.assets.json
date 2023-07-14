@@ -239,7 +239,9 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
         "dependencies": {
-          "GLM00200Common": "1.0.0"
+          "GLM00200Common": "1.0.0",
+          "Lookup_GSCOMMON": "1.0.0",
+          "Lookup_GSModel": "1.0.0"
         },
         "compile": {
           "bin/placeholder/GLM00200Model.dll": {}
